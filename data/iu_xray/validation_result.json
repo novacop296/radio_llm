@@ -1,0 +1,53 @@
+{
+    "dataset_source": "Indiana University Chest X-Ray (Open-i / NLM)",
+    "study_id": "CXR1122",
+    "image_path": "data\\iu_xray\\images\\CXR1122_IM-0080-1001-0002.png",
+    "view": "Frontal (PA/AP)",
+    "report_path": "data\\iu_xray\\reports\\ecgen-radiology\\1122.xml",
+    "image_successfully_loaded": true,
+    "preprocessing_successful": true,
+    "input_tensor_shape": [
+        1,
+        1,
+        224,
+        224
+    ],
+    "model_loaded": true,
+    "device_used": "cpu",
+    "pathology_prediction_successful": true,
+    "number_of_pathology_outputs": 18,
+    "top_5_pathologies": [
+        [
+            "Infiltration",
+            0.47500741481781006
+        ],
+        [
+            "Pneumothorax",
+            0.2192716896533966
+        ],
+        [
+            "Consolidation",
+            0.2052019089460373
+        ],
+        [
+            "Fracture",
+            0.08447106927633286
+        ],
+        [
+            "Nodule",
+            0.07079196721315384
+        ]
+    ],
+    "feature_extraction_successful": true,
+    "feature_tensor_shape": [
+        1,
+        1024
+    ],
+    "feature_values_finite": true,
+    "report_successfully_loaded": true,
+    "image_report_pairing_verified": true,
+    "report_sections": {
+        "findings": "The cardiomediastinal silhouette is within normal limits for appearance. No focal areas of pulmonary consolidation. No pneumothorax. No pleural effusion. The thoracic spine appears intact.",
+        "impression": "1. No acute intrathoracic abnormality."
+    }
+}

@@ -1,0 +1,559 @@
+{
+    "dataset_source": "Indiana University Chest X-Ray Collection (Open-i / NLM)",
+    "sample_study_id": "CXR1122",
+    "sample_image_id": "CXR1122_IM-0080-1001-0002",
+    "view": "Frontal",
+    "vision_pipeline": {
+        "model": "TorchXRayVision DenseNet-121 (densenet121-res224-all)",
+        "input_tensor_shape": [
+            1,
+            1,
+            224,
+            224
+        ],
+        "feature_tensor_shape": [
+            1,
+            1024
+        ],
+        "device": "cpu"
+    },
+    "qa_engine_config": {
+        "baseline_findings": [
+            "Pneumothorax",
+            "Effusion",
+            "Consolidation",
+            "Cardiomegaly"
+        ],
+        "top_k": 3,
+        "qa_threshold": 0.35
+    },
+    "qa_output": {
+        "study_id": "CXR1122",
+        "image_id": "CXR1122_IM-0080-1001-0002",
+        "view": "Frontal",
+        "vision_candidates": [
+            {
+                "finding": "Pneumothorax",
+                "model_score": 0.2193,
+                "is_baseline": true,
+                "selection_reason": "baseline_routine"
+            },
+            {
+                "finding": "Effusion",
+                "model_score": 0.0423,
+                "is_baseline": true,
+                "selection_reason": "baseline_routine"
+            },
+            {
+                "finding": "Consolidation",
+                "model_score": 0.2052,
+                "is_baseline": true,
+                "selection_reason": "baseline_routine"
+            },
+            {
+                "finding": "Cardiomegaly",
+                "model_score": 0.0015,
+                "is_baseline": true,
+                "selection_reason": "baseline_routine"
+            },
+            {
+                "finding": "Infiltration",
+                "model_score": 0.475,
+                "is_baseline": false,
+                "selection_reason": "top_3_activation"
+            },
+            {
+                "finding": "Fracture",
+                "model_score": 0.0845,
+                "is_baseline": false,
+                "selection_reason": "top_3_activation"
+            },
+            {
+                "finding": "Nodule",
+                "model_score": 0.0708,
+                "is_baseline": false,
+                "selection_reason": "top_3_activation"
+            }
+        ],
+        "questions_evaluated": [
+            {
+                "question_id": "Q_PNEUMOTHORAX_PRESENCE",
+                "finding": "Pneumothorax",
+                "level": 1,
+                "question_text": "Is there radiographic evidence of a pneumothorax?",
+                "options": [
+                    "yes",
+                    "no",
+                    "uncertain"
+                ],
+                "model_score": 0.2193,
+                "answer": "uncertain"
+            },
+            {
+                "question_id": "Q_PNEUMOTHORAX_LOCATION",
+                "finding": "Pneumothorax",
+                "level": 2,
+                "question_text": "Where is the pneumothorax located (e.g., right, left, apical)?",
+                "options": [
+                    "right",
+                    "left",
+                    "bilateral",
+                    "right_upper_lobe",
+                    "right_middle_lobe",
+                    "right_lower_lobe",
+                    "left_upper_lobe",
+                    "left_lower_lobe",
+                    "basilar",
+                    "apical",
+                    "retrocardiac",
+                    "mediastinum",
+                    "diffuse",
+                    "unspecified"
+                ],
+                "model_score": 0.2193,
+                "answer": "unspecified"
+            },
+            {
+                "question_id": "Q_EFFUSION_PRESENCE",
+                "finding": "Effusion",
+                "level": 1,
+                "question_text": "Is there evidence of pleural effusion or costophrenic angle blunting?",
+                "options": [
+                    "yes",
+                    "no",
+                    "uncertain"
+                ],
+                "model_score": 0.0423,
+                "answer": "uncertain"
+            },
+            {
+                "question_id": "Q_EFFUSION_LOCATION",
+                "finding": "Effusion",
+                "level": 2,
+                "question_text": "Where is the pleural effusion located (e.g., right, left, bilateral)?",
+                "options": [
+                    "right",
+                    "left",
+                    "bilateral",
+                    "right_upper_lobe",
+                    "right_middle_lobe",
+                    "right_lower_lobe",
+                    "left_upper_lobe",
+                    "left_lower_lobe",
+                    "basilar",
+                    "apical",
+                    "retrocardiac",
+                    "mediastinum",
+                    "diffuse",
+                    "unspecified"
+                ],
+                "model_score": 0.0423,
+                "answer": "unspecified"
+            },
+            {
+                "question_id": "Q_CONSOLIDATION_PRESENCE",
+                "finding": "Consolidation",
+                "level": 1,
+                "question_text": "Is there focal or dense airspace consolidation?",
+                "options": [
+                    "yes",
+                    "no",
+                    "uncertain"
+                ],
+                "model_score": 0.2052,
+                "answer": "uncertain"
+            },
+            {
+                "question_id": "Q_CONSOLIDATION_LOCATION",
+                "finding": "Consolidation",
+                "level": 2,
+                "question_text": "Which lung lobe or region contains the consolidation?",
+                "options": [
+                    "right",
+                    "left",
+                    "bilateral",
+                    "right_upper_lobe",
+                    "right_middle_lobe",
+                    "right_lower_lobe",
+                    "left_upper_lobe",
+                    "left_lower_lobe",
+                    "basilar",
+                    "apical",
+                    "retrocardiac",
+                    "mediastinum",
+                    "diffuse",
+                    "unspecified"
+                ],
+                "model_score": 0.2052,
+                "answer": "unspecified"
+            },
+            {
+                "question_id": "Q_CARDIOMEGALY_PRESENCE",
+                "finding": "Cardiomegaly",
+                "level": 1,
+                "question_text": "Is cardiomegaly or prominent cardiac enlargement present?",
+                "options": [
+                    "yes",
+                    "no",
+                    "uncertain"
+                ],
+                "model_score": 0.0015,
+                "answer": "uncertain"
+            },
+            {
+                "question_id": "Q_CARDIOMEGALY_LOCATION",
+                "finding": "Cardiomegaly",
+                "level": 2,
+                "question_text": "Is the enlargement generalized or specific to cardiac chambers?",
+                "options": [
+                    "right",
+                    "left",
+                    "bilateral",
+                    "right_upper_lobe",
+                    "right_middle_lobe",
+                    "right_lower_lobe",
+                    "left_upper_lobe",
+                    "left_lower_lobe",
+                    "basilar",
+                    "apical",
+                    "retrocardiac",
+                    "mediastinum",
+                    "diffuse",
+                    "unspecified"
+                ],
+                "model_score": 0.0015,
+                "answer": "unspecified"
+            },
+            {
+                "question_id": "Q_INFILTRATION_PRESENCE",
+                "finding": "Infiltration",
+                "level": 1,
+                "question_text": "Are there infiltrative or hazy airspace opacities?",
+                "options": [
+                    "yes",
+                    "no",
+                    "uncertain"
+                ],
+                "model_score": 0.475,
+                "answer": "uncertain"
+            },
+            {
+                "question_id": "Q_INFILTRATION_LOCATION",
+                "finding": "Infiltration",
+                "level": 2,
+                "question_text": "Where are the infiltrates distributed (e.g., right, left, bilateral)?",
+                "options": [
+                    "right",
+                    "left",
+                    "bilateral",
+                    "right_upper_lobe",
+                    "right_middle_lobe",
+                    "right_lower_lobe",
+                    "left_upper_lobe",
+                    "left_lower_lobe",
+                    "basilar",
+                    "apical",
+                    "retrocardiac",
+                    "mediastinum",
+                    "diffuse",
+                    "unspecified"
+                ],
+                "model_score": 0.475,
+                "answer": "unspecified"
+            },
+            {
+                "question_id": "Q_FRACTURE_PRESENCE",
+                "finding": "Fracture",
+                "level": 1,
+                "question_text": "Is there evidence of acute or healed fractures (ribs, clavicle, spine)?",
+                "options": [
+                    "yes",
+                    "no",
+                    "uncertain"
+                ],
+                "model_score": 0.0845,
+                "answer": "uncertain"
+            },
+            {
+                "question_id": "Q_FRACTURE_LOCATION",
+                "finding": "Fracture",
+                "level": 2,
+                "question_text": "Which bone is fractured (e.g., rib_right, clavicle_left, spine)?",
+                "options": [
+                    "right",
+                    "left",
+                    "bilateral",
+                    "right_upper_lobe",
+                    "right_middle_lobe",
+                    "right_lower_lobe",
+                    "left_upper_lobe",
+                    "left_lower_lobe",
+                    "basilar",
+                    "apical",
+                    "retrocardiac",
+                    "mediastinum",
+                    "diffuse",
+                    "unspecified"
+                ],
+                "model_score": 0.0845,
+                "answer": "unspecified"
+            },
+            {
+                "question_id": "Q_NODULE_PRESENCE",
+                "finding": "Nodule",
+                "level": 1,
+                "question_text": "Is there evidence of pulmonary nodule(s) or calcified granuloma(s)?",
+                "options": [
+                    "yes",
+                    "no",
+                    "uncertain"
+                ],
+                "model_score": 0.0708,
+                "answer": "uncertain"
+            },
+            {
+                "question_id": "Q_NODULE_LOCATION",
+                "finding": "Nodule",
+                "level": 2,
+                "question_text": "Where is the nodule located (e.g., right_upper_lobe, left_midlung)?",
+                "options": [
+                    "right",
+                    "left",
+                    "bilateral",
+                    "right_upper_lobe",
+                    "right_middle_lobe",
+                    "right_lower_lobe",
+                    "left_upper_lobe",
+                    "left_lower_lobe",
+                    "basilar",
+                    "apical",
+                    "retrocardiac",
+                    "mediastinum",
+                    "diffuse",
+                    "unspecified"
+                ],
+                "model_score": 0.0708,
+                "answer": "unspecified"
+            }
+        ],
+        "qa_findings": [
+            {
+                "finding": "Pneumothorax",
+                "presence": "uncertain",
+                "location": "unspecified",
+                "severity": "unspecified",
+                "model_score": 0.2193,
+                "evidence_source": "vision_model"
+            },
+            {
+                "finding": "Effusion",
+                "presence": "uncertain",
+                "location": "unspecified",
+                "severity": "unspecified",
+                "model_score": 0.0423,
+                "evidence_source": "vision_model"
+            },
+            {
+                "finding": "Consolidation",
+                "presence": "uncertain",
+                "location": "unspecified",
+                "severity": "unspecified",
+                "model_score": 0.2052,
+                "evidence_source": "vision_model"
+            },
+            {
+                "finding": "Cardiomegaly",
+                "presence": "uncertain",
+                "location": "unspecified",
+                "severity": "unspecified",
+                "model_score": 0.0015,
+                "evidence_source": "vision_model"
+            },
+            {
+                "finding": "Infiltration",
+                "presence": "uncertain",
+                "location": "unspecified",
+                "severity": "unspecified",
+                "model_score": 0.475,
+                "evidence_source": "vision_model"
+            },
+            {
+                "finding": "Fracture",
+                "presence": "uncertain",
+                "location": "unspecified",
+                "severity": "unspecified",
+                "model_score": 0.0845,
+                "evidence_source": "vision_model"
+            },
+            {
+                "finding": "Nodule",
+                "presence": "uncertain",
+                "location": "unspecified",
+                "severity": "unspecified",
+                "model_score": 0.0708,
+                "evidence_source": "vision_model"
+            }
+        ]
+    },
+    "ground_truth_report": {
+        "study_id": "CXR1122",
+        "parent_images": [
+            {
+                "image_id": "CXR1122_IM-0080-1001-0001",
+                "caption": "Chest radiograph examination 2 views performed XXXX, XXXX at XXXX."
+            },
+            {
+                "image_id": "CXR1122_IM-0080-1001-0002",
+                "caption": "Chest radiograph examination 2 views performed XXXX, XXXX at XXXX."
+            },
+            {
+                "image_id": "CXR1122_IM-0080-2001",
+                "caption": "Chest radiograph examination 2 views performed XXXX, XXXX at XXXX."
+            }
+        ],
+        "sections": {
+            "findings": "The cardiomediastinal silhouette is within normal limits for appearance. No focal areas of pulmonary consolidation. No pneumothorax. No pleural effusion. The thoracic spine appears intact.",
+            "impression": "1. No acute intrathoracic abnormality.",
+            "indication": "XXXX-year-old XXXX with suspected pneumothorax.",
+            "comparison": "None."
+        },
+        "ground_truth_findings": [
+            {
+                "finding": "Pneumothorax",
+                "presence": "no",
+                "location": "unspecified",
+                "severity": "unspecified",
+                "evidence_source": "report_ground_truth",
+                "matched_text": "No pneumothorax"
+            },
+            {
+                "finding": "Effusion",
+                "presence": "no",
+                "location": "unspecified",
+                "severity": "unspecified",
+                "evidence_source": "report_ground_truth",
+                "matched_text": "No pleural effusion"
+            },
+            {
+                "finding": "Consolidation",
+                "presence": "no",
+                "location": "unspecified",
+                "severity": "unspecified",
+                "evidence_source": "report_ground_truth",
+                "matched_text": "No focal areas of pulmonary consolidation"
+            },
+            {
+                "finding": "Fracture",
+                "presence": "no",
+                "location": "unspecified",
+                "severity": "unspecified",
+                "evidence_source": "report_ground_truth",
+                "matched_text": "intact"
+            }
+        ]
+    },
+    "evaluation_metrics": {
+        "study_id": "CXR1122",
+        "total_qa_evaluated": 7,
+        "total_ground_truth_findings": 4,
+        "matched_findings_count": 4,
+        "matched_findings_list": [
+            "Consolidation",
+            "Fracture",
+            "Effusion",
+            "Pneumothorax"
+        ],
+        "missed_findings_count": 0,
+        "missed_findings_list": [],
+        "extra_findings_count": 3,
+        "extra_findings_list": [
+            "Nodule",
+            "Cardiomegaly",
+            "Infiltration"
+        ],
+        "presence_matches": 0,
+        "presence_mismatches": 4,
+        "presence_agreement_rate": 0.0,
+        "comparison_details": [
+            {
+                "finding": "Nodule",
+                "status": "evaluated_not_in_report",
+                "qa_presence": "uncertain",
+                "gt_presence": null,
+                "presence_agreement": false,
+                "qa_location": "unspecified",
+                "qa_severity": "unspecified",
+                "qa_model_score": 0.0708
+            },
+            {
+                "finding": "Consolidation",
+                "status": "matched_evaluation",
+                "qa_presence": "uncertain",
+                "gt_presence": "no",
+                "presence_agreement": false,
+                "qa_location": "unspecified",
+                "gt_location": "unspecified",
+                "qa_severity": "unspecified",
+                "gt_severity": "unspecified",
+                "qa_model_score": 0.2052
+            },
+            {
+                "finding": "Fracture",
+                "status": "matched_evaluation",
+                "qa_presence": "uncertain",
+                "gt_presence": "no",
+                "presence_agreement": false,
+                "qa_location": "unspecified",
+                "gt_location": "unspecified",
+                "qa_severity": "unspecified",
+                "gt_severity": "unspecified",
+                "qa_model_score": 0.0845
+            },
+            {
+                "finding": "Cardiomegaly",
+                "status": "evaluated_not_in_report",
+                "qa_presence": "uncertain",
+                "gt_presence": null,
+                "presence_agreement": false,
+                "qa_location": "unspecified",
+                "qa_severity": "unspecified",
+                "qa_model_score": 0.0015
+            },
+            {
+                "finding": "Infiltration",
+                "status": "evaluated_not_in_report",
+                "qa_presence": "uncertain",
+                "gt_presence": null,
+                "presence_agreement": false,
+                "qa_location": "unspecified",
+                "qa_severity": "unspecified",
+                "qa_model_score": 0.475
+            },
+            {
+                "finding": "Effusion",
+                "status": "matched_evaluation",
+                "qa_presence": "uncertain",
+                "gt_presence": "no",
+                "presence_agreement": false,
+                "qa_location": "unspecified",
+                "gt_location": "unspecified",
+                "qa_severity": "unspecified",
+                "gt_severity": "unspecified",
+                "qa_model_score": 0.0423
+            },
+            {
+                "finding": "Pneumothorax",
+                "status": "matched_evaluation",
+                "qa_presence": "uncertain",
+                "gt_presence": "no",
+                "presence_agreement": false,
+                "qa_location": "unspecified",
+                "gt_location": "unspecified",
+                "qa_severity": "unspecified",
+                "gt_severity": "unspecified",
+                "qa_model_score": 0.2193
+            }
+        ],
+        "evaluation_notes": "Presence agreement measures exact consistency between QA finding presence and rule-based report ground truth. Model scores are candidate triggers, not clinical facts."
+    }
+}

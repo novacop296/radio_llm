@@ -1,0 +1,146 @@
+{
+    "total_reports": 3955,
+    "total_with_findings": 3425,
+    "total_with_impression": 3921,
+    "total_with_both": 3419,
+    "total_with_indication": 3865,
+    "total_with_comparison": 3333,
+    "avg_findings_words": 31.64817518248175,
+    "avg_impression_words": 10.668706962509564,
+    "pathology_positive_counts": {
+        "Lung Opacity": 835,
+        "Effusion": 688,
+        "Nodule": 562,
+        "Atelectasis": 539,
+        "Pneumothorax": 461,
+        "Cardiomegaly": 366,
+        "Consolidation": 330,
+        "Emphysema": 204,
+        "Edema": 162,
+        "Fracture": 156,
+        "Infiltration": 131,
+        "Pneumonia": 116,
+        "Fibrosis": 110,
+        "Mass": 108,
+        "Hernia": 71,
+        "Pleural_Thickening": 46,
+        "Lung Lesion": 16,
+        "Enlarged Cardiomediastinum": 2
+    },
+    "pathology_negated_counts": {
+        "Pneumothorax": 2276,
+        "Effusion": 1916,
+        "Consolidation": 1481,
+        "Infiltration": 334,
+        "Edema": 285,
+        "Lung Opacity": 273,
+        "Pneumonia": 177,
+        "Nodule": 143,
+        "Fracture": 128,
+        "Mass": 112,
+        "Cardiomegaly": 65,
+        "Enlarged Cardiomediastinum": 35,
+        "Emphysema": 18,
+        "Atelectasis": 15,
+        "Hernia": 10,
+        "Fibrosis": 7,
+        "Lung Lesion": 3,
+        "Pleural_Thickening": 2
+    },
+    "additional_concept_counts": {
+        "Normal / Clear Lungs": 2625,
+        "Degenerative Spine / Scoliosis / Bone Disease": 645,
+        "Calcified Granuloma / Calcification": 590,
+        "Support Devices / Hardware / Post-Surgical": 330,
+        "Granulomatous Disease": 100,
+        "Aortic Tortuosity / Atherosclerosis": 92
+    },
+    "location_counts": {
+        "Mediastinum / Hilum": 1728,
+        "Right": 906,
+        "Left": 802,
+        "Lower Lobe / Basilar / Base": 611,
+        "Bilateral": 362,
+        "Upper Lobe / Apical": 266,
+        "Middle Lobe / Lingula": 62
+    },
+    "severity_counts": {
+        "Small / Minimal / Trace": 825,
+        "Large / Severe": 558,
+        "Moderate": 77
+    },
+    "case_studies": {
+        "normal": [
+            {
+                "study_id": "CXR1",
+                "findings": "The cardiac silhouette and mediastinum size are within normal limits. There is no pulmonary edema. There is no focal consolidation. There are no XXXX of a pleural effusion. There is no evidence of pneumothorax.",
+                "impression": "Normal chest x-XXXX."
+            },
+            {
+                "study_id": "CXR1002",
+                "findings": "",
+                "impression": "Status post left mastectomy. Heart size normal. Lungs are clear."
+            },
+            {
+                "study_id": "CXR1004",
+                "findings": "The heart, pulmonary XXXX and mediastinum are within normal limits. There is no pleural effusion or pneumothorax. There is no focal air space opacity to suggest a pneumonia. The aorta is tortuous and ectatic. There are degenerative changes of the acromioclavicular joints. There degenerative changes of the spine. There is an IVC XXXX identified.",
+                "impression": "No acute cardiopulmonary disease."
+            }
+        ],
+        "single_finding": [
+            {
+                "study_id": "CXR1001",
+                "finding": "Fibrosis",
+                "findings": "Interstitial markings are diffusely prominent throughout both lungs. Heart size is normal. Pulmonary XXXX normal.",
+                "impression": "Diffuse fibrosis. No visible focal acute disease."
+            },
+            {
+                "study_id": "CXR1008",
+                "finding": "Pneumothorax",
+                "findings": "Heart size and mediastinal contours are normal in appearance. No consolidative airspace opacities. No radiographic evidence of pleural effusion or pneumothorax. Visualized osseous structures appear intact.",
+                "impression": "No acute cardiopulmonary abnormality."
+            },
+            {
+                "study_id": "CXR1014",
+                "finding": "Cardiomegaly",
+                "findings": "",
+                "impression": "Slightly enlarged heart. No effusions. No edema. No nodules or masses. Aortic XXXX calcification. Aortic XXXX is normal size. Lungs are clear."
+            }
+        ],
+        "multiple_findings": [
+            {
+                "study_id": "CXR10",
+                "findings_list": [
+                    "Pneumothorax",
+                    "Effusion",
+                    "Nodule"
+                ],
+                "findings": "The cardiomediastinal silhouette is within normal limits for size and contour. The lungs are normally inflated without evidence of focal airspace disease, pleural effusion, or pneumothorax. Stable calcified granuloma within the right upper lung. No acute bone abnormality..",
+                "impression": "No acute cardiopulmonary process."
+            },
+            {
+                "study_id": "CXR1000",
+                "findings_list": [
+                    "Atelectasis",
+                    "Consolidation",
+                    "Mass",
+                    "Lung Lesion",
+                    "Lung Opacity"
+                ],
+                "findings": "There is XXXX increased opacity within the right upper lobe with possible mass and associated area of atelectasis or focal consolidation. The cardiac silhouette is within normal limits. XXXX opacity in the left midlung overlying the posterior left 5th rib may represent focal airspace disease. No pleural effusion or pneumothorax. No acute bone abnormality.",
+                "impression": "1. Increased opacity in the right upper lobe with XXXX associated atelectasis may represent focal consolidation or mass lesion with atelectasis. Recommend chest CT for further evaluation. 2. XXXX opacity overlying the left 5th rib may represent focal airspace disease."
+            },
+            {
+                "study_id": "CXR1003",
+                "findings_list": [
+                    "Atelectasis",
+                    "Nodule",
+                    "Hernia",
+                    "Lung Opacity"
+                ],
+                "findings": "Heart size and pulmonary vascularity appear within normal limits. Retrocardiac soft tissue density is present. There appears to be air within this which could suggest that this represents a hiatal hernia. Vascular calcification is noted. Calcified granuloma is seen. There has been interval development of bandlike opacity in the left lung base. This may represent atelectasis. No pneumothorax or pleural effusion is seen. Osteopenia is present in the spine.",
+                "impression": "1. Retrocardiac soft tissue density. The appearance suggests hiatal hernia. 2. XXXX left base bandlike opacity. The appearance suggests atelectasis."
+            }
+        ]
+    }
+}

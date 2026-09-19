@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "StructuredRadiologyReportSchema",
+  "description": "JSON schema for structured radiology reports generated from the Evidence Layer.",
+  "type": "object",
+  "required": [
+    "study_id",
+    "image_id",
+    "view",
+    "findings",
+    "impression"
+  ],
+  "properties": {
+    "study_id": {
+      "type": "string",
+      "description": "Identifier of the imaging study (e.g., CXR1122)."
+    },
+    "image_id": {
+      "type": "string",
+      "description": "Identifier of the specific radiograph (e.g., CXR1122_IM-0080-1001-0002)."
+    },
+    "view": {
+      "type": "string",
+      "enum": ["Frontal", "Lateral", "Unspecified"],
+      "description": "Projection/view of the radiograph."
+    },
+    "findings": {
+      "type": "array",
+      "description": "List of structured finding statements generated strictly from input evidence.",
+      "items": {
+        "type": "object",
+        "required": [
+          "finding",
+          "statement",
+          "status"
+        ],
+        "properties": {
+          "finding": {
+            "type": "string",
+            "description": "Standardized name of the radiological finding."
+          },
+          "statement": {
+            "type": "string",
+            "description": "Clear clinical descriptive sentence for the FINDINGS section."
+          },
+          "status": {
+            "type": "string",
+            "enum": ["supported", "possible", "uncertain", "absent"],
+            "description": "Evidence status matching input evidence."
+          },
+          "location": {
+            "type": "string",
+            "description": "Location (must match input evidence or remain 'unspecified')."
+          },
+          "severity": {
+            "type": "string",
+            "description": "Severity (must match input evidence or remain 'unspecified')."
+          }
+        }
+      }
+    },
+    "impression": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "description": "List of concise diagnostic summary points for the IMPRESSION section."
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "provider": { "type": "string" },
+        "model": { "type": "string" },
+        "generated_at": { "type": "string" }
+      }
+    }
+  }
+}

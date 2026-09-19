@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "VisualGroundingSchema",
+  "description": "JSON schema for visual grounding and Grad-CAM activation artifacts in chest X-ray report generation.",
+  "type": "object",
+  "required": [
+    "study_id",
+    "image_id",
+    "view"
+  ],
+  "properties": {
+    "study_id": {
+      "type": "string",
+      "description": "Identifier of the imaging study (e.g., CXR1122)."
+    },
+    "image_id": {
+      "type": "string",
+      "description": "Identifier of the specific radiograph (e.g., CXR1122_IM-0080-1001-0002)."
+    },
+    "view": {
+      "type": "string",
+      "enum": ["Frontal", "Lateral", "PA", "AP", "Unspecified"],
+      "description": "Projection/view of the radiograph."
+    },
+    "disclaimer": {
+      "type": "string",
+      "description": "Explanatory disclaimer that visual attribution maps are for research explainability, not clinical diagnosis."
+    },
+    "original_image_path": {
+      "type": "string",
+      "description": "Path to preserved original radiograph image."
+    },
+    "groundings": {
+      "type": "array",
+      "description": "List of visual grounding entries linked to individual findings.",
+      "items": { "$ref": "#/definitions/GroundingEntry" }
+    },
+    "grounding_records": {
+      "type": "array",
+      "description": "List of visual grounding entries linked to individual findings (alias).",
+      "items": { "$ref": "#/definitions/GroundingEntry" }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "model": { "type": "string" },
+        "generated_at": { "type": "string" },
+        "disclaimer": { "type": "string" }
+      }
+    }
+  },
+  "definitions": {
+    "GroundingEntry": {
+      "type": "object",
+      "required": [
+        "finding",
+        "model_score",
+        "target_layer",
+        "heatmap_path",
+        "overlay_path"
+      ],
+      "properties": {
+        "finding": {
+          "type": "string",
+          "description": "Name of the target DenseNet-121 pathology."
+        },
+        "model_score": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Raw vision model score for this pathology (not clinical confidence)."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["supported", "possible", "uncertain", "absent"],
+          "description": "Evidence status from Evidence Layer (never upgraded by grounding)."
+        },
+        "method": {
+          "type": "string",
+          "enum": ["grad_cam"],
+          "description": "Explainability method used."
+        },
+        "explanation_type": {
+          "type": "string",
+          "enum": ["grad_cam"],
+          "description": "Explainability type used."
+        },
+        "target_layer": {
+          "type": "string",
+          "description": "Exact PyTorch module layer where feature maps and gradients were tapped (e.g., model.features.norm5)."
+        },
+        "activation_shape": {
+          "type": "array",
+          "items": { "type": "integer" },
+          "description": "Spatial dimensions of the convolutional feature map before interpolation (e.g., [7, 7])."
+        },
+        "heatmap_shape": {
+          "type": "array",
+          "items": { "type": "integer" },
+          "description": "Spatial dimensions of the upsampled heatmap (e.g., [512, 624])."
+        },
+        "normalization": {
+          "type": "string",
+          "enum": ["minmax_0_1"],
+          "description": "Normalization technique applied to the raw activation map."
+        },
+        "heatmap_path": {
+          "type": "string",
+          "description": "Path to saved colormapped Grad-CAM heatmap PNG."
+        },
+        "overlay_path": {
+          "type": "string",
+          "description": "Path to saved heatmap-radiograph overlay PNG."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Explanatory disclaimer (model attention pattern, not clinical localization)."
+        }
+      }
+    }
+  }
+}

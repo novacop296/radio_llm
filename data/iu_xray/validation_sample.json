@@ -1,0 +1,7 @@
+{
+    "study_id": "CXR1122",
+    "image_id": "CXR1122_IM-0080-1001-0002",
+    "image_path": "data\\iu_xray\\images\\CXR1122_IM-0080-1001-0002.png",
+    "view": "Frontal",
+    "report_path": "data\\iu_xray\\reports\\ecgen-radiology\\1122.xml"
+}

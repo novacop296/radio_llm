@@ -1,0 +1,83 @@
+# ==============================================================================
+# Git Ignore Configuration for Explainable Radiology Report Generation
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Python Virtual Environments
+# ------------------------------------------------------------------------------
+venv/
+**/venv/
+.venv/
+env/
+ENV/
+
+# ------------------------------------------------------------------------------
+# Python Bytecode, Caches & Coverage
+# ------------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+
+# ------------------------------------------------------------------------------
+# Environment Variables & Secrets
+# ------------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# ------------------------------------------------------------------------------
+# IDE & Operating System Files
+# ------------------------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ------------------------------------------------------------------------------
+# Logs & Temporary Scratch Files
+# ------------------------------------------------------------------------------
+*.log
+*.tmp
+*.bak
+*.swp
+scratch/
+
+# ------------------------------------------------------------------------------
+# Large Binary Datasets & Archives
+# (Download separately via scripts/download_iu_xray.py)
+# ------------------------------------------------------------------------------
+data/iu_xray/images/
+data/iu_xray/reports/
+data/iu_xray/archives/
+data/iu_xray/visual_grounding_test_tmp/
+data/iu_xray/grounding/*.png
+data/iu_xray/visual_grounding/*.png
+
+# Preserve data directory structure and small JSON metadata/schema fixtures
+!data/.gitkeep
+!data/README.md
+!data/iu_xray/*.json
+!data/reviewer_annotations/
+data/reviewer_annotations/*.json
+
+# ------------------------------------------------------------------------------
+# Model Weights & Large Checkpoint Binaries
+# (TorchXRayVision downloads weights to ~/.torchxrayvision/models_data)
+# ------------------------------------------------------------------------------
+*.pt
+*.pth
+*.bin
+*.onnx
+*.safetensors
+models/weights/
+backend/test_xray.jpg
+backend/test_features.pt

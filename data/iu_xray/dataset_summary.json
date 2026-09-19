@@ -1,0 +1,18 @@
+{
+    "dataset_name": "Indiana University Chest X-ray Collection (Open-i / NLM)",
+    "source_url": "https://openi.nlm.nih.gov/imgs/collections/",
+    "total_images": 1312,
+    "total_reports": 3955,
+    "reports_with_findings": 3425,
+    "reports_with_impression": 3921,
+    "reports_with_findings_and_impression": 3419,
+    "studies_with_multiple_images": 3405,
+    "frontal_images": 263,
+    "lateral_images": 6579,
+    "image_formats": [
+        "PNG"
+    ],
+    "report_format": "XML (NLM ecgen-radiology schema)",
+    "pairing_method": "XML <parentImage id='<image_id>'> matches <image_id>.png located in images/",
+    "matched_image_report_pairs": 1312
+}

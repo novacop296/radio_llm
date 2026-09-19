@@ -1,0 +1,185 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RadiologyEvidenceAndLLMInputSchema",
+  "description": "JSON schema for the Evidence Layer and safe LLM Input Package in chest X-ray report generation.",
+  "type": "object",
+  "definitions": {
+    "EvidenceFinding": {
+      "type": "object",
+      "required": [
+        "finding",
+        "status",
+        "model_score",
+        "location",
+        "severity",
+        "evidence_sources"
+      ],
+      "properties": {
+        "finding": {
+          "type": "string",
+          "description": "Standardized name of the radiological finding."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["supported", "possible", "uncertain", "absent"],
+          "description": "Strict evidence status (supported, possible, uncertain, absent)."
+        },
+        "model_score": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Raw model activation score from vision backbone (not clinical confidence)."
+        },
+        "location": {
+          "type": "string",
+          "enum": [
+            "right",
+            "left",
+            "bilateral",
+            "right_upper_lobe",
+            "right_middle_lobe",
+            "right_lower_lobe",
+            "left_upper_lobe",
+            "left_lower_lobe",
+            "basilar",
+            "apical",
+            "retrocardiac",
+            "mediastinum",
+            "diffuse",
+            "unspecified"
+          ],
+          "description": "Anatomical location or lateralization (unspecified unless backed by evidence)."
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "small",
+            "minimal",
+            "moderate",
+            "large",
+            "mild",
+            "severe",
+            "trace",
+            "unspecified"
+          ],
+          "description": "Severity or extent descriptor (unspecified unless backed by evidence)."
+        },
+        "evidence_sources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "vision_model",
+              "diagnostic_qa",
+              "rule_derived",
+              "grounding_module",
+              "report_ground_truth"
+            ]
+          },
+          "minItems": 1,
+          "description": "List of evidence provenance sources."
+        },
+        "evidence_notes": {
+          "type": "string",
+          "description": "Optional explanatory notes on provenance."
+        }
+      }
+    },
+    "LLMInputEvidenceFinding": {
+      "type": "object",
+      "required": [
+        "finding",
+        "status",
+        "model_score",
+        "location",
+        "severity"
+      ],
+      "properties": {
+        "finding": {
+          "type": "string",
+          "description": "Standardized name of the radiological finding."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["supported", "possible", "uncertain", "absent"],
+          "description": "Strict evidence status."
+        },
+        "model_score": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Raw model activation score."
+        },
+        "location": {
+          "type": "string",
+          "description": "Location (unspecified unless evidenced)."
+        },
+        "severity": {
+          "type": "string",
+          "description": "Severity (unspecified unless evidenced)."
+        }
+      }
+    },
+    "LLMInputPackage": {
+      "type": "object",
+      "required": [
+        "task",
+        "study",
+        "evidence",
+        "constraints"
+      ],
+      "properties": {
+        "task": {
+          "type": "string",
+          "enum": ["radiology_report_generation"]
+        },
+        "study": {
+          "type": "object",
+          "required": ["study_id", "image_id", "view"],
+          "properties": {
+            "study_id": { "type": "string" },
+            "image_id": { "type": "string" },
+            "view": { "type": "string" }
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/LLMInputEvidenceFinding" }
+        },
+        "constraints": {
+          "type": "object",
+          "required": [
+            "do_not_invent_findings",
+            "do_not_invent_location",
+            "do_not_invent_severity",
+            "preserve_uncertainty"
+          ],
+          "properties": {
+            "do_not_invent_findings": { "type": "boolean" },
+            "do_not_invent_location": { "type": "boolean" },
+            "do_not_invent_severity": { "type": "boolean" },
+            "preserve_uncertainty": { "type": "boolean" }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "study_id",
+    "image_id",
+    "view",
+    "findings"
+  ],
+  "properties": {
+    "study_id": { "type": "string" },
+    "image_id": { "type": "string" },
+    "view": { "type": "string" },
+    "findings": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/EvidenceFinding" }
+    },
+    "llm_input_package": {
+      "$ref": "#/definitions/LLMInputPackage"
+    }
+  }
+}

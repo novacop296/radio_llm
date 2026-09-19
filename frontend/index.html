@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM-Assisted Explainable Radiology Research Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="logo-badge">
+        <span class="logo-icon">🩻</span>
+        <div class="logo-text">
+          <h1>Explainable Radiology Report Generation</h1>
+          <span class="subtitle">Diagnostic Questioning & Visual Attribution Research Prototype (Phase 1.1)</span>
+        </div>
+      </div>
+    </div>
+    <div class="header-right">
+      <!-- Pipeline Status Summary Widget -->
+      <div class="pipeline-status-widget" id="pipelineStatusWidget">
+        <div class="pipeline-status-title">PIPELINE STATUS</div>
+        <div class="pipeline-status-steps">
+          <span class="p-step active" title="Vision Backbone (DenseNet-121)">✓ Vision</span>
+          <span class="p-step active" title="Diagnostic QA Engine">✓ QA</span>
+          <span class="p-step active" title="Evidence Layer Status">✓ Evidence</span>
+          <span class="p-step active" title="Grad-CAM Visual Grounding">✓ Grounding</span>
+          <span class="p-step active" title="LLM Report Generation">✓ LLM</span>
+          <span class="p-step active" title="Safety & Invariant Validator">✓ Validation</span>
+        </div>
+        <div class="pipeline-violations" id="pipelineViolationsText">Safety checks: 0 violations</div>
+      </div>
+
+      <!-- Multi-Study Selector & Search -->
+      <div class="study-selector-container">
+        <label for="studySelect">Study:</label>
+        <select id="studySelect" class="study-select">
+          <option value="CXR1122" selected>CXR1122 (IU X-Ray)</option>
+        </select>
+        <input type="text" id="studySearchInput" class="study-search-input" placeholder="Search study ID...">
+        <select id="studyFilterSelect" class="study-filter-select">
+          <option value="all">All Studies</option>
+          <option value="validated" selected>Validated Artifacts</option>
+          <option value="dual_view">Multi-View</option>
+        </select>
+        <button id="batchModalBtn" class="btn btn-sm btn-secondary" title="Open Batch Processing Runner">Batch Runner</button>
+      </div>
+
+      <div class="research-badge" title="For research explainability; not for clinical diagnostic decision-making.">
+        <span class="pulse-dot"></span> Research Prototype — Not for Clinical Diagnosis
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Grid -->
+  <main class="dashboard-grid">
+
+    <!-- Column 1: Radiograph Viewer (Single & Dual-View) -->
+    <section class="panel viewer-panel" aria-label="Radiograph Viewer">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <h2>Radiograph & Visual Attribution</h2>
+          <span class="info-tag" id="viewTag">Frontal View</span>
+          <span class="badge badge-neutral" id="dualViewBadge" style="display: none;">Dual-View</span>
+        </div>
+        <div class="viewer-actions">
+          <div class="sync-toggle-container" id="syncToggleContainer" style="display: none;">
+            <label class="switch" title="Synchronize pan, zoom, and fit across both views">
+              <input type="checkbox" id="syncToggle" checked>
+              <span class="slider round"></span>
+            </label>
+            <span class="sync-label">SYNC VIEWS</span>
+          </div>
+          <button id="resetZoomBtn" class="btn btn-sm btn-secondary" title="Reset Zoom">Fit View</button>
+          <button id="zoomInBtn" class="btn btn-sm btn-secondary" title="Zoom In">+</button>
+          <button id="zoomOutBtn" class="btn btn-sm btn-secondary" title="Zoom Out">−</button>
+        </div>
+      </div>
+
+      <!-- Prominent Attribution & Safety Notice -->
+      <div class="attribution-warning-banner">
+        <div class="warning-header">
+          <span class="warning-icon">⚠️</span>
+          <strong>VISUAL ATTRIBUTION — NOT LESION LOCALIZATION</strong>
+        </div>
+        <p class="warning-text">
+          Grad-CAM highlights neural-network feature activation patterns. It is not a validated lesion boundary, segmentation mask, or definitive anatomical localization.
+        </p>
+      </div>
+
+      <!-- Viewer Toolbar -->
+      <div class="viewer-toolbar">
+        <div class="mode-toggle-group">
+          <button class="mode-btn active" data-mode="overlay">X-Ray + Grad-CAM Attribution</button>
+          <button class="mode-btn" data-mode="original">Original X-Ray</button>
+          <button class="mode-btn" data-mode="heatmap">Grad-CAM Attribution</button>
+        </div>
+        <div class="opacity-control" id="opacityControl">
+          <label for="opacitySlider">Attribution Opacity:</label>
+          <input type="range" id="opacitySlider" min="0" max="100" value="45">
+          <span id="opacityVal">45%</span>
+        </div>
+      </div>
+
+      <!-- Viewports Grid (Supports Single & Dual-View) -->
+      <div class="viewports-container single-view" id="viewportsContainer">
+        <!-- Primary Viewport -->
+        <div class="image-viewport" id="primaryViewport">
+          <div class="viewport-tag">PRIMARY (FRONTAL)</div>
+          <div class="viewport-content" id="primaryViewportContent">
+            <canvas id="primaryCanvas" width="512" height="624"></canvas>
+            <div id="primaryLoader" class="canvas-loader">Loading radiograph and attribution maps...</div>
+          </div>
+          <!-- Legend Overlay -->
+          <div class="heatmap-legend" id="heatmapLegend">
+            <span class="legend-label">Low Activation</span>
+            <div class="legend-bar"></div>
+            <span class="legend-label">High Activation</span>
+          </div>
+        </div>
+
+        <!-- Secondary Viewport (Dual-View Mode) -->
+        <div class="image-viewport" id="secondaryViewport" style="display: none;">
+          <div class="viewport-tag" id="secondaryViewportTag">SECONDARY (LATERAL)</div>
+          <div class="viewport-content" id="secondaryViewportContent">
+            <canvas id="secondaryCanvas" width="512" height="624"></canvas>
+            <div id="secondaryLoader" class="canvas-loader">Secondary view loading...</div>
+            <div id="secondaryUnavailableNotice" class="attribution-unavailable-notice" style="display: none;">
+              Visual attribution unavailable for this view.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Viewer Footer Note -->
+      <div class="viewer-footer">
+        <span class="disclaimer-note">
+          <strong>Visual Grounding Layer:</strong> DenseNet-121 layer <code id="targetLayerCode">model.features.norm5</code> ($7 \times 7$ feature activation map). Bilinearly interpolated for display.
+        </span>
+      </div>
+    </section>
+
+    <!-- Column 2: Candidate Findings, QA, Reviewer & Traceability -->
+    <section class="panel findings-panel" aria-label="Evidence & Findings">
+      <div class="panel-header">
+        <h2>Model Findings & Evidence</h2>
+        <span class="badge badge-neutral" id="findingsCountBadge">7 Candidates</span>
+      </div>
+
+      <!-- Finding Selector Pills -->
+      <div class="findings-selector" id="findingsSelector">
+        <!-- Injected dynamically via app.js -->
+      </div>
+
+      <!-- Active Finding Detail Card -->
+      <div class="card active-finding-card" id="activeFindingCard">
+        <div class="card-header">
+          <h3 id="activeFindingName">INFILTRATION</h3>
+          <span class="status-badge status-possible" id="activeFindingStatus">POSSIBLE</span>
+        </div>
+        <div class="finding-metrics-grid">
+          <div class="metric-item">
+            <div class="metric-label-row">
+              <span class="metric-label">Model Activation Score</span>
+              <span class="info-tooltip-trigger" title="Model activation score from DenseNet-121. This is not a probability, confidence score, or clinical diagnosis.">ⓘ</span>
+            </div>
+            <span class="metric-val" id="activeModelScore">0.4750</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Evidence Source</span>
+            <span class="metric-val" id="activeEvidenceSource">vision_model</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Location</span>
+            <span class="metric-val" id="activeLocation">unspecified</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Severity</span>
+            <span class="metric-val" id="activeSeverity">unspecified</span>
+          </div>
+        </div>
+
+        <!-- Semantic Interpretation Box -->
+        <div class="status-interpretation-box">
+          <div class="interpretation-title">EVIDENCE STATUS INTERPRETATION:</div>
+          <div class="interpretation-text" id="statusInterpretationText">
+            Model or indirect evidence suggests this finding may warrant review, but it is not independently established.
+          </div>
+        </div>
+      </div>
+
+      <!-- Clinician / Reviewer Annotation System (Phase 1.1) -->
+      <div class="collapsible-section reviewer-section" id="reviewerSection">
+        <button class="collapsible-header" id="reviewerToggleBtn" aria-expanded="true">
+          <span>RESEARCH REVIEWER ANNOTATION</span>
+          <span class="toggle-icon">▼</span>
+        </button>
+        <div class="collapsible-body" id="reviewerBody">
+          <div class="reviewer-form-row">
+            <label for="reviewerStatusSelect">Reviewer Status:</label>
+            <select id="reviewerStatusSelect" class="reviewer-select">
+              <option value="not_reviewed">Not Reviewed</option>
+              <option value="confirmed_present">Confirmed Present</option>
+              <option value="confirmed_absent">Confirmed Absent</option>
+              <option value="uncertain">Uncertain</option>
+            </select>
+          </div>
+
+          <div class="reviewer-form-grid">
+            <div class="reviewer-form-item">
+              <label for="reviewerLocationInput">Location:</label>
+              <input type="text" id="reviewerLocationInput" class="reviewer-input" placeholder="e.g. right_lower_lobe or unspecified">
+            </div>
+            <div class="reviewer-form-item">
+              <label for="reviewerSeveritySelect">Severity:</label>
+              <select id="reviewerSeveritySelect" class="reviewer-select">
+                <option value="unspecified">unspecified</option>
+                <option value="mild">mild</option>
+                <option value="moderate">moderate</option>
+                <option value="severe">severe</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="reviewer-form-row">
+            <label for="reviewerNotesInput">Reviewer Notes / Commentary:</label>
+            <textarea id="reviewerNotesInput" class="reviewer-textarea" rows="2" placeholder="Record research review notes..."></textarea>
+          </div>
+
+          <div class="reviewer-actions-row">
+            <button id="saveReviewBtn" class="btn btn-sm btn-primary">Save Review</button>
+            <button id="clearReviewBtn" class="btn btn-sm btn-secondary">Clear Review</button>
+            <span id="reviewSaveStatus" class="review-save-status"></span>
+          </div>
+
+          <div class="reviewer-disclaimer">
+            <em>Notice: Reviewer annotations are research metadata and do not alter underlying machine evidence or constitute clinical ground truth.</em>
+          </div>
+
+          <!-- Machine Evidence vs Reviewer Comparison Box -->
+          <div class="comparison-card" id="comparisonCard">
+            <div class="comparison-title">MACHINE EVIDENCE vs REVIEWER ANNOTATION</div>
+            <div class="comparison-grid">
+              <div class="comp-col">
+                <span class="comp-label">Machine Status:</span>
+                <span class="status-badge status-possible" id="compMachineStatus">POSSIBLE</span>
+              </div>
+              <div class="comp-col">
+                <span class="comp-label">Reviewer Status:</span>
+                <span class="status-badge status-absent" id="compReviewerStatus">NOT REVIEWED</span>
+              </div>
+            </div>
+            <p class="comp-note">Disagreement between model suggestions and reviewer annotations is expected in exploratory research.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- "Why This Finding?" Pipeline Explanation Section -->
+      <div class="collapsible-section" id="whyFindingSection">
+        <button class="collapsible-header" id="whyFindingToggleBtn" aria-expanded="false">
+          <span>WHY THIS FINDING? (Pipeline Attribution)</span>
+          <span class="toggle-icon">▶</span>
+        </button>
+        <div class="collapsible-body" id="whyFindingBody" style="display: none;">
+          <div class="why-item">
+            <span class="why-label">Model Signal:</span>
+            <span class="why-val" id="whyModelSignal">0.4750 (DenseNet-121 Activation)</span>
+          </div>
+          <div class="why-item">
+            <span class="why-label">Evidence Source:</span>
+            <span class="why-val" id="whyEvidenceSource">vision_model</span>
+          </div>
+          <div class="why-item">
+            <span class="why-label">QA Confirmation:</span>
+            <span class="why-val" id="whyQaState">Presence evaluated as 'uncertain'</span>
+          </div>
+          <div class="why-item">
+            <span class="why-label">Spatial Grounding:</span>
+            <span class="why-val" id="whySpatialGrounding">Available (Grad-CAM on norm5)</span>
+          </div>
+          <div class="why-item">
+            <span class="why-label">Final Evidence Status:</span>
+            <span class="why-val" id="whyFinalStatus">POSSIBLE (Uncertainty preserved)</span>
+          </div>
+          <div class="why-note">
+            <em>Notice: Grad-CAM attribution is available for this finding to explain model attention. This explains pipeline reasoning, not a medical diagnosis.</em>
+          </div>
+        </div>
+      </div>
+
+      <!-- Diagnostic QA Inspection Accordion -->
+      <div class="collapsible-section" id="qaSection">
+        <button class="collapsible-header" id="qaToggleBtn" aria-expanded="false">
+          <span>DIAGNOSTIC QUESTIONING (QA Engine)</span>
+          <span class="toggle-icon">▶</span>
+        </button>
+        <div class="collapsible-body" id="qaQuestionsList" style="display: none;">
+          <!-- Injected dynamically via app.js -->
+        </div>
+      </div>
+
+      <!-- Evidence Traceability Pipeline (6 Steps) -->
+      <div class="traceability-section">
+        <div class="section-title">EVIDENCE TRACEABILITY PIPELINE</div>
+        <div class="traceability-pipeline" id="traceabilityChain">
+          <!-- Injected dynamically via app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Column 3: Generated Structured Report & Validation Status -->
+    <section class="panel report-panel" aria-label="Generated Report">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <h2>GENERATED REPORT</h2>
+          <span class="info-tag">LLM-generated from Evidence Layer</span>
+        </div>
+        <div class="export-actions">
+          <button id="exportJsonBtn" class="btn btn-sm btn-primary">Export JSON</button>
+          <button id="exportTextBtn" class="btn btn-sm btn-secondary">Export Text</button>
+        </div>
+      </div>
+
+      <!-- Human Review & Non-Diagnostic Notice -->
+      <div class="report-warning-banner">
+        <div class="report-warning-heading">RESEARCH OUTPUT — REQUIRES HUMAN REVIEW</div>
+        <div class="report-warning-sub">This report was synthesized from Evidence Layer findings by an LLM prototype. It is not a clinical diagnosis.</div>
+      </div>
+
+      <!-- Report Metadata -->
+      <div class="report-meta">
+        <span><strong>Study ID:</strong> <span id="reportStudyId">CXR1122</span></span>
+        <span><strong>Backbone:</strong> DenseNet-121</span>
+        <span><strong>LLM Generator:</strong> <span id="reportGenerator">mock-radiology-llm</span></span>
+      </div>
+
+      <!-- Structured Report Container -->
+      <div class="report-container">
+        <!-- Findings Section -->
+        <div class="report-section">
+          <div class="section-heading">FINDINGS</div>
+          <div class="findings-list" id="reportFindingsList">
+            <!-- Injected dynamically via app.js -->
+          </div>
+        </div>
+
+        <!-- Impression Section -->
+        <div class="report-section">
+          <div class="section-heading">IMPRESSION</div>
+          <div class="impression-list" id="reportImpressionList">
+            <!-- Injected dynamically via app.js -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Validation & Safety Status -->
+      <div class="validation-status-box">
+        <div class="validation-header">
+          <span>Safety & Schema Invariant Status</span>
+          <span class="status-indicator-pass" id="safetyBadgeStatus">ALL PASS</span>
+        </div>
+        <div class="validation-badges-grid" id="validationBadges">
+          <div class="val-badge"><span class="val-dot pass"></span> Schema Compliance: PASS</div>
+          <div class="val-badge"><span class="val-dot pass"></span> Evidence Traceability: PASS</div>
+          <div class="val-badge"><span class="val-dot pass"></span> Ground-Truth Isolation: PASS</div>
+          <div class="val-badge"><span class="val-dot pass"></span> Weight Immutability: PASS</div>
+          <div class="val-badge val-badge-full"><span class="val-dot neutral"></span> Clinical Validation: NOT PERFORMED (Research Prototype Only)</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Batch Processing Modal Dialog (Phase 1.1) -->
+  <div class="modal-backdrop" id="batchModalBackdrop" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Research Batch Study Runner</h3>
+        <button id="closeBatchModalBtn" class="btn btn-sm btn-secondary">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-desc">
+          Trigger batch study validation across the 6-stage explainable radiology pipeline (Vision $\rightarrow$ QA $\rightarrow$ Evidence $\rightarrow$ Grounding $\rightarrow$ LLM $\rightarrow$ Validation).
+        </p>
+        <div class="modal-form-group">
+          <label for="batchStudyInput">Study IDs (comma separated):</label>
+          <input type="text" id="batchStudyInput" class="reviewer-input" value="CXR1122, CXR1007, CXR1009">
+        </div>
+        <button id="triggerBatchBtn" class="btn btn-primary">Run Batch Verification</button>
+
+        <div class="batch-status-container" id="batchStatusContainer" style="display: none;">
+          <div class="batch-status-header">
+            <span>Job ID: <code id="batchJobId">-</code></span>
+            <span class="status-badge status-possible" id="batchJobStatusBadge">QUEUED</span>
+          </div>
+          <div class="batch-stages-grid" id="batchStagesGrid">
+            <!-- Stage pills injected dynamically -->
+          </div>
+          <div class="batch-log" id="batchLog"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

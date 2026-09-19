@@ -1,0 +1,300 @@
+{
+  "dataset": "Indiana University Chest X-Ray Collection (Open-i / NLM)",
+  "vision_model": "TorchXRayVision DenseNet-121 (densenet121-res224-all)",
+  "total_pathologies_supported": 18,
+  "mappings": {
+    "Atelectasis": {
+      "match_type": "direct",
+      "model_pathology": "Atelectasis",
+      "report_terms": [
+        "atelectasis",
+        "atelectatic changes",
+        "subsegmental atelectasis",
+        "bibasilar atelectasis",
+        "bandlike opacity",
+        "plate-like atelectasis",
+        "collapse"
+      ],
+      "corpus_positive_count": 539,
+      "corpus_negated_count": 15,
+      "clinical_notes": "Frequently observed at lung bases or as linear/bandlike opacities. Highly represented in IU X-Ray reports."
+    },
+    "Consolidation": {
+      "match_type": "direct",
+      "model_pathology": "Consolidation",
+      "report_terms": [
+        "consolidation",
+        "focal consolidation",
+        "airspace disease",
+        "air space disease",
+        "parenchymal consolidation",
+        "air bronchogram"
+      ],
+      "corpus_positive_count": 330,
+      "corpus_negated_count": 1481,
+      "clinical_notes": "Very frequently negated in normal/unremarkable studies ('no focal consolidation')."
+    },
+    "Infiltration": {
+      "match_type": "approximate",
+      "model_pathology": "Infiltration",
+      "report_terms": [
+        "infiltrate",
+        "infiltrates",
+        "infiltrative opacity",
+        "interstitial infiltrate"
+      ],
+      "corpus_positive_count": 131,
+      "corpus_negated_count": 334,
+      "clinical_notes": "Older radiological descriptor often replaced by 'airspace opacity', 'consolidation', or 'interstitial markings'. Frequently negated ('clear of focal infiltrate')."
+    },
+    "Pneumothorax": {
+      "match_type": "direct",
+      "model_pathology": "Pneumothorax",
+      "report_terms": [
+        "pneumothorax",
+        "pneumothoraces",
+        "apical pneumothorax",
+        "tension pneumothorax"
+      ],
+      "corpus_positive_count": 461,
+      "corpus_negated_count": 2276,
+      "clinical_notes": "Critical acute condition. Most commonly mentioned as an explicit negative ('no evidence of pneumothorax') in 57.5% of all reports."
+    },
+    "Edema": {
+      "match_type": "direct",
+      "model_pathology": "Edema",
+      "report_terms": [
+        "pulmonary edema",
+        "edema",
+        "vascular congestion",
+        "interstitial edema",
+        "perihilar haziness",
+        "kerley b lines"
+      ],
+      "corpus_positive_count": 162,
+      "corpus_negated_count": 285,
+      "clinical_notes": "Often paired with heart failure or vascular congestion assessments in elderly cohorts."
+    },
+    "Emphysema": {
+      "match_type": "direct",
+      "model_pathology": "Emphysema",
+      "report_terms": [
+        "emphysema",
+        "pulmonary emphysema",
+        "hyperinflation",
+        "hyperexpansion",
+        "flattened diaphragms",
+        "copd",
+        "chronic obstructive pulmonary disease"
+      ],
+      "corpus_positive_count": 204,
+      "corpus_negated_count": 18,
+      "clinical_notes": "Commonly described via secondary visual signs like hyperinflated lungs or flattened hemidiaphragms."
+    },
+    "Fibrosis": {
+      "match_type": "approximate",
+      "model_pathology": "Fibrosis",
+      "report_terms": [
+        "fibrosis",
+        "fibrotic changes",
+        "interstitial markings",
+        "reticular markings",
+        "honeycombing",
+        "fibronodular scarring"
+      ],
+      "corpus_positive_count": 110,
+      "corpus_negated_count": 7,
+      "clinical_notes": "In reports, often described as 'prominent interstitial markings' or 'apical scarring/fibrotic changes'."
+    },
+    "Effusion": {
+      "match_type": "direct",
+      "model_pathology": "Effusion",
+      "report_terms": [
+        "pleural effusion",
+        "effusion",
+        "blunting of costophrenic angle",
+        "costophrenic sulcus blunting",
+        "fluid overload"
+      ],
+      "corpus_positive_count": 688,
+      "corpus_negated_count": 1916,
+      "clinical_notes": "One of the top findings in the entire dataset. 688 positive cases, and 1,916 negated occurrences ('no pleural effusion')."
+    },
+    "Pneumonia": {
+      "match_type": "approximate",
+      "model_pathology": "Pneumonia",
+      "report_terms": [
+        "pneumonia",
+        "bronchopneumonia",
+        "infectious process",
+        "infectious consolidation"
+      ],
+      "corpus_positive_count": 116,
+      "corpus_negated_count": 177,
+      "clinical_notes": "Pneumonia is a clinical diagnosis; radiologists usually describe visual correlates ('focal consolidation', 'airspace opacity') and mention pneumonia in IMPRESSION as a differential."
+    },
+    "Pleural_Thickening": {
+      "match_type": "approximate",
+      "model_pathology": "Pleural_Thickening",
+      "report_terms": [
+        "pleural thickening",
+        "apical pleural thickening",
+        "apical capping",
+        "pleural plaque",
+        "calcified pleural plaque"
+      ],
+      "corpus_positive_count": 46,
+      "corpus_negated_count": 2,
+      "clinical_notes": "Less frequent in isolation; frequently noted at the apices ('apical capping/scarring')."
+    },
+    "Cardiomegaly": {
+      "match_type": "direct",
+      "model_pathology": "Cardiomegaly",
+      "report_terms": [
+        "cardiomegaly",
+        "cardiac enlargement",
+        "enlarged heart",
+        "prominent cardiac silhouette",
+        "cardiomegaly is mild/moderate"
+      ],
+      "corpus_positive_count": 366,
+      "corpus_negated_count": 65,
+      "clinical_notes": "High positive representation. Also routinely noted as normal ('heart size within normal limits')."
+    },
+    "Nodule": {
+      "match_type": "direct",
+      "model_pathology": "Nodule",
+      "report_terms": [
+        "nodule",
+        "nodules",
+        "pulmonary nodule",
+        "calcified granuloma",
+        "granuloma",
+        "nodular density"
+      ],
+      "corpus_positive_count": 562,
+      "corpus_negated_count": 143,
+      "clinical_notes": "Very high occurrence in IU X-Ray, predominantly due to benign calcified granulomas from endemic fungal exposure (histoplasmosis)."
+    },
+    "Mass": {
+      "match_type": "direct",
+      "model_pathology": "Mass",
+      "report_terms": [
+        "mass",
+        "masses",
+        "lung mass",
+        "hilar mass",
+        "mediastinal mass",
+        "neoplasm",
+        "tumor"
+      ],
+      "corpus_positive_count": 108,
+      "corpus_negated_count": 112,
+      "clinical_notes": "Used for lesions > 3 cm or ill-defined bulky opacities. Frequently followed by recommendation for chest CT."
+    },
+    "Hernia": {
+      "match_type": "direct",
+      "model_pathology": "Hernia",
+      "report_terms": [
+        "hiatal hernia",
+        "hiatus hernia",
+        "retrocardiac density with air-fluid level",
+        "diaphragmatic hernia"
+      ],
+      "corpus_positive_count": 71,
+      "corpus_negated_count": 10,
+      "clinical_notes": "Almost exclusively refers to hiatal hernia presenting as retrocardiac soft tissue mass with or without air."
+    },
+    "Lung Lesion": {
+      "match_type": "approximate",
+      "model_pathology": "Lung Lesion",
+      "report_terms": [
+        "lung lesion",
+        "cavitary lesion",
+        "parenchymal lesion",
+        "focal lesion"
+      ],
+      "corpus_positive_count": 16,
+      "corpus_negated_count": 3,
+      "clinical_notes": "Rare generic term; clinical radiologists prefer specific descriptors ('nodule', 'mass', 'granuloma', 'opacity')."
+    },
+    "Fracture": {
+      "match_type": "direct",
+      "model_pathology": "Fracture",
+      "report_terms": [
+        "fracture",
+        "rib fracture",
+        "clavicle fracture",
+        "healed fracture",
+        "compression fracture",
+        "vertebral fracture"
+      ],
+      "corpus_positive_count": 156,
+      "corpus_negated_count": 128,
+      "clinical_notes": "Commonly relates to rib fractures or osteoporotic spine compression fractures."
+    },
+    "Lung Opacity": {
+      "match_type": "direct",
+      "model_pathology": "Lung Opacity",
+      "report_terms": [
+        "lung opacity",
+        "opacities",
+        "density",
+        "densities",
+        "hazy opacity",
+        "streaky opacity",
+        "airspace opacity",
+        "focal opacity"
+      ],
+      "corpus_positive_count": 835,
+      "corpus_negated_count": 273,
+      "clinical_notes": "The most frequent radiological descriptor in the entire dataset (835 positive instances). Broad superset covering consolidation, atelectasis, and scarring."
+    },
+    "Enlarged Cardiomediastinum": {
+      "match_type": "approximate",
+      "model_pathology": "Enlarged Cardiomediastinum",
+      "report_terms": [
+        "enlarged cardiomediastinum",
+        "mediastinal widening",
+        "prominent mediastinum",
+        "tortuous aorta",
+        "aortic ectasia"
+      ],
+      "corpus_positive_count": 2,
+      "corpus_negated_count": 35,
+      "clinical_notes": "The exact phrase is rare in IU X-Ray; reports routinely differentiate between cardiomegaly and tortuous aorta or mediastinal contour."
+    }
+  },
+  "non_model_frequent_report_concepts": [
+    {
+      "concept": "Normal / Clear Lungs",
+      "report_frequency": 2625,
+      "percentage": "66.4%",
+      "description": "Explicit confirmation of normal pulmonary parenchyma, clear costophrenic angles, and normal cardiomediastinal contour."
+    },
+    {
+      "concept": "Degenerative Spine / Scoliosis / Bone Disease",
+      "report_frequency": 645,
+      "percentage": "16.3%",
+      "description": "Thoracic spondylosis, scoliosis, osteophytes, and degenerative disc disease."
+    },
+    {
+      "concept": "Calcified Granuloma / Calcification",
+      "report_frequency": 590,
+      "percentage": "14.9%",
+      "description": "Benign calcified granulomas (often histoplasmosis) and vascular calcification."
+    },
+    {
+      "concept": "Support Devices / Hardware / Post-Surgical",
+      "report_frequency": 330,
+      "percentage": "8.3%",
+      "description": "Sternotomy wires, surgical clips, pacemakers, leads, and central venous catheters."
+    },
+    {
+      "concept": "Aortic Tortuosity / Atherosclerosis",
+      "report_frequency": 92,
+      "percentage": "2.3%",
+      "description": "Tortuous ectatic thoracic aorta, aortic arch calcification."
+    }
+  ]
+}

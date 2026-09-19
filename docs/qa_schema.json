@@ -1,0 +1,178 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RadiologyDiagnosticQASchema",
+  "description": "JSON schema for structured diagnostic questioning and findings in chest X-ray report generation (Research Prototype).",
+  "type": "object",
+  "required": [
+    "study_id",
+    "vision_candidates",
+    "qa_findings"
+  ],
+  "properties": {
+    "study_id": {
+      "type": "string",
+      "description": "Identifier of the imaging study (e.g., CXR1122)."
+    },
+    "image_id": {
+      "type": "string",
+      "description": "Identifier of the specific radiograph (e.g., CXR1122_IM-0080-1001-0002)."
+    },
+    "view": {
+      "type": "string",
+      "enum": ["Frontal", "Lateral", "Unspecified"],
+      "description": "Projection/view of the radiograph."
+    },
+    "vision_candidates": {
+      "type": "array",
+      "description": "Raw candidate findings and activation scores from the vision model.",
+      "items": {
+        "type": "object",
+        "required": ["finding", "model_score"],
+        "properties": {
+          "finding": {
+            "type": "string",
+            "description": "Target pathology name from the vision model."
+          },
+          "model_score": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "description": "Raw model activation or prediction score (not a clinical probability)."
+          },
+          "is_baseline": {
+            "type": "boolean",
+            "description": "Whether this finding was selected via routine baseline policy."
+          },
+          "selection_reason": {
+            "type": "string",
+            "description": "Reason this finding was selected for QA (e.g., baseline, top_k, threshold)."
+          }
+        }
+      }
+    },
+    "questions_evaluated": {
+      "type": "array",
+      "description": "List of diagnostic questions evaluated for this study.",
+      "items": {
+        "type": "object",
+        "required": [
+          "question_id",
+          "finding",
+          "level",
+          "question_text",
+          "answer"
+        ],
+        "properties": {
+          "question_id": {
+            "type": "string",
+            "description": "Unique identifier for the question (e.g., Q_EFFUSION_PRESENCE)."
+          },
+          "finding": {
+            "type": "string",
+            "description": "The target radiological finding (e.g., Effusion, Pneumothorax)."
+          },
+          "level": {
+            "type": "integer",
+            "enum": [1, 2, 3],
+            "description": "1: Presence, 2: Location, 3: Severity/Characteristics."
+          },
+          "question_text": {
+            "type": "string",
+            "description": "Deterministic diagnostic question text."
+          },
+          "answer": {
+            "type": "string",
+            "description": "Selected structured answer."
+          },
+          "options": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Allowed answer options for this question."
+          },
+          "model_score": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "description": "Associated vision model score."
+          }
+        }
+      }
+    },
+    "qa_findings": {
+      "type": "array",
+      "description": "List of resolved structured radiological findings.",
+      "items": {
+        "type": "object",
+        "required": [
+          "finding",
+          "presence",
+          "location",
+          "severity",
+          "model_score",
+          "evidence_source"
+        ],
+        "properties": {
+          "finding": {
+            "type": "string",
+            "description": "Standardized name of the radiological finding."
+          },
+          "presence": {
+            "type": "string",
+            "enum": ["yes", "no", "uncertain"],
+            "description": "Whether the finding is present, absent/negated, or uncertain."
+          },
+          "location": {
+            "type": "string",
+            "enum": [
+              "right",
+              "left",
+              "bilateral",
+              "right_upper_lobe",
+              "right_middle_lobe",
+              "right_lower_lobe",
+              "left_upper_lobe",
+              "left_lower_lobe",
+              "basilar",
+              "apical",
+              "retrocardiac",
+              "mediastinum",
+              "diffuse",
+              "unspecified"
+            ],
+            "description": "Anatomical location or lateralization (unspecified unless supported)."
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "small",
+              "minimal",
+              "moderate",
+              "large",
+              "mild",
+              "severe",
+              "trace",
+              "unspecified"
+            ],
+            "description": "Severity or extent descriptor (unspecified unless supported)."
+          },
+          "model_score": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "description": "Vision model score/activation (not clinical confidence)."
+          },
+          "evidence_source": {
+            "type": "string",
+            "enum": [
+              "vision_model",
+              "report_ground_truth",
+              "qa_engine",
+              "grounding_module"
+            ],
+            "description": "Source of evidence supporting the finding entry."
+          }
+        }
+      }
+    }
+  }
+}
