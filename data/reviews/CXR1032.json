@@ -1,0 +1,290 @@
+{
+  "study_id": "CXR1032",
+  "review_id": "rev_CXR1032_researcher_01_1790346561",
+  "reviewer": {
+    "id": "researcher_01",
+    "display_name": "Clinical Research Reviewer (researcher_01)",
+    "role": "Research Reviewer"
+  },
+  "status": "in_review",
+  "started_at": "2026-09-25T14:29:21Z",
+  "updated_at": "2026-09-25T14:29:21Z",
+  "completed_at": null,
+  "finding_reviews": [
+    {
+      "finding": "Atelectasis",
+      "machine_status": "possible",
+      "reviewer_status": "not_reviewed",
+      "machine_location": "unspecified",
+      "reviewer_location": "unspecified",
+      "machine_severity": "unspecified",
+      "reviewer_severity": "unspecified",
+      "reviewer_comment": "",
+      "reviewed": false
+    },
+    {
+      "finding": "Infiltration",
+      "machine_status": "possible",
+      "reviewer_status": "not_reviewed",
+      "machine_location": "unspecified",
+      "reviewer_location": "unspecified",
+      "machine_severity": "unspecified",
+      "reviewer_severity": "unspecified",
+      "reviewer_comment": "",
+      "reviewed": false
+    },
+    {
+      "finding": "Fibrosis",
+      "machine_status": "possible",
+      "reviewer_status": "not_reviewed",
+      "machine_location": "unspecified",
+      "reviewer_location": "unspecified",
+      "machine_severity": "unspecified",
+      "reviewer_severity": "unspecified",
+      "reviewer_comment": "",
+      "reviewed": false
+    },
+    {
+      "finding": "Consolidation",
+      "machine_status": "possible",
+      "reviewer_status": "not_reviewed",
+      "machine_location": "unspecified",
+      "reviewer_location": "unspecified",
+      "machine_severity": "unspecified",
+      "reviewer_severity": "unspecified",
+      "reviewer_comment": "",
+      "reviewed": false
+    },
+    {
+      "finding": "Pneumothorax",
+      "machine_status": "possible",
+      "reviewer_status": "not_reviewed",
+      "machine_location": "unspecified",
+      "reviewer_location": "unspecified",
+      "machine_severity": "unspecified",
+      "reviewer_severity": "unspecified",
+      "reviewer_comment": "",
+      "reviewed": false
+    },
+    {
+      "finding": "Cardiomegaly",
+      "machine_status": "possible",
+      "reviewer_status": "not_reviewed",
+      "machine_location": "unspecified",
+      "reviewer_location": "unspecified",
+      "machine_severity": "unspecified",
+      "reviewer_severity": "unspecified",
+      "reviewer_comment": "",
+      "reviewed": false
+    },
+    {
+      "finding": "Effusion",
+      "machine_status": "possible",
+      "reviewer_status": "not_reviewed",
+      "machine_location": "unspecified",
+      "reviewer_location": "unspecified",
+      "machine_severity": "unspecified",
+      "reviewer_severity": "unspecified",
+      "reviewer_comment": "",
+      "reviewed": false
+    }
+  ],
+  "qa_reviews": [
+    {
+      "question_id": "Q_PNEUMOTHORAX_PRESENCE",
+      "finding": "Pneumothorax",
+      "level": 1,
+      "question_text": "Is there radiographic evidence of a pneumothorax?",
+      "machine_answer": "uncertain",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_PNEUMOTHORAX_LOCATION",
+      "finding": "Pneumothorax",
+      "level": 2,
+      "question_text": "Where is the pneumothorax located (e.g., right, left, apical)?",
+      "machine_answer": "unspecified",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_EFFUSION_PRESENCE",
+      "finding": "Effusion",
+      "level": 1,
+      "question_text": "Is there evidence of pleural effusion or costophrenic angle blunting?",
+      "machine_answer": "uncertain",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_EFFUSION_LOCATION",
+      "finding": "Effusion",
+      "level": 2,
+      "question_text": "Where is the pleural effusion located (e.g., right, left, bilateral)?",
+      "machine_answer": "unspecified",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_CONSOLIDATION_PRESENCE",
+      "finding": "Consolidation",
+      "level": 1,
+      "question_text": "Is there focal or dense airspace consolidation?",
+      "machine_answer": "uncertain",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_CONSOLIDATION_LOCATION",
+      "finding": "Consolidation",
+      "level": 2,
+      "question_text": "Which lung lobe or region contains the consolidation?",
+      "machine_answer": "unspecified",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_CARDIOMEGALY_PRESENCE",
+      "finding": "Cardiomegaly",
+      "level": 1,
+      "question_text": "Is cardiomegaly or prominent cardiac enlargement present?",
+      "machine_answer": "uncertain",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_CARDIOMEGALY_LOCATION",
+      "finding": "Cardiomegaly",
+      "level": 2,
+      "question_text": "Is the enlargement generalized or specific to cardiac chambers?",
+      "machine_answer": "unspecified",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_ATELECTASIS_PRESENCE",
+      "finding": "Atelectasis",
+      "level": 1,
+      "question_text": "Is there evidence of linear, bandlike, or lobar atelectasis?",
+      "machine_answer": "uncertain",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_ATELECTASIS_LOCATION",
+      "finding": "Atelectasis",
+      "level": 2,
+      "question_text": "Where is the atelectasis located (e.g., basilar, right_upper_lobe, left_lower_lobe)?",
+      "machine_answer": "unspecified",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_INFILTRATION_PRESENCE",
+      "finding": "Infiltration",
+      "level": 1,
+      "question_text": "Are there infiltrative or hazy airspace opacities?",
+      "machine_answer": "uncertain",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_INFILTRATION_LOCATION",
+      "finding": "Infiltration",
+      "level": 2,
+      "question_text": "Where are the infiltrates distributed (e.g., right, left, bilateral)?",
+      "machine_answer": "unspecified",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_FIBROSIS_PRESENCE",
+      "finding": "Fibrosis",
+      "level": 1,
+      "question_text": "Is there evidence of pulmonary fibrosis, reticular markings, or scarring?",
+      "machine_answer": "uncertain",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_FIBROSIS_LOCATION",
+      "finding": "Fibrosis",
+      "level": 2,
+      "question_text": "Where are the fibrotic markings located (e.g., apical, bibasilar, diffuse)?",
+      "machine_answer": "unspecified",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    }
+  ],
+  "report_review": {
+    "machine_report_locked": true,
+    "final_findings": [
+      {
+        "finding": "Atelectasis",
+        "statement": "Possible atelectasis cannot be excluded; correlation is advised.",
+        "status": "possible",
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Infiltration",
+        "statement": "Possible infiltration cannot be excluded; correlation is advised.",
+        "status": "possible",
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Fibrosis",
+        "statement": "Possible fibrosis cannot be excluded; correlation is advised.",
+        "status": "possible",
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Consolidation",
+        "statement": "Possible consolidation cannot be excluded; correlation is advised.",
+        "status": "possible",
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Pneumothorax",
+        "statement": "Possible pneumothorax cannot be excluded; correlation is advised.",
+        "status": "possible",
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Cardiomegaly",
+        "statement": "Possible cardiomegaly cannot be excluded; correlation is advised.",
+        "status": "possible",
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Effusion",
+        "statement": "Possible effusion cannot be excluded; correlation is advised.",
+        "status": "possible",
+        "location": "unspecified",
+        "severity": "unspecified"
+      }
+    ],
+    "final_impression": [
+      "1. Possible atelectasis, Possible infiltration, Possible fibrosis, Possible consolidation, Possible pneumothorax, Possible cardiomegaly, Possible effusion; recommend clinical correlation."
+    ],
+    "reviewer_comment": "",
+    "finalized": false
+  },
+  "audit_trail": [
+    {
+      "timestamp": "2026-09-25T14:29:21Z",
+      "reviewer_id": "researcher_01",
+      "finding": "*SESSION*",
+      "field": "session_init",
+      "old_value": null,
+      "new_value": "initialized"
+    }
+  ],
+  "disclaimer": "Research Prototype \u2014 Reviewer annotations and finalized reports are research metadata and do not constitute certified clinical ground truth or automated diagnoses."
+}

@@ -1,0 +1,64 @@
+{
+  "study_id": "CXR1122",
+  "image_id": "CXR1122_IM-0080-1001-0002",
+  "view": "Frontal",
+  "findings": [
+    {
+      "finding": "Infiltration",
+      "statement": "Possible infiltration cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Pneumothorax",
+      "statement": "Possible pneumothorax cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Consolidation",
+      "statement": "Possible consolidation cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Fracture",
+      "statement": "Possible fracture cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Nodule",
+      "statement": "Possible nodule cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Effusion",
+      "statement": "Possible effusion cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Cardiomegaly",
+      "statement": "Possible cardiomegaly cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    }
+  ],
+  "impression": [
+    "1. Possible infiltration, Possible pneumothorax, Possible consolidation, Possible fracture, Possible nodule, Possible effusion, Possible cardiomegaly; recommend clinical correlation."
+  ],
+  "metadata": {
+    "provider": "mock",
+    "model": "mock-radiology-llm",
+    "generated_at": "2026-09-24T02:03:39Z"
+  }
+}

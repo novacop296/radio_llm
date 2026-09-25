@@ -1,0 +1,86 @@
+{
+  "counterfactual_id": "CF-CXR1122-1790212135111",
+  "study_id": "CXR1122",
+  "source_view": "PA",
+  "source_image_filename": "CXR1122_IM-0080-1001-0002.png",
+  "created_at": "2026-09-24T01:08:55Z",
+  "created_by": "researcher",
+  "status": "DRAFT",
+  "disclaimer": "RESEARCH USE ONLY. Counterfactual perturbations are controlled computational interventions. Changes in model activation, attribution, QA responses, or generated text do not establish clinical causality, lesion boundaries, diagnostic truth, or clinical effectiveness. Model Activation Score != Clinical Probability | Grad-CAM Attribution != Lesion Localization | Counterfactual Response Change != Clinical Causality.",
+  "perturbation": {
+    "method": "REGION_MASK",
+    "roi": {
+      "x": 50,
+      "y": 50,
+      "width": 60,
+      "height": 60,
+      "norm_x": 0.22,
+      "norm_y": 0.22,
+      "norm_width": 0.27,
+      "norm_height": 0.27
+    },
+    "strength": 1.0,
+    "seed": 42,
+    "is_control_region": false,
+    "control_roi": null,
+    "target_pathology": "Atelectasis",
+    "artifact_hash": null,
+    "parameters": {}
+  },
+  "baseline": {
+    "image_id": "CXR1122_IM-0080-1001-0002.png",
+    "image_path": "C:\\Users\\ankit\\OneDrive\\Desktop\\radio-llm\\data\\iu_xray\\images\\CXR1122_IM-0080-1001-0002.png",
+    "findings": [],
+    "top_findings": [],
+    "timestamp": "2026-09-24T01:08:55Z",
+    "model_checksum": "0fcfaed70646574c",
+    "gradcam_artifacts": {}
+  },
+  "counterfactual": {
+    "image_id": "cf_CF-CXR1122-1790212135111.png",
+    "image_path": "",
+    "findings": [],
+    "top_findings": [],
+    "timestamp": "2026-09-24T01:08:55Z",
+    "model_checksum": "0fcfaed70646574c",
+    "gradcam_artifacts": {}
+  },
+  "finding_deltas": [],
+  "attribution_deltas": [],
+  "qa_impact": [],
+  "report_impact": {
+    "findings_changed": [],
+    "status_changes": [],
+    "statements_added": [],
+    "statements_removed": [],
+    "baseline_summary": "",
+    "counterfactual_summary": "",
+    "impression_changed": false
+  },
+  "reproducibility": {
+    "status": "INCOMPLETE",
+    "fingerprint": "",
+    "source_image_hash": "5df0c7a414936560a001d0ca47954ccf35fd2c5dd8f4cee63564b5f6d7707391",
+    "counterfactual_image_hash": "",
+    "model_checksum": "0fcfaed70646574c",
+    "config_hash": "",
+    "environment": {
+      "python_version": "3.11.9",
+      "torch_version": "2.2.0+cpu",
+      "torchxrayvision_version": "0.0.43",
+      "platform": "Windows-10-10.0.26200-SP0"
+    },
+    "verified_at": "2026-09-24T01:08:55Z"
+  },
+  "audit_trail": [
+    {
+      "timestamp": "2026-09-24T01:08:55Z",
+      "action": "CREATE",
+      "actor": "researcher",
+      "previous_status": null,
+      "new_status": "DRAFT",
+      "details": "Created counterfactual draft experiment for study CXR1122",
+      "record_hash": "43e653d368f81afd"
+    }
+  ]
+}

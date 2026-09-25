@@ -1,0 +1,26 @@
+[
+  {
+    "timestamp": "2026-09-22T01:09:09.900132+00:00",
+    "actor": "runner",
+    "action": "EXPERIMENT_STARTED",
+    "object_type": "EXPERIMENT",
+    "object_id": "exp_20260922_010909_27c56a67",
+    "field": null,
+    "old_value": null,
+    "new_value": null,
+    "metadata": {}
+  },
+  {
+    "timestamp": "2026-09-22T01:09:09.927383+00:00",
+    "actor": "runner",
+    "action": "EXPERIMENT_COMPLETED",
+    "object_type": "EXPERIMENT",
+    "object_id": "exp_20260922_010909_27c56a67",
+    "field": null,
+    "old_value": null,
+    "new_value": null,
+    "metadata": {
+      "evaluation_run_id": "eval_exp_20260922_010909_27c56a67"
+    }
+  }
+]

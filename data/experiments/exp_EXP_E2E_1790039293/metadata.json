@@ -1,0 +1,60 @@
+{
+  "experiment_id": "exp_EXP_E2E_1790039293",
+  "experiment_name": "E2E Baseline Exp",
+  "description": "E2E Baseline Evaluation Exp",
+  "created_at": "2026-09-22T01:08:13Z",
+  "created_by": "researcher",
+  "completed_at": null,
+  "dataset_snapshot_id": "snap_SNAP_E2E_1790039293",
+  "dataset_size": 2,
+  "model_name": "TorchXRayVision DenseNet-121",
+  "model_version": "densenet121-res224-all",
+  "configuration": {
+    "model_name": "TorchXRayVision DenseNet-121",
+    "qa_threshold": 0.15
+  },
+  "configuration_fingerprint": {
+    "model_name": "TorchXRayVision DenseNet-121",
+    "model_version": "densenet121-res224-all",
+    "target_layer": "model.features.norm5",
+    "preprocessing_resolution": [
+      224,
+      224
+    ],
+    "normalization": "minmax_0_1",
+    "device": "cpu",
+    "qa_threshold": 0.15,
+    "qa_top_k": 5,
+    "llm_provider": "mock",
+    "llm_model": "mock-radiology-llm",
+    "fingerprint_sha256": "9908c6fb4542259412c67b58277b95229bceed6b2a9ee5131d61d06acd93696f",
+    "environment_metadata": {
+      "python_version": "3.11.9",
+      "os_platform": "win32"
+    }
+  },
+  "status": "CREATED",
+  "metrics": null,
+  "provenance": {
+    "experiment_id": "exp_EXP_E2E_1790039293",
+    "stages": [
+      {
+        "stage_id": "creation",
+        "stage_name": "Experiment Initialized",
+        "status": "COMPLETED",
+        "timestamp": "2026-09-22T01:08:13Z",
+        "details": {
+          "snapshot_id": "snap_SNAP_E2E_1790039293",
+          "fingerprint": "9908c6fb4542259412c67b58277b95229bceed6b2a9ee5131d61d06acd93696f"
+        }
+      }
+    ]
+  },
+  "validation": {
+    "schema_validation": "PASS",
+    "configuration_validation": "PASS",
+    "snapshot_validation": "PASS",
+    "ground_truth_isolation": "PASS"
+  },
+  "research_disclaimer": "RESEARCH EVALUATION ONLY \u2014 NOT CLINICAL PERFORMANCE. Experiment configurations, metrics, and evaluation summaries are research artifacts. They do not provide clinical diagnostic guarantees or patient-level medical validation."
+}

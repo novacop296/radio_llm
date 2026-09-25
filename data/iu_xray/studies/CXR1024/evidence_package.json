@@ -1,0 +1,142 @@
+{
+  "study_id": "CXR1024",
+  "image_id": "CXR1024_IM-0019-1001",
+  "view": "Frontal",
+  "findings": [
+    {
+      "finding": "Consolidation",
+      "status": "possible",
+      "model_score": 0.467,
+      "location": "unspecified",
+      "severity": "unspecified",
+      "evidence_sources": [
+        "vision_model"
+      ]
+    },
+    {
+      "finding": "Pneumonia",
+      "status": "possible",
+      "model_score": 0.4531,
+      "location": "unspecified",
+      "severity": "unspecified",
+      "evidence_sources": [
+        "vision_model"
+      ]
+    },
+    {
+      "finding": "Infiltration",
+      "status": "possible",
+      "model_score": 0.4441,
+      "location": "unspecified",
+      "severity": "unspecified",
+      "evidence_sources": [
+        "vision_model"
+      ]
+    },
+    {
+      "finding": "Nodule",
+      "status": "possible",
+      "model_score": 0.2233,
+      "location": "unspecified",
+      "severity": "unspecified",
+      "evidence_sources": [
+        "vision_model"
+      ]
+    },
+    {
+      "finding": "Pneumothorax",
+      "status": "possible",
+      "model_score": 0.1567,
+      "location": "unspecified",
+      "severity": "unspecified",
+      "evidence_sources": [
+        "vision_model"
+      ]
+    },
+    {
+      "finding": "Effusion",
+      "status": "possible",
+      "model_score": 0.0112,
+      "location": "unspecified",
+      "severity": "unspecified",
+      "evidence_sources": [
+        "vision_model"
+      ]
+    },
+    {
+      "finding": "Cardiomegaly",
+      "status": "possible",
+      "model_score": 0.001,
+      "location": "unspecified",
+      "severity": "unspecified",
+      "evidence_sources": [
+        "vision_model"
+      ]
+    }
+  ],
+  "llm_input_package": {
+    "task": "radiology_report_generation",
+    "study": {
+      "study_id": "CXR1024",
+      "image_id": "CXR1024_IM-0019-1001",
+      "view": "Frontal"
+    },
+    "evidence": [
+      {
+        "finding": "Consolidation",
+        "status": "possible",
+        "model_score": 0.467,
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Pneumonia",
+        "status": "possible",
+        "model_score": 0.4531,
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Infiltration",
+        "status": "possible",
+        "model_score": 0.4441,
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Nodule",
+        "status": "possible",
+        "model_score": 0.2233,
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Pneumothorax",
+        "status": "possible",
+        "model_score": 0.1567,
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Effusion",
+        "status": "possible",
+        "model_score": 0.0112,
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Cardiomegaly",
+        "status": "possible",
+        "model_score": 0.001,
+        "location": "unspecified",
+        "severity": "unspecified"
+      }
+    ],
+    "constraints": {
+      "do_not_invent_findings": true,
+      "do_not_invent_location": true,
+      "do_not_invent_severity": true,
+      "preserve_uncertainty": true
+    }
+  }
+}

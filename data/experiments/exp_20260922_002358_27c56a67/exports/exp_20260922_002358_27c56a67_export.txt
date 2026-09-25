@@ -1,0 +1,43 @@
+=================================================================
+EXPLAINABLE RADIOLOGY RESEARCH EXPERIMENT EXPORT
+RESEARCH EVALUATION ONLY — NOT CLINICAL PERFORMANCE
+DISCLAIMER: This experiment record contains model configurations,
+research evaluation metrics, and provenance metadata. It is strictly
+non-diagnostic and must not be used for clinical decision-making.
+=================================================================
+EXPERIMENT ID     : exp_20260922_002358_27c56a67
+EXPERIMENT NAME   : DenseNet121_denseblock4_Alternate
+STATUS            : COMPLETED
+CREATED AT        : 2026-09-22T00:23:58Z
+COMPLETED AT      : 2026-09-22T00:23:59Z
+DATASET SNAPSHOT  : snap_20260922_002358_29d96f33 (Size: 1 studies)
+
+CONFIGURATION FINGERPRINT:
+- Model Architecture : TorchXRayVision DenseNet-121
+- Model Version      : densenet121-res224-all
+- Grad-CAM Layer     : model.features.denseblock4
+- QA Threshold / TopK: 0.25 / 5
+- LLM Provider/Model : mock / mock-radiology-llm
+- SHA-256 Fingerprint: 27c56a673986841c67d56d6c90c347c09a4afe316569ef82acd854a8c78de888
+
+RESEARCH EVALUATION METRICS:
+- Review Coverage    : 1/1 reviewed (100.0%)
+- Consensus Coverage : 1 consensus sessions (0 unanimous, 0 majority)
+- Adjudications Req. : 0 studies
+- Cohen's Kappa (N=2): Avg κ = None (N=0)
+- Fleiss' Kappa (N>=3: Avg κ = 1.0 (N=1)
+- Explainability Cov.: 7/7 findings grounded (100.0%)
+
+PIPELINE PROVENANCE STAGES:
+- [COMPLETED   ] Immutable Dataset Snapshot (TS: 2026-09-22T00:23:58Z)
+- [COMPLETED   ] Study Cohort Selection (TS: 2026-09-22T00:23:58Z)
+- [COMPLETED   ] Vision Backbone Model (TS: 2026-09-22T00:23:58Z)
+- [COMPLETED   ] Image Preprocessing & Normalization (TS: 2026-09-22T00:23:58Z)
+- [COMPLETED   ] Diagnostic QA Engine (TS: 2026-09-22T00:23:58Z)
+- [COMPLETED   ] Immutable Evidence Layer (TS: 2026-09-22T00:23:58Z)
+- [COMPLETED   ] Grad-CAM Visual Grounding (TS: 2026-09-22T00:23:58Z)
+- [COMPLETED   ] Independent Human Review Tracking (TS: 2026-09-22T00:23:59Z)
+- [COMPLETED   ] Multi-Reviewer Consensus Synthesis (TS: 2026-09-22T00:23:59Z)
+- [COMPLETED   ] Research Metrics & Inter-Rater Reliability (TS: 2026-09-22T00:23:59Z)
+- [COMPLETED   ] Finalized Reproducible Experiment Artifact (TS: 2026-09-22T00:23:59Z)
+=================================================================

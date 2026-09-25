@@ -1,0 +1,76 @@
+{
+  "experiment_id": "exp_1790038765",
+  "experiment_name": "Exp 1",
+  "name": "Exp 1",
+  "description": "",
+  "model_id": "model_densenet121_txrv",
+  "dataset_version_id": "snap_20260922_005925_29d96f33",
+  "snapshot_id": "snap_20260922_005925_29d96f33",
+  "evaluation_dataset_id": "eval_ds_default",
+  "methodology": "standard_qa_evidence_evaluation",
+  "preprocessing": {
+    "resize": [
+      224,
+      224
+    ],
+    "normalization": "txrv_rescale_minmax_to_neg1024_pos1024"
+  },
+  "inference_configuration": {
+    "threshold": 0.15,
+    "top_k": 5
+  },
+  "grounding_configuration": {
+    "target_layer": "model.features.norm5"
+  },
+  "report_configuration": {
+    "llm_provider": "mock",
+    "llm_model": "mock-radiology-llm"
+  },
+  "random_seed": 42,
+  "software_versions": {
+    "python": "3.11.9",
+    "platform": "win32"
+  },
+  "fingerprint_sha256": "eb31455221d65839401cd5b7be773f59080744b70cdfe4207b3d147570b6563a",
+  "configuration": {
+    "fingerprint_sha256": "46608df4dcde583b528697f71a920470062b36fe611eb10769f84380ed837f2a",
+    "model_name": "TorchXRayVision DenseNet-121",
+    "model_version": "densenet121-res224-all",
+    "target_layer": "model.features.norm5",
+    "preprocessing_resolution": [
+      224,
+      224
+    ],
+    "normalization": "txrv_rescale_minmax_to_neg1024_pos1024",
+    "device": "cpu",
+    "qa_threshold": 0.15,
+    "qa_top_k": 5,
+    "llm_provider": "mock",
+    "llm_model": "mock-radiology-llm",
+    "environment_metadata": {
+      "python_version": "3.11.9",
+      "platform": "win32"
+    }
+  },
+  "status": "REGISTERED",
+  "created_at": "2026-09-22T00:59:25.135362+00:00",
+  "started_at": null,
+  "completed_at": null,
+  "created_by": "researcher",
+  "evaluation_run_id": null,
+  "metrics": null,
+  "statistics": null,
+  "error_analysis": null,
+  "provenance_trail": [
+    {
+      "stage": "EXPERIMENT_REGISTRATION",
+      "timestamp": "2026-09-22T00:59:25.135362+00:00",
+      "actor": "researcher",
+      "status": "REGISTERED",
+      "details": "Registered experiment with model=model_densenet121_txrv, dataset_version=snap_20260922_005925_29d96f33"
+    }
+  ],
+  "schema_version": "1.7.0",
+  "metadata": {},
+  "disclaimer": "RESEARCH EXPERIMENT RECORD \u2014 NOT CLINICAL PERFORMANCE EVIDENCE. Experiment configurations, metrics, and evaluation summaries are research artifacts. They do not provide clinical diagnostic guarantees or patient-level medical validation."
+}

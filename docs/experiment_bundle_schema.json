@@ -1,0 +1,112 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Phase 1.8 Experiment Bundle Schema",
+  "description": "Formal JSON schema defining self-contained portable experiment bundles for air-gapped reproducibility.",
+  "type": "object",
+  "required": [
+    "bundle_id",
+    "experiment_id",
+    "schema_version",
+    "manifest_sha256",
+    "fingerprint_sha256",
+    "created_at",
+    "files",
+    "model_metadata",
+    "dataset_metadata",
+    "experiment_config",
+    "software_environment",
+    "status"
+  ],
+  "properties": {
+    "bundle_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_-]+$"
+    },
+    "experiment_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_-]+$"
+    },
+    "schema_version": {
+      "type": "string"
+    },
+    "manifest_sha256": {
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{64}$"
+    },
+    "fingerprint_sha256": {
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{64}$"
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "created_by": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["CREATED", "VALIDATED", "VERIFIED", "ARCHIVED", "EXPORTED"]
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["relative_path", "sha256", "size_bytes"],
+        "properties": {
+          "relative_path": { "type": "string" },
+          "sha256": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+          "size_bytes": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "model_metadata": {
+      "type": "object",
+      "required": ["model_id", "architecture", "weights_identifier"],
+      "properties": {
+        "model_id": { "type": "string" },
+        "architecture": { "type": "string" },
+        "framework": { "type": "string" },
+        "weights_identifier": { "type": "string" },
+        "weights_sha256": { "type": ["string", "null"] }
+      }
+    },
+    "dataset_metadata": {
+      "type": "object",
+      "required": ["source_dataset", "study_count"],
+      "properties": {
+        "dataset_version_id": { "type": ["string", "null"] },
+        "external_dataset_id": { "type": ["string", "null"] },
+        "source_dataset": { "type": "string" },
+        "study_count": { "type": "integer" },
+        "manifest_sha256": { "type": ["string", "null"] }
+      }
+    },
+    "experiment_config": {
+      "type": "object",
+      "required": ["methodology", "preprocessing"],
+      "properties": {
+        "methodology": { "type": "string" },
+        "preprocessing": { "type": "object" },
+        "inference_configuration": { "type": "object" },
+        "random_seed": { "type": "integer" }
+      }
+    },
+    "software_environment": {
+      "type": "object",
+      "required": ["python_version", "platform"],
+      "properties": {
+        "python_version": { "type": "string" },
+        "platform": { "type": "string" },
+        "dependencies": { "type": "object" }
+      }
+    },
+    "metrics_summary": {
+      "type": "object"
+    },
+    "provenance": {
+      "type": "array",
+      "items": { "type": "object" }
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,64 @@
+{
+  "study_id": "CXR1007",
+  "image_id": "CXR1007_IM-0008-1001",
+  "view": "Frontal",
+  "findings": [
+    {
+      "finding": "Infiltration",
+      "statement": "Possible infiltration cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Pleural_Thickening",
+      "statement": "Possible pleural_thickening cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Fibrosis",
+      "statement": "Possible fibrosis cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Consolidation",
+      "statement": "Possible consolidation cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Pneumothorax",
+      "statement": "Possible pneumothorax cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Effusion",
+      "statement": "Possible effusion cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Cardiomegaly",
+      "statement": "Possible cardiomegaly cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    }
+  ],
+  "impression": [
+    "1. Possible infiltration, Possible pleural_thickening, Possible fibrosis, Possible consolidation, Possible pneumothorax, Possible effusion, Possible cardiomegaly; recommend clinical correlation."
+  ],
+  "metadata": {
+    "provider": "mock",
+    "model": "mock-radiology-llm",
+    "generated_at": "2026-09-24T02:03:41Z"
+  }
+}

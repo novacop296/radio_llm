@@ -1,0 +1,697 @@
+{
+  "counterfactual_id": "CF-CXR1122-1790212311381",
+  "study_id": "CXR1122",
+  "source_view": "PA",
+  "source_image_filename": "CXR1122_IM-0080-1001-0002.png",
+  "created_at": "2026-09-24T01:11:51Z",
+  "created_by": "researcher",
+  "status": "PUBLISHED",
+  "disclaimer": "RESEARCH USE ONLY. Counterfactual perturbations are controlled computational interventions. Changes in model activation, attribution, QA responses, or generated text do not establish clinical causality, lesion boundaries, diagnostic truth, or clinical effectiveness. Model Activation Score != Clinical Probability | Grad-CAM Attribution != Lesion Localization | Counterfactual Response Change != Clinical Causality.",
+  "perturbation": {
+    "method": "REGION_MASK",
+    "roi": {
+      "x": 40,
+      "y": 40,
+      "width": 60,
+      "height": 60,
+      "norm_x": 0.0781,
+      "norm_y": 0.0781,
+      "norm_width": 0.1172,
+      "norm_height": 0.1172
+    },
+    "strength": 1.0,
+    "seed": 42,
+    "is_control_region": false,
+    "control_roi": null,
+    "target_pathology": null,
+    "artifact_hash": "dd31c1d3d2a9253994780c4ecd5ed85bff59b7d3c869a8b6ee25e2e7a0af04b7",
+    "parameters": {}
+  },
+  "baseline": {
+    "image_id": "CXR1122_IM-0080-1001-0002.png",
+    "findings": [
+      {
+        "pathology": "Infiltration",
+        "score": 0.4749,
+        "is_top_finding": true
+      },
+      {
+        "pathology": "Emphysema",
+        "score": 0.4749,
+        "is_top_finding": true
+      },
+      {
+        "pathology": "Pneumonia",
+        "score": 0.4749,
+        "is_top_finding": true
+      },
+      {
+        "pathology": "Nodule",
+        "score": 0.4749,
+        "is_top_finding": false
+      },
+      {
+        "pathology": "Consolidation",
+        "score": 0.4129,
+        "is_top_finding": false
+      },
+      {
+        "pathology": "Edema",
+        "score": 0.4129,
+        "is_top_finding": false
+      },
+      {
+        "pathology": "Effusion",
+        "score": 0.4129,
+        "is_top_finding": false
+      },
+      {
+        "pathology": "Cardiomegaly",
+        "score": 0.4129,
+        "is_top_finding": false
+      },
+      {
+        "pathology": "Hernia",
+        "score": 0.4129,
+        "is_top_finding": false
+      },
+      {
+        "pathology": "Atelectasis",
+        "score": 0.4059,
+        "is_top_finding": false
+      },
+      {
+        "pathology": "Pneumothorax",
+        "score": 0.4059,
+        "is_top_finding": false
+      },
+      {
+        "pathology": "Fibrosis",
+        "score": 0.4059,
+        "is_top_finding": false
+      },
+      {
+        "pathology": "Pleural_Thickening",
+        "score": 0.4059,
+        "is_top_finding": false
+      },
+      {
+        "pathology": "Mass",
+        "score": 0.4059,
+        "is_top_finding": false
+      }
+    ],
+    "top_findings": [
+      "Infiltration",
+      "Emphysema",
+      "Pneumonia"
+    ],
+    "timestamp": "2026-09-24T01:11:51Z",
+    "model_checksum": "0fcfaed70646574c",
+    "gradcam_artifacts": {
+      "primary": "C:\\Users\\ankit\\OneDrive\\Desktop\\radio-llm\\data\\counterfactuals\\CXR1122\\artifacts\\CF-CXR1122-1790212311381_baseline_gradcam.png"
+    }
+  },
+  "counterfactual": {
+    "image_id": "cf_CXR1122_IM-0080-1001-0002.png",
+    "findings": [
+      {
+        "pathology": "Infiltration",
+        "score": 0.4749,
+        "is_top_finding": true
+      },
+      {
+        "pathology": "Emphysema",
+        "score": 0.4749,
+        "is_top_finding": true
+      },
+      {
+        "pathology": "Pneumonia",
+        "score": 0.4749,
+        "is_top_finding": true
+      },
+      {
+        "pathology": "Nodule",
+        "score": 0.4749,
+        "is_top_finding": false
+      },
+      {
+        "pathology": "Consolidation",
+        "score": 0.4129,
+        "is_top_finding": false
+      },
+      {
+        "pathology": "Edema",
+        "score": 0.4129,
+        "is_top_finding": false
+      },
+      {
+        "pathology": "Effusion",
+        "score": 0.4129,
+        "is_top_finding": false
+      },
+      {
+        "pathology": "Cardiomegaly",
+        "score": 0.4129,
+        "is_top_finding": false
+      },
+      {
+        "pathology": "Hernia",
+        "score": 0.4129,
+        "is_top_finding": false
+      },
+      {
+        "pathology": "Atelectasis",
+        "score": 0.3733,
+        "is_top_finding": false
+      },
+      {
+        "pathology": "Pneumothorax",
+        "score": 0.3733,
+        "is_top_finding": false
+      },
+      {
+        "pathology": "Fibrosis",
+        "score": 0.3733,
+        "is_top_finding": false
+      },
+      {
+        "pathology": "Pleural_Thickening",
+        "score": 0.3733,
+        "is_top_finding": false
+      },
+      {
+        "pathology": "Mass",
+        "score": 0.3733,
+        "is_top_finding": false
+      }
+    ],
+    "top_findings": [
+      "Infiltration",
+      "Emphysema",
+      "Pneumonia"
+    ],
+    "timestamp": "2026-09-24T01:11:51Z",
+    "model_checksum": "0fcfaed70646574c",
+    "gradcam_artifacts": {
+      "primary": "C:\\Users\\ankit\\OneDrive\\Desktop\\radio-llm\\data\\counterfactuals\\CXR1122\\artifacts\\CF-CXR1122-1790212311381_counterfactual_gradcam.png"
+    },
+    "image_path": "C:\\Users\\ankit\\OneDrive\\Desktop\\radio-llm\\data\\counterfactuals\\CXR1122\\artifacts\\CF-CXR1122-1790212311381_counterfactual_image.png"
+  },
+  "finding_deltas": [
+    {
+      "pathology": "Infiltration",
+      "baseline_score": 0.4749,
+      "counterfactual_score": 0.4749,
+      "delta_abs": 0.0,
+      "delta_rel": 0.0,
+      "direction": "UNCHANGED",
+      "is_significant": false
+    },
+    {
+      "pathology": "Emphysema",
+      "baseline_score": 0.4749,
+      "counterfactual_score": 0.4749,
+      "delta_abs": 0.0,
+      "delta_rel": 0.0,
+      "direction": "UNCHANGED",
+      "is_significant": false
+    },
+    {
+      "pathology": "Pneumonia",
+      "baseline_score": 0.4749,
+      "counterfactual_score": 0.4749,
+      "delta_abs": 0.0,
+      "delta_rel": 0.0,
+      "direction": "UNCHANGED",
+      "is_significant": false
+    },
+    {
+      "pathology": "Nodule",
+      "baseline_score": 0.4749,
+      "counterfactual_score": 0.4749,
+      "delta_abs": 0.0,
+      "delta_rel": 0.0,
+      "direction": "UNCHANGED",
+      "is_significant": false
+    },
+    {
+      "pathology": "Consolidation",
+      "baseline_score": 0.4129,
+      "counterfactual_score": 0.4129,
+      "delta_abs": 0.0,
+      "delta_rel": 0.0,
+      "direction": "UNCHANGED",
+      "is_significant": false
+    },
+    {
+      "pathology": "Edema",
+      "baseline_score": 0.4129,
+      "counterfactual_score": 0.4129,
+      "delta_abs": 0.0,
+      "delta_rel": 0.0,
+      "direction": "UNCHANGED",
+      "is_significant": false
+    },
+    {
+      "pathology": "Effusion",
+      "baseline_score": 0.4129,
+      "counterfactual_score": 0.4129,
+      "delta_abs": 0.0,
+      "delta_rel": 0.0,
+      "direction": "UNCHANGED",
+      "is_significant": false
+    },
+    {
+      "pathology": "Cardiomegaly",
+      "baseline_score": 0.4129,
+      "counterfactual_score": 0.4129,
+      "delta_abs": 0.0,
+      "delta_rel": 0.0,
+      "direction": "UNCHANGED",
+      "is_significant": false
+    },
+    {
+      "pathology": "Hernia",
+      "baseline_score": 0.4129,
+      "counterfactual_score": 0.4129,
+      "delta_abs": 0.0,
+      "delta_rel": 0.0,
+      "direction": "UNCHANGED",
+      "is_significant": false
+    },
+    {
+      "pathology": "Atelectasis",
+      "baseline_score": 0.4059,
+      "counterfactual_score": 0.3733,
+      "delta_abs": -0.0326,
+      "delta_rel": -0.0803,
+      "direction": "DECREASED",
+      "is_significant": false
+    },
+    {
+      "pathology": "Pneumothorax",
+      "baseline_score": 0.4059,
+      "counterfactual_score": 0.3733,
+      "delta_abs": -0.0326,
+      "delta_rel": -0.0803,
+      "direction": "DECREASED",
+      "is_significant": false
+    },
+    {
+      "pathology": "Fibrosis",
+      "baseline_score": 0.4059,
+      "counterfactual_score": 0.3733,
+      "delta_abs": -0.0326,
+      "delta_rel": -0.0803,
+      "direction": "DECREASED",
+      "is_significant": false
+    },
+    {
+      "pathology": "Pleural_Thickening",
+      "baseline_score": 0.4059,
+      "counterfactual_score": 0.3733,
+      "delta_abs": -0.0326,
+      "delta_rel": -0.0803,
+      "direction": "DECREASED",
+      "is_significant": false
+    },
+    {
+      "pathology": "Mass",
+      "baseline_score": 0.4059,
+      "counterfactual_score": 0.3733,
+      "delta_abs": -0.0326,
+      "delta_rel": -0.0803,
+      "direction": "DECREASED",
+      "is_significant": false
+    }
+  ],
+  "attribution_deltas": [
+    {
+      "pathology": "Infiltration",
+      "mean_abs_difference": 0.0004,
+      "overlap_fraction": 0.9999,
+      "roi_attribution_fraction_baseline": 0.0016,
+      "roi_attribution_fraction_counterfactual": 0.0004,
+      "attribution_shift": -0.0012,
+      "diff_map_path": "C:\\Users\\ankit\\OneDrive\\Desktop\\radio-llm\\data\\counterfactuals\\CXR1122\\artifacts\\CF-CXR1122-1790212311381_attribution_diff.png"
+    }
+  ],
+  "qa_impact": [
+    {
+      "question_id": "q_l1_infiltration",
+      "finding": "Infiltration",
+      "level": "Level 1 (Presence)",
+      "baseline_answer": "uncertain",
+      "counterfactual_answer": "uncertain",
+      "changed": false,
+      "evidence_effect": "No response change observed"
+    },
+    {
+      "question_id": "q_l2_infiltration",
+      "finding": "Infiltration",
+      "level": "Level 2 (Severity)",
+      "baseline_answer": "moderate",
+      "counterfactual_answer": "moderate",
+      "changed": false,
+      "evidence_effect": "No severity change"
+    },
+    {
+      "question_id": "q_l1_emphysema",
+      "finding": "Emphysema",
+      "level": "Level 1 (Presence)",
+      "baseline_answer": "uncertain",
+      "counterfactual_answer": "uncertain",
+      "changed": false,
+      "evidence_effect": "No response change observed"
+    },
+    {
+      "question_id": "q_l2_emphysema",
+      "finding": "Emphysema",
+      "level": "Level 2 (Severity)",
+      "baseline_answer": "moderate",
+      "counterfactual_answer": "moderate",
+      "changed": false,
+      "evidence_effect": "No severity change"
+    },
+    {
+      "question_id": "q_l1_pneumonia",
+      "finding": "Pneumonia",
+      "level": "Level 1 (Presence)",
+      "baseline_answer": "uncertain",
+      "counterfactual_answer": "uncertain",
+      "changed": false,
+      "evidence_effect": "No response change observed"
+    },
+    {
+      "question_id": "q_l2_pneumonia",
+      "finding": "Pneumonia",
+      "level": "Level 2 (Severity)",
+      "baseline_answer": "moderate",
+      "counterfactual_answer": "moderate",
+      "changed": false,
+      "evidence_effect": "No severity change"
+    },
+    {
+      "question_id": "q_l1_nodule",
+      "finding": "Nodule",
+      "level": "Level 1 (Presence)",
+      "baseline_answer": "uncertain",
+      "counterfactual_answer": "uncertain",
+      "changed": false,
+      "evidence_effect": "No response change observed"
+    },
+    {
+      "question_id": "q_l2_nodule",
+      "finding": "Nodule",
+      "level": "Level 2 (Severity)",
+      "baseline_answer": "moderate",
+      "counterfactual_answer": "moderate",
+      "changed": false,
+      "evidence_effect": "No severity change"
+    },
+    {
+      "question_id": "q_l1_consolidation",
+      "finding": "Consolidation",
+      "level": "Level 1 (Presence)",
+      "baseline_answer": "uncertain",
+      "counterfactual_answer": "uncertain",
+      "changed": false,
+      "evidence_effect": "No response change observed"
+    },
+    {
+      "question_id": "q_l2_consolidation",
+      "finding": "Consolidation",
+      "level": "Level 2 (Severity)",
+      "baseline_answer": "moderate",
+      "counterfactual_answer": "moderate",
+      "changed": false,
+      "evidence_effect": "No severity change"
+    },
+    {
+      "question_id": "q_l1_edema",
+      "finding": "Edema",
+      "level": "Level 1 (Presence)",
+      "baseline_answer": "uncertain",
+      "counterfactual_answer": "uncertain",
+      "changed": false,
+      "evidence_effect": "No response change observed"
+    },
+    {
+      "question_id": "q_l2_edema",
+      "finding": "Edema",
+      "level": "Level 2 (Severity)",
+      "baseline_answer": "moderate",
+      "counterfactual_answer": "moderate",
+      "changed": false,
+      "evidence_effect": "No severity change"
+    },
+    {
+      "question_id": "q_l1_effusion",
+      "finding": "Effusion",
+      "level": "Level 1 (Presence)",
+      "baseline_answer": "uncertain",
+      "counterfactual_answer": "uncertain",
+      "changed": false,
+      "evidence_effect": "No response change observed"
+    },
+    {
+      "question_id": "q_l2_effusion",
+      "finding": "Effusion",
+      "level": "Level 2 (Severity)",
+      "baseline_answer": "moderate",
+      "counterfactual_answer": "moderate",
+      "changed": false,
+      "evidence_effect": "No severity change"
+    },
+    {
+      "question_id": "q_l1_cardiomegaly",
+      "finding": "Cardiomegaly",
+      "level": "Level 1 (Presence)",
+      "baseline_answer": "uncertain",
+      "counterfactual_answer": "uncertain",
+      "changed": false,
+      "evidence_effect": "No response change observed"
+    },
+    {
+      "question_id": "q_l2_cardiomegaly",
+      "finding": "Cardiomegaly",
+      "level": "Level 2 (Severity)",
+      "baseline_answer": "moderate",
+      "counterfactual_answer": "moderate",
+      "changed": false,
+      "evidence_effect": "No severity change"
+    },
+    {
+      "question_id": "q_l1_hernia",
+      "finding": "Hernia",
+      "level": "Level 1 (Presence)",
+      "baseline_answer": "uncertain",
+      "counterfactual_answer": "uncertain",
+      "changed": false,
+      "evidence_effect": "No response change observed"
+    },
+    {
+      "question_id": "q_l2_hernia",
+      "finding": "Hernia",
+      "level": "Level 2 (Severity)",
+      "baseline_answer": "moderate",
+      "counterfactual_answer": "moderate",
+      "changed": false,
+      "evidence_effect": "No severity change"
+    },
+    {
+      "question_id": "q_l1_atelectasis",
+      "finding": "Atelectasis",
+      "level": "Level 1 (Presence)",
+      "baseline_answer": "uncertain",
+      "counterfactual_answer": "uncertain",
+      "changed": false,
+      "evidence_effect": "No response change observed"
+    },
+    {
+      "question_id": "q_l2_atelectasis",
+      "finding": "Atelectasis",
+      "level": "Level 2 (Severity)",
+      "baseline_answer": "moderate",
+      "counterfactual_answer": "minimal/absent",
+      "changed": true,
+      "evidence_effect": "Severity rating shifted from moderate to minimal/absent"
+    },
+    {
+      "question_id": "q_l1_pneumothorax",
+      "finding": "Pneumothorax",
+      "level": "Level 1 (Presence)",
+      "baseline_answer": "uncertain",
+      "counterfactual_answer": "uncertain",
+      "changed": false,
+      "evidence_effect": "No response change observed"
+    },
+    {
+      "question_id": "q_l2_pneumothorax",
+      "finding": "Pneumothorax",
+      "level": "Level 2 (Severity)",
+      "baseline_answer": "moderate",
+      "counterfactual_answer": "minimal/absent",
+      "changed": true,
+      "evidence_effect": "Severity rating shifted from moderate to minimal/absent"
+    },
+    {
+      "question_id": "q_l1_fibrosis",
+      "finding": "Fibrosis",
+      "level": "Level 1 (Presence)",
+      "baseline_answer": "uncertain",
+      "counterfactual_answer": "uncertain",
+      "changed": false,
+      "evidence_effect": "No response change observed"
+    },
+    {
+      "question_id": "q_l2_fibrosis",
+      "finding": "Fibrosis",
+      "level": "Level 2 (Severity)",
+      "baseline_answer": "moderate",
+      "counterfactual_answer": "minimal/absent",
+      "changed": true,
+      "evidence_effect": "Severity rating shifted from moderate to minimal/absent"
+    },
+    {
+      "question_id": "q_l1_pleural_thickening",
+      "finding": "Pleural_Thickening",
+      "level": "Level 1 (Presence)",
+      "baseline_answer": "uncertain",
+      "counterfactual_answer": "uncertain",
+      "changed": false,
+      "evidence_effect": "No response change observed"
+    },
+    {
+      "question_id": "q_l2_pleural_thickening",
+      "finding": "Pleural_Thickening",
+      "level": "Level 2 (Severity)",
+      "baseline_answer": "moderate",
+      "counterfactual_answer": "minimal/absent",
+      "changed": true,
+      "evidence_effect": "Severity rating shifted from moderate to minimal/absent"
+    },
+    {
+      "question_id": "q_l1_mass",
+      "finding": "Mass",
+      "level": "Level 1 (Presence)",
+      "baseline_answer": "uncertain",
+      "counterfactual_answer": "uncertain",
+      "changed": false,
+      "evidence_effect": "No response change observed"
+    },
+    {
+      "question_id": "q_l2_mass",
+      "finding": "Mass",
+      "level": "Level 2 (Severity)",
+      "baseline_answer": "moderate",
+      "counterfactual_answer": "minimal/absent",
+      "changed": true,
+      "evidence_effect": "Severity rating shifted from moderate to minimal/absent"
+    }
+  ],
+  "report_impact": {
+    "findings_changed": [
+      "Atelectasis",
+      "Pneumothorax",
+      "Fibrosis",
+      "Pleural_Thickening",
+      "Mass"
+    ],
+    "status_changes": [
+      {
+        "finding": "Atelectasis",
+        "baseline_status": "possible",
+        "counterfactual_status": "uncertain"
+      },
+      {
+        "finding": "Pneumothorax",
+        "baseline_status": "possible",
+        "counterfactual_status": "uncertain"
+      },
+      {
+        "finding": "Fibrosis",
+        "baseline_status": "possible",
+        "counterfactual_status": "uncertain"
+      },
+      {
+        "finding": "Pleural_Thickening",
+        "baseline_status": "possible",
+        "counterfactual_status": "uncertain"
+      },
+      {
+        "finding": "Mass",
+        "baseline_status": "possible",
+        "counterfactual_status": "uncertain"
+      }
+    ],
+    "statements_added": [],
+    "statements_removed": [],
+    "baseline_summary": "Baseline Machine Finding(s): No prominent focal abnormality.",
+    "counterfactual_summary": "Counterfactual Machine Finding(s): No prominent focal abnormality.",
+    "impression_changed": true
+  },
+  "reproducibility": {
+    "status": "REPRODUCIBLE",
+    "fingerprint": "9e238a1674f6856911f7a695c4d51f3c96e90445878fe49c32b25467324f1c1c",
+    "source_image_hash": "5df0c7a414936560a001d0ca47954ccf35fd2c5dd8f4cee63564b5f6d7707391",
+    "counterfactual_image_hash": "dd31c1d3d2a9253994780c4ecd5ed85bff59b7d3c869a8b6ee25e2e7a0af04b7",
+    "model_checksum": "0fcfaed70646574c",
+    "config_hash": "f1197a7a408f5152b7fd5660300a8f6fbce0a2077ff2fcc0ac2857e16ea9c8cb",
+    "environment": {
+      "python_version": "3.11.9",
+      "torch_version": "2.2.0+cpu",
+      "torchxrayvision_version": "0.0.43",
+      "platform": "Windows-10-10.0.26200-SP0"
+    },
+    "verified_at": "2026-09-24T01:11:51Z"
+  },
+  "audit_trail": [
+    {
+      "timestamp": "2026-09-24T01:11:51Z",
+      "action": "CREATE",
+      "actor": "researcher",
+      "previous_status": null,
+      "new_status": "DRAFT",
+      "details": "Created counterfactual draft experiment for study CXR1122",
+      "record_hash": "29987569280e8630"
+    },
+    {
+      "timestamp": "2026-09-24T01:11:51Z",
+      "action": "CONFIGURE",
+      "actor": "researcher",
+      "previous_status": "DRAFT",
+      "new_status": "CONFIGURED",
+      "details": "Configured REGION_MASK perturbation (strength=1.0, seed=42)",
+      "record_hash": "72e09ece2e730544"
+    },
+    {
+      "timestamp": "2026-09-24T01:11:51Z",
+      "action": "RUN",
+      "actor": "researcher",
+      "previous_status": "CONFIGURED",
+      "new_status": "COMPLETED",
+      "details": "Completed counterfactual execution (fingerprint=9e238a1674f6...)",
+      "record_hash": "72e12e80fb32a2ca"
+    },
+    {
+      "timestamp": "2026-09-24T01:11:51Z",
+      "action": "VALIDATE",
+      "actor": "researcher",
+      "previous_status": "COMPLETED",
+      "new_status": "VALIDATED",
+      "details": "Experiment validated with reproducibility status 'REPRODUCIBLE'",
+      "record_hash": "65e2aa8d9b21db43"
+    },
+    {
+      "timestamp": "2026-09-24T01:11:51Z",
+      "action": "PUBLISH",
+      "actor": "researcher",
+      "previous_status": "VALIDATED",
+      "new_status": "PUBLISHED",
+      "details": "Experiment published to registry and locked as immutable.",
+      "record_hash": "f6bd41f4d6354ed2"
+    }
+  ]
+}

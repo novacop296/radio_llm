@@ -1,0 +1,64 @@
+{
+  "study_id": "CXR1009",
+  "image_id": "CXR1009_IM-0010-1001",
+  "view": "Frontal",
+  "findings": [
+    {
+      "finding": "Infiltration",
+      "statement": "Possible infiltration cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Nodule",
+      "statement": "Possible nodule cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Fibrosis",
+      "statement": "Possible fibrosis cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Pneumothorax",
+      "statement": "Possible pneumothorax cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Cardiomegaly",
+      "statement": "Possible cardiomegaly cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Consolidation",
+      "statement": "Possible consolidation cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Effusion",
+      "statement": "Possible effusion cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    }
+  ],
+  "impression": [
+    "1. Possible infiltration, Possible nodule, Possible fibrosis, Possible pneumothorax, Possible cardiomegaly, Possible consolidation, Possible effusion; recommend clinical correlation."
+  ],
+  "metadata": {
+    "provider": "mock",
+    "model": "mock-radiology-llm",
+    "generated_at": "2026-09-24T02:03:44Z"
+  }
+}

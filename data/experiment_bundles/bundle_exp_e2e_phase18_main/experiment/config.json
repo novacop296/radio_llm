@@ -1,0 +1,26 @@
+{
+  "model_id": "model_e2e_txrv_densenet121",
+  "dataset_version_id": "dsv_iu_xray_e2e_v1",
+  "external_dataset_id": "ext_ds_e2e_mimic_cxr_v1",
+  "evaluation_dataset_id": "eval_ds_default",
+  "methodology": "standard_qa_evidence_evaluation",
+  "preprocessing": {
+    "resize": [
+      224,
+      224
+    ],
+    "normalization": "minmax_0_1"
+  },
+  "inference_configuration": {
+    "threshold": 0.15,
+    "top_k": 5
+  },
+  "grounding_configuration": {
+    "target_layer": "model.features.norm5"
+  },
+  "report_configuration": {
+    "llm_provider": "mock",
+    "llm_model": "mock-radiology-llm"
+  },
+  "random_seed": 42
+}

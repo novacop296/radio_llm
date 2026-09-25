@@ -1,0 +1,85 @@
+{
+  "study_id": "CXR1015",
+  "image_id": "CXR1015_IM-0001-2001",
+  "view": "Lateral",
+  "findings": [
+    {
+      "finding": "Lung Opacity",
+      "statement": "Possible lung opacity cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Pneumonia",
+      "statement": "Possible pneumonia cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Infiltration",
+      "statement": "Possible infiltration cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Fracture",
+      "statement": "Possible fracture cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Consolidation",
+      "statement": "Possible consolidation cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Emphysema",
+      "statement": "Possible emphysema cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Atelectasis",
+      "statement": "Possible atelectasis cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Pneumothorax",
+      "statement": "Possible pneumothorax cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Cardiomegaly",
+      "statement": "Possible cardiomegaly cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Effusion",
+      "statement": "Possible effusion cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    }
+  ],
+  "impression": [
+    "1. Possible lung opacity, Possible pneumonia, Possible infiltration, Possible fracture, Possible consolidation, Possible emphysema, Possible atelectasis, Possible pneumothorax, Possible cardiomegaly, Possible effusion; recommend clinical correlation."
+  ],
+  "metadata": {
+    "provider": "mock",
+    "model": "mock-radiology-llm",
+    "generated_at": "2026-09-24T02:08:46Z"
+  }
+}

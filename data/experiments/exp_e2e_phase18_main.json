@@ -1,0 +1,77 @@
+{
+  "experiment_id": "exp_e2e_phase18_main",
+  "experiment_name": "Multi-View & External Benchmarking E2E Run",
+  "name": "Multi-View & External Benchmarking E2E Run",
+  "description": "",
+  "model_id": "model_e2e_txrv_densenet121",
+  "dataset_version_id": "dsv_iu_xray_e2e_v1",
+  "external_dataset_id": "ext_ds_e2e_mimic_cxr_v1",
+  "snapshot_id": "dsv_iu_xray_e2e_v1",
+  "evaluation_dataset_id": "eval_ds_default",
+  "methodology": "standard_qa_evidence_evaluation",
+  "preprocessing": {
+    "resize": [
+      224,
+      224
+    ],
+    "normalization": "minmax_0_1"
+  },
+  "inference_configuration": {
+    "threshold": 0.15,
+    "top_k": 5
+  },
+  "grounding_configuration": {
+    "target_layer": "model.features.norm5"
+  },
+  "report_configuration": {
+    "llm_provider": "mock",
+    "llm_model": "mock-radiology-llm"
+  },
+  "random_seed": 42,
+  "software_versions": {
+    "python": "3.11.9",
+    "platform": "win32"
+  },
+  "fingerprint_sha256": "a9df6f3d19732f97630ebc879872845bc16748b305b867a77bf60ea170bd55a9",
+  "configuration": {
+    "fingerprint_sha256": "46608df4dcde583b528697f71a920470062b36fe611eb10769f84380ed837f2a",
+    "model_name": "TorchXRayVision DenseNet-121",
+    "model_version": "densenet121-res224-all",
+    "target_layer": "model.features.norm5",
+    "preprocessing_resolution": [
+      224,
+      224
+    ],
+    "normalization": "minmax_0_1",
+    "device": "cpu",
+    "qa_threshold": 0.15,
+    "qa_top_k": 5,
+    "llm_provider": "mock",
+    "llm_model": "mock-radiology-llm",
+    "environment_metadata": {
+      "python_version": "3.11.9",
+      "platform": "win32"
+    }
+  },
+  "status": "REGISTERED",
+  "created_at": "2026-09-24T00:16:53.775938+00:00",
+  "started_at": null,
+  "completed_at": null,
+  "created_by": "researcher",
+  "evaluation_run_id": null,
+  "metrics": null,
+  "statistics": null,
+  "error_analysis": null,
+  "provenance_trail": [
+    {
+      "stage": "EXPERIMENT_REGISTRATION",
+      "timestamp": "2026-09-24T00:16:53.775938+00:00",
+      "actor": "researcher",
+      "status": "REGISTERED",
+      "details": "Registered experiment with model=model_e2e_txrv_densenet121, dataset_version=dsv_iu_xray_e2e_v1"
+    }
+  ],
+  "schema_version": "1.7.0",
+  "metadata": {},
+  "disclaimer": "RESEARCH EXPERIMENT RECORD \u2014 NOT CLINICAL PERFORMANCE EVIDENCE. Experiment configurations, metrics, and evaluation summaries are research artifacts. They do not provide clinical diagnostic guarantees or patient-level medical validation."
+}

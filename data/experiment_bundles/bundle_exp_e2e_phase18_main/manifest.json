@@ -1,0 +1,139 @@
+{
+  "bundle_id": "bundle_exp_e2e_phase18_main",
+  "experiment_id": "exp_e2e_phase18_main",
+  "schema_version": "1.8.0",
+  "disclaimer": "RESEARCH PROTOTYPE \u2014 NOT CLINICAL PERFORMANCE EVIDENCE. Portable experiment bundles are self-contained artifacts for academic reproducibility, code auditing, and benchmark verification only.",
+  "manifest_sha256": "c32a0b85a77df31c60aef89b2eb899cdec2773a7576c846ef51dc7cedf19f632",
+  "fingerprint_sha256": "a9df6f3d19732f97630ebc879872845bc16748b305b867a77bf60ea170bd55a9",
+  "created_at": "2026-09-24T00:16:54.022663+00:00",
+  "created_by": "researcher",
+  "status": "CREATED",
+  "files": [
+    {
+      "relative_path": "README.md",
+      "sha256": "f83432318c12790e0d0585b12f8c8ae3b8bd759860d30d767dd63d45355e5743",
+      "size_bytes": 807
+    },
+    {
+      "relative_path": "dataset/metadata.json",
+      "sha256": "b26a6ade3d45e743df3ce455058ef6639c7a9068cb5fb3dc1474a4b58095f9a0",
+      "size_bytes": 275
+    },
+    {
+      "relative_path": "evaluation/error_analysis.json",
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "size_bytes": 4
+    },
+    {
+      "relative_path": "evaluation/metrics.json",
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "size_bytes": 4
+    },
+    {
+      "relative_path": "experiment/config.json",
+      "sha256": "d139be20a731bf685c9ef24eec692777e2fc9232199a736d0eb8d67f30bc6ba0",
+      "size_bytes": 644
+    },
+    {
+      "relative_path": "model/metadata.json",
+      "sha256": "338b4e748b5a3e6f24c8c56e2e64b2bf490d35c40c00a7397cd2ae26785d45b5",
+      "size_bytes": 1185
+    },
+    {
+      "relative_path": "provenance/audit_trail.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "size_bytes": 2
+    },
+    {
+      "relative_path": "reports/report.json",
+      "sha256": "b91b8be7cf691ef50c9315648ba3c7d8c898c9ffa8c0b5b4f7251e50288beb47",
+      "size_bytes": 306
+    },
+    {
+      "relative_path": "scripts/reproduce.py",
+      "sha256": "d5844f4c4ea1efb09dd319638fef6fc57b67a43bab2a13ae840757041399775d",
+      "size_bytes": 316
+    }
+  ],
+  "model_metadata": {
+    "model_id": "model_e2e_txrv_densenet121",
+    "model_name": "TorchXRayVision DenseNet-121 E2E",
+    "architecture": "DenseNet-121",
+    "framework": "PyTorch / TorchXRayVision",
+    "framework_version": "1.2.0+",
+    "weights_identifier": "densenet121-res224-all",
+    "weights_sha256": null,
+    "input_dimensions": [
+      1,
+      224,
+      224
+    ],
+    "preprocessing": {
+      "resize": [
+        224,
+        224
+      ],
+      "normalization": "standard_cxr"
+    },
+    "target_labels": [
+      "Cardiomegaly",
+      "Effusion",
+      "Infiltration",
+      "Atelectasis"
+    ],
+    "target_layer": "model.features.norm5",
+    "created_at": "2026-09-24T00:16:53.763284+00:00",
+    "registered_by": "researcher",
+    "description": "",
+    "status": "REGISTERED",
+    "metadata": {
+      "weights_hash_note": "Weights downloaded dynamically on demand via TorchXRayVision CDN; local weight cache not verified at bootstrap."
+    },
+    "disclaimer": "RESEARCH MODEL REGISTRY RECORD \u2014 NOT CLINICAL PERFORMANCE EVIDENCE. Model configurations, weight hashes, and architecture specifications are research metadata. They do not provide clinical diagnostic guarantees or patient-level medical validation."
+  },
+  "dataset_metadata": {
+    "dataset_version_id": "dsv_iu_xray_e2e_v1",
+    "external_dataset_id": "ext_ds_e2e_mimic_cxr_v1",
+    "source_dataset": "E2E MIMIC-CXR Validation Test Cohort",
+    "study_count": 2,
+    "manifest_sha256": "5b857331bfb2adbede19b8b5d4be304eec7de7cfef6055bed4119c7d7283e636"
+  },
+  "experiment_config": {
+    "fingerprint_sha256": "46608df4dcde583b528697f71a920470062b36fe611eb10769f84380ed837f2a",
+    "model_name": "TorchXRayVision DenseNet-121",
+    "model_version": "densenet121-res224-all",
+    "target_layer": "model.features.norm5",
+    "preprocessing_resolution": [
+      224,
+      224
+    ],
+    "normalization": "minmax_0_1",
+    "device": "cpu",
+    "qa_threshold": 0.15,
+    "qa_top_k": 5,
+    "llm_provider": "mock",
+    "llm_model": "mock-radiology-llm",
+    "environment_metadata": {
+      "python_version": "3.11.9",
+      "platform": "win32"
+    }
+  },
+  "software_environment": {
+    "python_version": "3.11.9",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "dependencies": {
+      "torch": "2.2.0",
+      "torchxrayvision": "1.2.0",
+      "numpy": "1.26.4"
+    }
+  },
+  "metrics_summary": null,
+  "provenance": [
+    {
+      "timestamp": "2026-09-24T00:16:54.022663+00:00",
+      "action": "BUNDLE_CREATED",
+      "actor": "researcher",
+      "details": "Created portable experiment bundle 'bundle_exp_e2e_phase18_main' with 9 files."
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+=================================================================
+EXPLAINABLE RADIOLOGY RESEARCH EXPERIMENT EXPORT
+RESEARCH EVALUATION ONLY — NOT CLINICAL PERFORMANCE
+DISCLAIMER: This experiment record contains model configurations,
+research evaluation metrics, and provenance metadata. It is strictly
+non-diagnostic and must not be used for clinical decision-making.
+=================================================================
+EXPERIMENT ID     : exp_20260922_004219_eb038dbf
+EXPERIMENT NAME   : Exp 2
+STATUS            : COMPLETED
+CREATED AT        : 2026-09-22T00:42:19Z
+COMPLETED AT      : 2026-09-22T00:42:20Z
+DATASET SNAPSHOT  : snap_20260922_004219_29d96f33 (Size: 1 studies)
+
+CONFIGURATION FINGERPRINT:
+- Model Architecture : TorchXRayVision DenseNet-121
+- Model Version      : densenet121-res224-all
+- Grad-CAM Layer     : denseblock4
+- QA Threshold / TopK: 0.15 / 5
+- LLM Provider/Model : mock / mock-radiology-llm
+- SHA-256 Fingerprint: eb038dbfe892cb1f93e38a106da120fb8017cb9762b78cf37da665a0ed0e6b15
+
+RESEARCH EVALUATION METRICS:
+- Review Coverage    : 1/1 reviewed (100.0%)
+- Consensus Coverage : 1 consensus sessions (0 unanimous, 0 majority)
+- Adjudications Req. : 0 studies
+- Cohen's Kappa (N=2): Avg κ = 0.76 (N=3)
+- Fleiss' Kappa (N>=3: Avg κ = 0.71 (N=2)
+- Explainability Cov.: 7/7 findings grounded (100.0%)
+
+PIPELINE PROVENANCE STAGES:
+- [COMPLETED   ] Immutable Dataset Snapshot (TS: 2026-09-22T00:42:19Z)
+- [COMPLETED   ] Study Cohort Selection (TS: 2026-09-22T00:42:19Z)
+- [COMPLETED   ] Vision Backbone Model (TS: 2026-09-22T00:42:19Z)
+- [COMPLETED   ] Image Preprocessing & Normalization (TS: 2026-09-22T00:42:19Z)
+- [COMPLETED   ] Diagnostic QA Engine (TS: 2026-09-22T00:42:19Z)
+- [COMPLETED   ] Immutable Evidence Layer (TS: 2026-09-22T00:42:19Z)
+- [COMPLETED   ] Grad-CAM Visual Grounding (TS: 2026-09-22T00:42:19Z)
+- [COMPLETED   ] Independent Human Review Tracking (TS: 2026-09-22T00:42:20Z)
+- [COMPLETED   ] Multi-Reviewer Consensus Synthesis (TS: 2026-09-22T00:42:20Z)
+- [COMPLETED   ] Research Metrics & Inter-Rater Reliability (TS: 2026-09-22T00:42:20Z)
+- [COMPLETED   ] Finalized Reproducible Experiment Artifact (TS: 2026-09-22T00:42:20Z)
+=================================================================

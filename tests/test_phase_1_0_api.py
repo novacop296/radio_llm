@@ -259,6 +259,35 @@ class TestPhase10API(unittest.TestCase):
             self.assertIn(s, stages)
             self.assertTrue(stages[s])
 
+    def test_23_top_level_tab_navigation_elements(self):
+        """TEST 23: Confirms all 9 top-level tabs and corresponding workspace containers exist in frontend."""
+        status, headers, body = self._get("/")
+        self.assertEqual(status, 200)
+        html = body.decode("utf-8")
+
+        expected_tabs = [
+            ("tabDatasetQueue", "datasetQueueViewContainer"),
+            ("tabIndividualReview", "individualViewContainer"),
+            ("tabConsensusDashboard", "consensusDashboardContainer"),
+            ("tabEvaluationAnalytics", "evaluationAnalyticsContainer"),
+            ("tabResearchEvaluation", "researchEvaluationViewContainer"),
+            ("tabExperimentRegistry", "experimentRegistryViewContainer"),
+            ("tabExternalBenchmarking", "externalBenchmarkingViewContainer"),
+            ("tabResearchExperiments", "researchExperimentsContainer"),
+            ("tabCounterfactualExplainability", "counterfactualViewContainer")
+        ]
+
+        for tab_id, container_id in expected_tabs:
+            self.assertIn(f'id="{tab_id}"', html, f"Tab button id '{tab_id}' missing from index.html")
+            self.assertIn(f'id="{container_id}"', html, f"Container id '{container_id}' missing from index.html")
+
+        # Verify app.js serves valid JS containing centralized tab navigation
+        status_js, _, body_js = self._get("/app.js")
+        self.assertEqual(status_js, 200)
+        js = body_js.decode("utf-8")
+        self.assertIn("const TABS = {", js)
+        self.assertIn("function switchTab(", js)
+
 
 if __name__ == "__main__":
     unittest.main()

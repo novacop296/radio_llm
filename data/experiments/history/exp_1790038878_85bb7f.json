@@ -1,0 +1,41 @@
+[
+  {
+    "timestamp": "2026-09-22T01:01:18.531799+00:00",
+    "actor": "researcher",
+    "action": "EXPERIMENT_REGISTERED",
+    "object_type": "EXPERIMENT",
+    "object_id": "exp_1790038878_85bb7f",
+    "field": null,
+    "old_value": null,
+    "new_value": null,
+    "metadata": {
+      "fingerprint": "dd1a6e2e2cc9dcc014c4d00703f99eb18b37dd9d62c3872ceba0f74ccc0994f7",
+      "model_id": "model_densenet121_txrv",
+      "dataset_version_id": "snap_20260922_010118_29d96f33"
+    }
+  },
+  {
+    "timestamp": "2026-09-22T01:01:18.616083+00:00",
+    "actor": "runner",
+    "action": "EXPERIMENT_STARTED",
+    "object_type": "EXPERIMENT",
+    "object_id": "exp_1790038878_85bb7f",
+    "field": null,
+    "old_value": null,
+    "new_value": null,
+    "metadata": {}
+  },
+  {
+    "timestamp": "2026-09-22T01:01:18.644231+00:00",
+    "actor": "runner",
+    "action": "EXPERIMENT_COMPLETED",
+    "object_type": "EXPERIMENT",
+    "object_id": "exp_1790038878_85bb7f",
+    "field": null,
+    "old_value": null,
+    "new_value": null,
+    "metadata": {
+      "evaluation_run_id": "eval_exp_1790038878_85bb7f"
+    }
+  }
+]

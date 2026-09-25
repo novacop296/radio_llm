@@ -1,0 +1,193 @@
+{
+  "study_id": "CXR1053",
+  "image_id": "CXR1053_IM-0040-1001",
+  "view": "Frontal",
+  "findings": [
+    {
+      "finding": "Fibrosis",
+      "status": "possible",
+      "model_score": 0.5359,
+      "location": "unspecified",
+      "severity": "unspecified",
+      "evidence_sources": [
+        "vision_model"
+      ]
+    },
+    {
+      "finding": "Cardiomegaly",
+      "status": "possible",
+      "model_score": 0.5344,
+      "location": "unspecified",
+      "severity": "unspecified",
+      "evidence_sources": [
+        "vision_model"
+      ]
+    },
+    {
+      "finding": "Pleural_Thickening",
+      "status": "possible",
+      "model_score": 0.5196,
+      "location": "unspecified",
+      "severity": "unspecified",
+      "evidence_sources": [
+        "vision_model"
+      ]
+    },
+    {
+      "finding": "Nodule",
+      "status": "possible",
+      "model_score": 0.5106,
+      "location": "unspecified",
+      "severity": "unspecified",
+      "evidence_sources": [
+        "vision_model"
+      ]
+    },
+    {
+      "finding": "Emphysema",
+      "status": "possible",
+      "model_score": 0.5004,
+      "location": "unspecified",
+      "severity": "unspecified",
+      "evidence_sources": [
+        "vision_model"
+      ]
+    },
+    {
+      "finding": "Infiltration",
+      "status": "possible",
+      "model_score": 0.4794,
+      "location": "unspecified",
+      "severity": "unspecified",
+      "evidence_sources": [
+        "vision_model"
+      ]
+    },
+    {
+      "finding": "Atelectasis",
+      "status": "possible",
+      "model_score": 0.4712,
+      "location": "unspecified",
+      "severity": "unspecified",
+      "evidence_sources": [
+        "vision_model"
+      ]
+    },
+    {
+      "finding": "Pneumothorax",
+      "status": "possible",
+      "model_score": 0.1945,
+      "location": "unspecified",
+      "severity": "unspecified",
+      "evidence_sources": [
+        "vision_model"
+      ]
+    },
+    {
+      "finding": "Effusion",
+      "status": "possible",
+      "model_score": 0.169,
+      "location": "unspecified",
+      "severity": "unspecified",
+      "evidence_sources": [
+        "vision_model"
+      ]
+    },
+    {
+      "finding": "Consolidation",
+      "status": "possible",
+      "model_score": 0.1256,
+      "location": "unspecified",
+      "severity": "unspecified",
+      "evidence_sources": [
+        "vision_model"
+      ]
+    }
+  ],
+  "llm_input_package": {
+    "task": "radiology_report_generation",
+    "study": {
+      "study_id": "CXR1053",
+      "image_id": "CXR1053_IM-0040-1001",
+      "view": "Frontal"
+    },
+    "evidence": [
+      {
+        "finding": "Fibrosis",
+        "status": "possible",
+        "model_score": 0.5359,
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Cardiomegaly",
+        "status": "possible",
+        "model_score": 0.5344,
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Pleural_Thickening",
+        "status": "possible",
+        "model_score": 0.5196,
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Nodule",
+        "status": "possible",
+        "model_score": 0.5106,
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Emphysema",
+        "status": "possible",
+        "model_score": 0.5004,
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Infiltration",
+        "status": "possible",
+        "model_score": 0.4794,
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Atelectasis",
+        "status": "possible",
+        "model_score": 0.4712,
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Pneumothorax",
+        "status": "possible",
+        "model_score": 0.1945,
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Effusion",
+        "status": "possible",
+        "model_score": 0.169,
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Consolidation",
+        "status": "possible",
+        "model_score": 0.1256,
+        "location": "unspecified",
+        "severity": "unspecified"
+      }
+    ],
+    "constraints": {
+      "do_not_invent_findings": true,
+      "do_not_invent_location": true,
+      "do_not_invent_severity": true,
+      "preserve_uncertainty": true
+    }
+  }
+}

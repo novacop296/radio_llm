@@ -1,0 +1,287 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Phase 1.9 Research Experiment Orchestration & Reporting Schemas",
+  "description": "Formal schemas for reproducible experiment definitions, runs, statistics, reports, and manifests.",
+  "type": "object",
+  "definitions": {
+    "ExperimentStatus": {
+      "type": "string",
+      "enum": ["DRAFT", "CONFIGURED", "RUNNING", "COMPLETED", "VALIDATED", "PUBLISHED", "ARCHIVED"]
+    },
+    "ReproducibilityStatus": {
+      "type": "string",
+      "enum": ["REPRODUCIBLE", "DRIFT_DETECTED", "INCOMPLETE", "INVALID"]
+    },
+    "ViewConfiguration": {
+      "type": "string",
+      "enum": ["SINGLE_VIEW", "FRONTAL_ONLY", "LATERAL_ONLY", "MULTI_VIEW"]
+    },
+    "ExperimentDatasetReference": {
+      "type": "object",
+      "required": ["dataset_id", "dataset_name", "dataset_type"],
+      "properties": {
+        "dataset_id": { "type": "string" },
+        "dataset_name": { "type": "string" },
+        "dataset_type": { "type": "string", "enum": ["IU_XRAY", "EXTERNAL", "EXTERNAL_VALIDATION"] },
+        "version": { "type": "string" },
+        "split": { "type": "string" },
+        "sample_count": { "type": "integer", "minimum": 0 },
+        "manifest_sha256": { "type": "string" },
+        "view_pairing": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "ExperimentModelReference": {
+      "type": "object",
+      "required": ["model_id", "model_name", "model_architecture"],
+      "properties": {
+        "model_id": { "type": "string" },
+        "model_name": { "type": "string" },
+        "model_architecture": { "type": "string" },
+        "model_version": { "type": "string" },
+        "weights_sha256": { "type": "string" },
+        "target_layer": { "type": "string" },
+        "preprocessing_resolution": {
+          "type": "array",
+          "items": { "type": "integer" },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "normalization": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "ExperimentConfiguration": {
+      "type": "object",
+      "required": ["view_configuration"],
+      "properties": {
+        "view_configuration": { "$ref": "#/definitions/ViewConfiguration" },
+        "evaluation_metrics": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "random_seed": { "type": "integer" },
+        "bootstrap_sample_count": { "type": "integer", "minimum": 100 },
+        "confidence_level": { "type": "number", "minimum": 0.5, "maximum": 0.999 },
+        "threshold": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "batch_size": { "type": "integer", "minimum": 1 },
+        "preprocessing_version": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "ExperimentEnvironment": {
+      "type": "object",
+      "required": ["python_version", "os_platform"],
+      "properties": {
+        "python_version": { "type": "string" },
+        "os_platform": { "type": "string" },
+        "torch_version": { "type": "string" },
+        "torchxrayvision_version": { "type": "string" },
+        "hostname_digest": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "MetricValue": {
+      "type": "object",
+      "required": ["value"],
+      "properties": {
+        "value": { "type": "number" },
+        "ci_lower_95": { "type": "number" },
+        "ci_upper_95": { "type": "number" },
+        "sample_size": { "type": "integer" }
+      },
+      "additionalProperties": true
+    },
+    "ExperimentMetrics": {
+      "type": "object",
+      "properties": {
+        "macro_avg": {
+          "type": "object",
+          "properties": {
+            "auc": { "type": "number" },
+            "sensitivity": { "type": "number" },
+            "specificity": { "type": "number" },
+            "accuracy": { "type": "number" },
+            "precision": { "type": "number" },
+            "recall": { "type": "number" },
+            "f1": { "type": "number" }
+          },
+          "additionalProperties": true
+        },
+        "per_finding": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "auc": { "type": "number" },
+              "sensitivity": { "type": "number" },
+              "specificity": { "type": "number" },
+              "accuracy": { "type": "number" },
+              "precision": { "type": "number" },
+              "recall": { "type": "number" },
+              "f1": { "type": "number" }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "StatisticalSummary": {
+      "type": "object",
+      "required": ["sample_size", "metrics"],
+      "properties": {
+        "sample_size": { "type": "integer" },
+        "confidence_level": { "type": "number" },
+        "bootstrap_iterations": { "type": "integer" },
+        "random_seed": { "type": "integer" },
+        "metrics": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["mean", "median", "std", "min", "max", "ci_95"],
+            "properties": {
+              "mean": { "type": "number" },
+              "median": { "type": "number" },
+              "std": { "type": "number" },
+              "min": { "type": "number" },
+              "max": { "type": "number" },
+              "q25": { "type": "number" },
+              "q75": { "type": "number" },
+              "iqr": { "type": "number" },
+              "ci_95": {
+                "type": "object",
+                "required": ["lower", "upper", "method"],
+                "properties": {
+                  "lower": { "type": "number" },
+                  "upper": { "type": "number" },
+                  "method": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "ReproducibilityManifest": {
+      "type": "object",
+      "required": ["experiment_id", "experiment_fingerprint", "dataset_fingerprint", "model_fingerprint", "configuration_fingerprint", "environment_fingerprint", "reproducibility_status"],
+      "properties": {
+        "experiment_id": { "type": "string" },
+        "experiment_fingerprint": { "type": "string" },
+        "dataset_fingerprint": { "type": "string" },
+        "model_fingerprint": { "type": "string" },
+        "configuration_fingerprint": { "type": "string" },
+        "environment_fingerprint": { "type": "string" },
+        "software_version": { "type": "string" },
+        "python_version": { "type": "string" },
+        "operating_system": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "random_seed": { "type": "integer" },
+        "reproducibility_status": { "$ref": "#/definitions/ReproducibilityStatus" },
+        "drift_details": {
+          "type": "object",
+          "properties": {
+            "dataset_drift": { "type": "boolean" },
+            "model_drift": { "type": "boolean" },
+            "config_drift": { "type": "boolean" },
+            "environment_drift": { "type": "boolean" }
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "ExperimentComparison": {
+      "type": "object",
+      "required": ["experiment_ids", "metric_deltas", "neutral_summary", "disclaimer"],
+      "properties": {
+        "experiment_ids": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 2
+        },
+        "metric_deltas": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["baseline_value", "comparator_value", "delta_abs", "delta_rel"],
+            "properties": {
+              "baseline_value": { "type": "number" },
+              "comparator_value": { "type": "number" },
+              "delta_abs": { "type": "number" },
+              "delta_rel": { "type": "number" },
+              "baseline_ci_95": { "type": "object" },
+              "comparator_ci_95": { "type": "object" }
+            }
+          }
+        },
+        "neutral_summary": { "type": "string" },
+        "disclaimer": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "ResearchReport": {
+      "type": "object",
+      "required": ["report_id", "experiment_id", "created_at", "sections", "research_disclaimer"],
+      "properties": {
+        "report_id": { "type": "string" },
+        "experiment_id": { "type": "string" },
+        "experiment_name": { "type": "string" },
+        "created_at": { "type": "string" },
+        "created_by": { "type": "string" },
+        "sections": {
+          "type": "object",
+          "required": [
+            "overview",
+            "research_question",
+            "dataset_description",
+            "model_configuration",
+            "evaluation_configuration",
+            "results",
+            "confidence_intervals",
+            "reproducibility",
+            "provenance",
+            "limitations",
+            "disclaimer"
+          ]
+        },
+        "research_disclaimer": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "ExperimentDefinition": {
+      "type": "object",
+      "required": ["experiment_id", "experiment_name", "created_at", "status", "dataset_ref", "model_ref", "configuration", "research_disclaimer"],
+      "properties": {
+        "experiment_id": { "type": "string" },
+        "experiment_name": { "type": "string" },
+        "description": { "type": "string" },
+        "created_at": { "type": "string" },
+        "updated_at": { "type": "string" },
+        "created_by": { "type": "string" },
+        "status": { "$ref": "#/definitions/ExperimentStatus" },
+        "dataset_ref": { "$ref": "#/definitions/ExperimentDatasetReference" },
+        "model_ref": { "$ref": "#/definitions/ExperimentModelReference" },
+        "configuration": { "$ref": "#/definitions/ExperimentConfiguration" },
+        "environment": { "$ref": "#/definitions/ExperimentEnvironment" },
+        "input_fingerprints": {
+          "type": "object",
+          "properties": {
+            "dataset_manifest_sha256": { "type": "string" },
+            "model_weights_sha256": { "type": "string" },
+            "configuration_sha256": { "type": "string" },
+            "canonical_fingerprint": { "type": "string" }
+          }
+        },
+        "output_fingerprints": { "type": "object" },
+        "metrics": { "$ref": "#/definitions/ExperimentMetrics" },
+        "statistical_summary": { "$ref": "#/definitions/StatisticalSummary" },
+        "reproducibility_manifest": { "$ref": "#/definitions/ReproducibilityManifest" },
+        "provenance": { "type": "object" },
+        "research_disclaimer": { "type": "string" }
+      },
+      "additionalProperties": true
+    }
+  }
+}

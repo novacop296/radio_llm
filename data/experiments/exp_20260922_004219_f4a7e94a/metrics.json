@@ -1,0 +1,119 @@
+{
+  "review_coverage": {
+    "total_studies": 1,
+    "reviewed_studies": 1,
+    "finalized_studies": 0,
+    "review_completion_ratio": 1.0
+  },
+  "consensus_coverage": {
+    "total_consensus_studies": 1,
+    "unanimous_consensus_studies": 0,
+    "majority_consensus_studies": 0,
+    "adjudication_required_studies": 0,
+    "finalized_consensus_studies": 0
+  },
+  "finding_statistics": {
+    "Infiltration": {
+      "machine_candidate_count": 3,
+      "reviewer_confirmed_present": 3,
+      "reviewer_confirmed_absent": 0,
+      "reviewer_uncertain": 0,
+      "reviewer_needs_review": 0,
+      "disagreement_count": 0,
+      "consensus_outcome_distribution": {}
+    },
+    "Pneumothorax": {
+      "machine_candidate_count": 3,
+      "reviewer_confirmed_present": 0,
+      "reviewer_confirmed_absent": 3,
+      "reviewer_uncertain": 0,
+      "reviewer_needs_review": 0,
+      "disagreement_count": 0,
+      "consensus_outcome_distribution": {}
+    },
+    "Consolidation": {
+      "machine_candidate_count": 3,
+      "reviewer_confirmed_present": 0,
+      "reviewer_confirmed_absent": 3,
+      "reviewer_uncertain": 0,
+      "reviewer_needs_review": 0,
+      "disagreement_count": 0,
+      "consensus_outcome_distribution": {}
+    },
+    "Fracture": {
+      "machine_candidate_count": 3,
+      "reviewer_confirmed_present": 0,
+      "reviewer_confirmed_absent": 3,
+      "reviewer_uncertain": 0,
+      "reviewer_needs_review": 0,
+      "disagreement_count": 0,
+      "consensus_outcome_distribution": {}
+    },
+    "Nodule": {
+      "machine_candidate_count": 3,
+      "reviewer_confirmed_present": 0,
+      "reviewer_confirmed_absent": 3,
+      "reviewer_uncertain": 0,
+      "reviewer_needs_review": 0,
+      "disagreement_count": 0,
+      "consensus_outcome_distribution": {}
+    },
+    "Effusion": {
+      "machine_candidate_count": 3,
+      "reviewer_confirmed_present": 0,
+      "reviewer_confirmed_absent": 3,
+      "reviewer_uncertain": 0,
+      "reviewer_needs_review": 0,
+      "disagreement_count": 0,
+      "consensus_outcome_distribution": {}
+    },
+    "Cardiomegaly": {
+      "machine_candidate_count": 3,
+      "reviewer_confirmed_present": 0,
+      "reviewer_confirmed_absent": 3,
+      "reviewer_uncertain": 0,
+      "reviewer_needs_review": 0,
+      "disagreement_count": 0,
+      "consensus_outcome_distribution": {}
+    }
+  },
+  "machine_reviewer_agreement": {
+    "overall_agreement_ratio": 0.143,
+    "finding_agreement_ratios": {
+      "Infiltration": 1.0,
+      "Pneumothorax": 0.0,
+      "Consolidation": 0.0,
+      "Fracture": 0.0,
+      "Nodule": 0.0,
+      "Effusion": 0.0,
+      "Cardiomegaly": 0.0
+    },
+    "notes": "Descriptive machine-reviewer concordance ratio across evaluated findings. Not a clinical diagnostic accuracy benchmark."
+  },
+  "inter_rater_reliability": {
+    "cohens_kappa_2_reviewers": {
+      "average_kappa": 0.76,
+      "sample_size": 3
+    },
+    "fleiss_kappa_multi_reviewers": {
+      "average_kappa": 0.71,
+      "sample_size": 2
+    }
+  },
+  "explainability_coverage": {
+    "total_findings_evaluated": 7,
+    "findings_with_gradcam": 7,
+    "findings_without_gradcam": 0,
+    "gradcam_generation_success_rate": 1.0
+  },
+  "human_corrections": {
+    "total_decisions": 21,
+    "unchanged_count": 3,
+    "modified_status_count": 18,
+    "modified_location_count": 3,
+    "modified_severity_count": 3,
+    "report_findings_edited_count": 0,
+    "impression_edited_count": 0
+  },
+  "evaluation_notice": "RESEARCH EVALUATION ONLY \u2014 NOT CLINICAL PERFORMANCE"
+}

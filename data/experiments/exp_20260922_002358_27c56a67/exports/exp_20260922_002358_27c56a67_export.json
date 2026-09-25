@@ -1,0 +1,294 @@
+{
+  "experiment_id": "exp_20260922_002358_27c56a67",
+  "experiment_name": "DenseNet121_denseblock4_Alternate",
+  "description": "Alternate evaluation targeting DenseBlock4",
+  "created_at": "2026-09-22T00:23:58Z",
+  "created_by": "researcher_02",
+  "completed_at": "2026-09-22T00:23:59Z",
+  "dataset_snapshot_id": "snap_20260922_002358_29d96f33",
+  "dataset_size": 1,
+  "model_name": "TorchXRayVision DenseNet-121",
+  "model_version": "densenet121-res224-all",
+  "configuration": {
+    "model_name": "TorchXRayVision DenseNet-121",
+    "model_version": "densenet121-res224-all",
+    "target_layer": "model.features.denseblock4",
+    "qa_threshold": 0.25,
+    "qa_top_k": 5
+  },
+  "configuration_fingerprint": {
+    "model_name": "TorchXRayVision DenseNet-121",
+    "model_version": "densenet121-res224-all",
+    "target_layer": "model.features.denseblock4",
+    "preprocessing_resolution": [
+      224,
+      224
+    ],
+    "normalization": "minmax_0_1",
+    "device": "cpu",
+    "qa_threshold": 0.25,
+    "qa_top_k": 5,
+    "llm_provider": "mock",
+    "llm_model": "mock-radiology-llm",
+    "fingerprint_sha256": "27c56a673986841c67d56d6c90c347c09a4afe316569ef82acd854a8c78de888",
+    "environment_metadata": {
+      "python_version": "3.11.9",
+      "os_platform": "win32"
+    }
+  },
+  "status": "COMPLETED",
+  "metrics": {
+    "review_coverage": {
+      "total_studies": 1,
+      "reviewed_studies": 1,
+      "finalized_studies": 0,
+      "review_completion_ratio": 1.0
+    },
+    "consensus_coverage": {
+      "total_consensus_studies": 1,
+      "unanimous_consensus_studies": 0,
+      "majority_consensus_studies": 0,
+      "adjudication_required_studies": 0,
+      "finalized_consensus_studies": 0
+    },
+    "finding_statistics": {
+      "Infiltration": {
+        "machine_candidate_count": 3,
+        "reviewer_confirmed_present": 3,
+        "reviewer_confirmed_absent": 0,
+        "reviewer_uncertain": 0,
+        "reviewer_needs_review": 0,
+        "disagreement_count": 0,
+        "consensus_outcome_distribution": {}
+      },
+      "Pneumothorax": {
+        "machine_candidate_count": 3,
+        "reviewer_confirmed_present": 0,
+        "reviewer_confirmed_absent": 3,
+        "reviewer_uncertain": 0,
+        "reviewer_needs_review": 0,
+        "disagreement_count": 0,
+        "consensus_outcome_distribution": {}
+      },
+      "Consolidation": {
+        "machine_candidate_count": 3,
+        "reviewer_confirmed_present": 0,
+        "reviewer_confirmed_absent": 3,
+        "reviewer_uncertain": 0,
+        "reviewer_needs_review": 0,
+        "disagreement_count": 0,
+        "consensus_outcome_distribution": {}
+      },
+      "Fracture": {
+        "machine_candidate_count": 3,
+        "reviewer_confirmed_present": 0,
+        "reviewer_confirmed_absent": 3,
+        "reviewer_uncertain": 0,
+        "reviewer_needs_review": 0,
+        "disagreement_count": 0,
+        "consensus_outcome_distribution": {}
+      },
+      "Nodule": {
+        "machine_candidate_count": 3,
+        "reviewer_confirmed_present": 0,
+        "reviewer_confirmed_absent": 3,
+        "reviewer_uncertain": 0,
+        "reviewer_needs_review": 0,
+        "disagreement_count": 0,
+        "consensus_outcome_distribution": {}
+      },
+      "Effusion": {
+        "machine_candidate_count": 3,
+        "reviewer_confirmed_present": 0,
+        "reviewer_confirmed_absent": 3,
+        "reviewer_uncertain": 0,
+        "reviewer_needs_review": 0,
+        "disagreement_count": 0,
+        "consensus_outcome_distribution": {}
+      },
+      "Cardiomegaly": {
+        "machine_candidate_count": 3,
+        "reviewer_confirmed_present": 0,
+        "reviewer_confirmed_absent": 3,
+        "reviewer_uncertain": 0,
+        "reviewer_needs_review": 0,
+        "disagreement_count": 0,
+        "consensus_outcome_distribution": {}
+      }
+    },
+    "machine_reviewer_agreement": {
+      "overall_agreement_ratio": 0.143,
+      "finding_agreement_ratios": {
+        "Infiltration": 1.0,
+        "Pneumothorax": 0.0,
+        "Consolidation": 0.0,
+        "Fracture": 0.0,
+        "Nodule": 0.0,
+        "Effusion": 0.0,
+        "Cardiomegaly": 0.0
+      },
+      "notes": "Descriptive machine-reviewer concordance ratio across evaluated findings. Not a clinical diagnostic accuracy benchmark."
+    },
+    "inter_rater_reliability": {
+      "cohens_kappa_2_reviewers": {
+        "average_kappa": null,
+        "sample_size": 0
+      },
+      "fleiss_kappa_multi_reviewers": {
+        "average_kappa": 1.0,
+        "sample_size": 1
+      }
+    },
+    "explainability_coverage": {
+      "total_findings_evaluated": 7,
+      "findings_with_gradcam": 7,
+      "findings_without_gradcam": 0,
+      "gradcam_generation_success_rate": 1.0
+    },
+    "human_corrections": {
+      "total_decisions": 21,
+      "unchanged_count": 3,
+      "modified_status_count": 18,
+      "modified_location_count": 3,
+      "modified_severity_count": 3,
+      "report_findings_edited_count": 0,
+      "impression_edited_count": 0
+    },
+    "evaluation_notice": "RESEARCH EVALUATION ONLY \u2014 NOT CLINICAL PERFORMANCE"
+  },
+  "provenance": {
+    "experiment_id": "exp_20260922_002358_27c56a67",
+    "dataset_snapshot_id": "snap_20260922_002358_29d96f33",
+    "manifest_sha256": "29d96f3355d83620a28e4d3f3bca09cd2fc7246d574afc4dce6af4b5683b6b01",
+    "configuration_fingerprint": "27c56a673986841c67d56d6c90c347c09a4afe316569ef82acd854a8c78de888",
+    "pipeline_stages": [
+      {
+        "stage_id": "stage_1_dataset_snapshot",
+        "stage_name": "Immutable Dataset Snapshot",
+        "status": "COMPLETED",
+        "timestamp": "2026-09-22T00:23:58Z",
+        "details": {
+          "snapshot_id": "snap_20260922_002358_29d96f33",
+          "study_count": 1,
+          "manifest_sha256": "29d96f3355d83620a28e4d3f3bca09cd2fc7246d574afc4dce6af4b5683b6b01"
+        }
+      },
+      {
+        "stage_id": "stage_2_study_selection",
+        "stage_name": "Study Cohort Selection",
+        "status": "COMPLETED",
+        "timestamp": "2026-09-22T00:23:58Z",
+        "details": {
+          "total_studies_selected": 1,
+          "deterministic_ordering": true
+        }
+      },
+      {
+        "stage_id": "stage_3_machine_model",
+        "stage_name": "Vision Backbone Model",
+        "status": "COMPLETED",
+        "timestamp": "2026-09-22T00:23:58Z",
+        "details": {
+          "model_name": "TorchXRayVision DenseNet-121",
+          "model_version": "densenet121-res224-all",
+          "device": "cpu"
+        }
+      },
+      {
+        "stage_id": "stage_4_preprocessing",
+        "stage_name": "Image Preprocessing & Normalization",
+        "status": "COMPLETED",
+        "timestamp": "2026-09-22T00:23:58Z",
+        "details": {
+          "resolution": [
+            224,
+            224
+          ],
+          "normalization": "minmax_0_1"
+        }
+      },
+      {
+        "stage_id": "stage_5_diagnostic_qa",
+        "stage_name": "Diagnostic QA Engine",
+        "status": "COMPLETED",
+        "timestamp": "2026-09-22T00:23:58Z",
+        "details": {
+          "qa_threshold": 0.25,
+          "qa_top_k": 5
+        }
+      },
+      {
+        "stage_id": "stage_6_evidence_layer",
+        "stage_name": "Immutable Evidence Layer",
+        "status": "COMPLETED",
+        "timestamp": "2026-09-22T00:23:58Z",
+        "details": {
+          "semantics": "supported / possible / uncertain / absent",
+          "immutability_enforced": true
+        }
+      },
+      {
+        "stage_id": "stage_7_visual_grounding",
+        "stage_name": "Grad-CAM Visual Grounding",
+        "status": "COMPLETED",
+        "timestamp": "2026-09-22T00:23:58Z",
+        "details": {
+          "target_layer": "model.features.denseblock4",
+          "claim": "Feature Attribution Only"
+        }
+      },
+      {
+        "stage_id": "stage_8_human_review",
+        "stage_name": "Independent Human Review Tracking",
+        "status": "COMPLETED",
+        "timestamp": "2026-09-22T00:23:59Z",
+        "details": {
+          "reviewed_studies": 1,
+          "completion_ratio": 1.0
+        }
+      },
+      {
+        "stage_id": "stage_9_consensus_synthesis",
+        "stage_name": "Multi-Reviewer Consensus Synthesis",
+        "status": "COMPLETED",
+        "timestamp": "2026-09-22T00:23:59Z",
+        "details": {
+          "consensus_studies": 1,
+          "adjudications_required": 0
+        }
+      },
+      {
+        "stage_id": "stage_10_research_evaluation",
+        "stage_name": "Research Metrics & Inter-Rater Reliability",
+        "status": "COMPLETED",
+        "timestamp": "2026-09-22T00:23:59Z",
+        "details": {
+          "cohens_kappa": null,
+          "fleiss_kappa": 1.0
+        }
+      },
+      {
+        "stage_id": "stage_11_experiment_result",
+        "stage_name": "Finalized Reproducible Experiment Artifact",
+        "status": "COMPLETED",
+        "timestamp": "2026-09-22T00:23:59Z",
+        "details": {
+          "locked": true,
+          "evaluation_claim": "Research Evaluation Only (Non-Clinical)"
+        }
+      }
+    ],
+    "generated_at": "2026-09-22T00:23:59Z",
+    "disclaimer": "RESEARCH EVALUATION ONLY \u2014 NOT CLINICAL PERFORMANCE. Experiment configurations, metrics, and evaluation summaries are research artifacts. They do not provide clinical diagnostic guarantees or patient-level medical validation."
+  },
+  "validation": {
+    "schema_validation": "PASS",
+    "snapshot_integrity": "PASS",
+    "configuration_validation": "PASS",
+    "metrics_bounds_check": "PASS",
+    "ground_truth_isolation": "PASS",
+    "immutability_enforced": true,
+    "completed_at": "2026-09-22T00:23:59Z"
+  },
+  "research_disclaimer": "RESEARCH EVALUATION ONLY \u2014 NOT CLINICAL PERFORMANCE. Experiment configurations, metrics, and evaluation summaries are research artifacts. They do not provide clinical diagnostic guarantees or patient-level medical validation."
+}

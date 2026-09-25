@@ -1,0 +1,181 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "StudySummarySchema",
+  "description": "Formal schema for sanitized multi-study summaries, review queues, evaluation analytics, and provenance in Phase 1.4.",
+  "type": "object",
+  "definitions": {
+    "StudySummary": {
+      "type": "object",
+      "required": [
+        "study_id",
+        "image_count",
+        "views",
+        "machine_pipeline_status",
+        "evidence_count",
+        "qa_count",
+        "grounding_count",
+        "machine_report_available",
+        "review_status",
+        "reviewer_count",
+        "review_completion",
+        "consensus_status",
+        "adjudication_required",
+        "consensus_finalized",
+        "last_updated"
+      ],
+      "properties": {
+        "study_id": {
+          "type": "string",
+          "pattern": "^CXR[0-9]+.*$"
+        },
+        "image_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "image_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "views": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["Frontal", "Lateral", "Dual-View", "Other"] }
+        },
+        "machine_pipeline_status": {
+          "type": "string",
+          "enum": ["COMPLETE", "READY", "PARTIAL", "FAILED"]
+        },
+        "evidence_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "qa_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "grounding_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "machine_report_available": {
+          "type": "boolean"
+        },
+        "review_status": {
+          "type": "string",
+          "enum": ["UNREVIEWED", "IN_REVIEW", "COMPLETED", "READY_FOR_CONSENSUS"]
+        },
+        "reviewer_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "review_completion": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "consensus_status": {
+          "type": "string",
+          "enum": ["NOT_STARTED", "PENDING", "CONSENSUS_READY", "ADJUDICATION_REQUIRED", "FINALIZED"]
+        },
+        "adjudication_required": {
+          "type": "boolean"
+        },
+        "consensus_finalized": {
+          "type": "boolean"
+        },
+        "workflow_status": {
+          "type": "string",
+          "enum": ["UNREVIEWED", "IN_REVIEW", "AWAITING_CONSENSUS", "ADJUDICATION_REQUIRED", "READY_FOR_FINALIZATION", "FINALIZED"]
+        },
+        "last_updated": {
+          "type": "string"
+        },
+        "disclaimer": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "ReviewQueueItem": {
+      "type": "object",
+      "required": [
+        "study_id",
+        "primary_view",
+        "views",
+        "evidence_count",
+        "machine_report",
+        "reviewer_count",
+        "review_completion",
+        "consensus_status",
+        "adjudication_required",
+        "workflow_status",
+        "last_updated"
+      ],
+      "properties": {
+        "study_id": { "type": "string" },
+        "primary_view": { "type": "string" },
+        "views": { "type": "array", "items": { "type": "string" } },
+        "evidence_count": { "type": "integer" },
+        "machine_report": { "type": "boolean" },
+        "reviewer_count": { "type": "integer" },
+        "review_completion": { "type": "number" },
+        "consensus_status": { "type": "string" },
+        "adjudication_required": { "type": "boolean" },
+        "workflow_status": { "type": "string" },
+        "last_updated": { "type": "string" }
+      }
+    },
+    "DatasetStatistics": {
+      "type": "object",
+      "required": [
+        "total_studies",
+        "unreviewed",
+        "in_review",
+        "awaiting_consensus",
+        "adjudication_required",
+        "ready_for_finalization",
+        "finalized",
+        "total_reviewers",
+        "total_reviews_completed"
+      ],
+      "properties": {
+        "total_studies": { "type": "integer", "minimum": 0 },
+        "unreviewed": { "type": "integer", "minimum": 0 },
+        "in_review": { "type": "integer", "minimum": 0 },
+        "awaiting_consensus": { "type": "integer", "minimum": 0 },
+        "adjudication_required": { "type": "integer", "minimum": 0 },
+        "ready_for_finalization": { "type": "integer", "minimum": 0 },
+        "finalized": { "type": "integer", "minimum": 0 },
+        "total_reviewers": { "type": "integer", "minimum": 0 },
+        "total_reviews_completed": { "type": "integer", "minimum": 0 },
+        "disclaimer": { "type": "string" }
+      }
+    },
+    "StudyProvenance": {
+      "type": "object",
+      "required": [
+        "study_id",
+        "pipeline_stages",
+        "generated_at",
+        "disclaimer"
+      ],
+      "properties": {
+        "study_id": { "type": "string" },
+        "pipeline_stages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["stage_name", "status", "timestamp"],
+            "properties": {
+              "stage_name": { "type": "string" },
+              "status": { "type": "string" },
+              "timestamp": { "type": "string" },
+              "details": { "type": "object" }
+            }
+          }
+        },
+        "generated_at": { "type": "string" },
+        "disclaimer": { "type": "string" }
+      }
+    }
+  }
+}

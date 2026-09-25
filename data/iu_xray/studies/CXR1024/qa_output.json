@@ -1,0 +1,368 @@
+{
+  "study_id": "CXR1024",
+  "image_id": "CXR1024_IM-0019-1001",
+  "view": "Frontal",
+  "vision_candidates": [
+    {
+      "finding": "Pneumothorax",
+      "model_score": 0.1567,
+      "is_baseline": true,
+      "selection_reason": "baseline_routine"
+    },
+    {
+      "finding": "Effusion",
+      "model_score": 0.0112,
+      "is_baseline": true,
+      "selection_reason": "baseline_routine"
+    },
+    {
+      "finding": "Consolidation",
+      "model_score": 0.467,
+      "is_baseline": true,
+      "selection_reason": "baseline_routine"
+    },
+    {
+      "finding": "Cardiomegaly",
+      "model_score": 0.001,
+      "is_baseline": true,
+      "selection_reason": "baseline_routine"
+    },
+    {
+      "finding": "Pneumonia",
+      "model_score": 0.4531,
+      "is_baseline": false,
+      "selection_reason": "top_3_activation"
+    },
+    {
+      "finding": "Infiltration",
+      "model_score": 0.4441,
+      "is_baseline": false,
+      "selection_reason": "top_3_activation"
+    },
+    {
+      "finding": "Nodule",
+      "model_score": 0.2233,
+      "is_baseline": false,
+      "selection_reason": "top_3_activation"
+    }
+  ],
+  "questions_evaluated": [
+    {
+      "question_id": "Q_PNEUMOTHORAX_PRESENCE",
+      "finding": "Pneumothorax",
+      "level": 1,
+      "question_text": "Is there radiographic evidence of a pneumothorax?",
+      "options": [
+        "yes",
+        "no",
+        "uncertain"
+      ],
+      "model_score": 0.1567,
+      "answer": "uncertain"
+    },
+    {
+      "question_id": "Q_PNEUMOTHORAX_LOCATION",
+      "finding": "Pneumothorax",
+      "level": 2,
+      "question_text": "Where is the pneumothorax located (e.g., right, left, apical)?",
+      "options": [
+        "right",
+        "left",
+        "bilateral",
+        "right_upper_lobe",
+        "right_middle_lobe",
+        "right_lower_lobe",
+        "left_upper_lobe",
+        "left_lower_lobe",
+        "basilar",
+        "apical",
+        "retrocardiac",
+        "mediastinum",
+        "diffuse",
+        "unspecified"
+      ],
+      "model_score": 0.1567,
+      "answer": "unspecified"
+    },
+    {
+      "question_id": "Q_EFFUSION_PRESENCE",
+      "finding": "Effusion",
+      "level": 1,
+      "question_text": "Is there evidence of pleural effusion or costophrenic angle blunting?",
+      "options": [
+        "yes",
+        "no",
+        "uncertain"
+      ],
+      "model_score": 0.0112,
+      "answer": "uncertain"
+    },
+    {
+      "question_id": "Q_EFFUSION_LOCATION",
+      "finding": "Effusion",
+      "level": 2,
+      "question_text": "Where is the pleural effusion located (e.g., right, left, bilateral)?",
+      "options": [
+        "right",
+        "left",
+        "bilateral",
+        "right_upper_lobe",
+        "right_middle_lobe",
+        "right_lower_lobe",
+        "left_upper_lobe",
+        "left_lower_lobe",
+        "basilar",
+        "apical",
+        "retrocardiac",
+        "mediastinum",
+        "diffuse",
+        "unspecified"
+      ],
+      "model_score": 0.0112,
+      "answer": "unspecified"
+    },
+    {
+      "question_id": "Q_CONSOLIDATION_PRESENCE",
+      "finding": "Consolidation",
+      "level": 1,
+      "question_text": "Is there focal or dense airspace consolidation?",
+      "options": [
+        "yes",
+        "no",
+        "uncertain"
+      ],
+      "model_score": 0.467,
+      "answer": "uncertain"
+    },
+    {
+      "question_id": "Q_CONSOLIDATION_LOCATION",
+      "finding": "Consolidation",
+      "level": 2,
+      "question_text": "Which lung lobe or region contains the consolidation?",
+      "options": [
+        "right",
+        "left",
+        "bilateral",
+        "right_upper_lobe",
+        "right_middle_lobe",
+        "right_lower_lobe",
+        "left_upper_lobe",
+        "left_lower_lobe",
+        "basilar",
+        "apical",
+        "retrocardiac",
+        "mediastinum",
+        "diffuse",
+        "unspecified"
+      ],
+      "model_score": 0.467,
+      "answer": "unspecified"
+    },
+    {
+      "question_id": "Q_CARDIOMEGALY_PRESENCE",
+      "finding": "Cardiomegaly",
+      "level": 1,
+      "question_text": "Is cardiomegaly or prominent cardiac enlargement present?",
+      "options": [
+        "yes",
+        "no",
+        "uncertain"
+      ],
+      "model_score": 0.001,
+      "answer": "uncertain"
+    },
+    {
+      "question_id": "Q_CARDIOMEGALY_LOCATION",
+      "finding": "Cardiomegaly",
+      "level": 2,
+      "question_text": "Is the enlargement generalized or specific to cardiac chambers?",
+      "options": [
+        "right",
+        "left",
+        "bilateral",
+        "right_upper_lobe",
+        "right_middle_lobe",
+        "right_lower_lobe",
+        "left_upper_lobe",
+        "left_lower_lobe",
+        "basilar",
+        "apical",
+        "retrocardiac",
+        "mediastinum",
+        "diffuse",
+        "unspecified"
+      ],
+      "model_score": 0.001,
+      "answer": "unspecified"
+    },
+    {
+      "question_id": "Q_PNEUMONIA_PRESENCE",
+      "finding": "Pneumonia",
+      "level": 1,
+      "question_text": "Are there features suggestive of infectious pneumonia / bronchopneumonia?",
+      "options": [
+        "yes",
+        "no",
+        "uncertain"
+      ],
+      "model_score": 0.4531,
+      "answer": "uncertain"
+    },
+    {
+      "question_id": "Q_PNEUMONIA_LOCATION",
+      "finding": "Pneumonia",
+      "level": 2,
+      "question_text": "Where is the suspected pneumonia located?",
+      "options": [
+        "right",
+        "left",
+        "bilateral",
+        "right_upper_lobe",
+        "right_middle_lobe",
+        "right_lower_lobe",
+        "left_upper_lobe",
+        "left_lower_lobe",
+        "basilar",
+        "apical",
+        "retrocardiac",
+        "mediastinum",
+        "diffuse",
+        "unspecified"
+      ],
+      "model_score": 0.4531,
+      "answer": "unspecified"
+    },
+    {
+      "question_id": "Q_INFILTRATION_PRESENCE",
+      "finding": "Infiltration",
+      "level": 1,
+      "question_text": "Are there infiltrative or hazy airspace opacities?",
+      "options": [
+        "yes",
+        "no",
+        "uncertain"
+      ],
+      "model_score": 0.4441,
+      "answer": "uncertain"
+    },
+    {
+      "question_id": "Q_INFILTRATION_LOCATION",
+      "finding": "Infiltration",
+      "level": 2,
+      "question_text": "Where are the infiltrates distributed (e.g., right, left, bilateral)?",
+      "options": [
+        "right",
+        "left",
+        "bilateral",
+        "right_upper_lobe",
+        "right_middle_lobe",
+        "right_lower_lobe",
+        "left_upper_lobe",
+        "left_lower_lobe",
+        "basilar",
+        "apical",
+        "retrocardiac",
+        "mediastinum",
+        "diffuse",
+        "unspecified"
+      ],
+      "model_score": 0.4441,
+      "answer": "unspecified"
+    },
+    {
+      "question_id": "Q_NODULE_PRESENCE",
+      "finding": "Nodule",
+      "level": 1,
+      "question_text": "Is there evidence of pulmonary nodule(s) or calcified granuloma(s)?",
+      "options": [
+        "yes",
+        "no",
+        "uncertain"
+      ],
+      "model_score": 0.2233,
+      "answer": "uncertain"
+    },
+    {
+      "question_id": "Q_NODULE_LOCATION",
+      "finding": "Nodule",
+      "level": 2,
+      "question_text": "Where is the nodule located (e.g., right_upper_lobe, left_midlung)?",
+      "options": [
+        "right",
+        "left",
+        "bilateral",
+        "right_upper_lobe",
+        "right_middle_lobe",
+        "right_lower_lobe",
+        "left_upper_lobe",
+        "left_lower_lobe",
+        "basilar",
+        "apical",
+        "retrocardiac",
+        "mediastinum",
+        "diffuse",
+        "unspecified"
+      ],
+      "model_score": 0.2233,
+      "answer": "unspecified"
+    }
+  ],
+  "qa_findings": [
+    {
+      "finding": "Pneumothorax",
+      "presence": "uncertain",
+      "location": "unspecified",
+      "severity": "unspecified",
+      "model_score": 0.1567,
+      "evidence_source": "vision_model"
+    },
+    {
+      "finding": "Effusion",
+      "presence": "uncertain",
+      "location": "unspecified",
+      "severity": "unspecified",
+      "model_score": 0.0112,
+      "evidence_source": "vision_model"
+    },
+    {
+      "finding": "Consolidation",
+      "presence": "uncertain",
+      "location": "unspecified",
+      "severity": "unspecified",
+      "model_score": 0.467,
+      "evidence_source": "vision_model"
+    },
+    {
+      "finding": "Cardiomegaly",
+      "presence": "uncertain",
+      "location": "unspecified",
+      "severity": "unspecified",
+      "model_score": 0.001,
+      "evidence_source": "vision_model"
+    },
+    {
+      "finding": "Pneumonia",
+      "presence": "uncertain",
+      "location": "unspecified",
+      "severity": "unspecified",
+      "model_score": 0.4531,
+      "evidence_source": "vision_model"
+    },
+    {
+      "finding": "Infiltration",
+      "presence": "uncertain",
+      "location": "unspecified",
+      "severity": "unspecified",
+      "model_score": 0.4441,
+      "evidence_source": "vision_model"
+    },
+    {
+      "finding": "Nodule",
+      "presence": "uncertain",
+      "location": "unspecified",
+      "severity": "unspecified",
+      "model_score": 0.2233,
+      "evidence_source": "vision_model"
+    }
+  ]
+}

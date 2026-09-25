@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Phase 1.8 Research Benchmark Schema",
+  "description": "Formal JSON schema defining multi-view and external test set research benchmark records.",
+  "type": "object",
+  "required": [
+    "benchmark_id",
+    "benchmark_name",
+    "experiment_id",
+    "modality",
+    "view_configuration",
+    "status",
+    "created_at"
+  ],
+  "properties": {
+    "benchmark_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_-]+$"
+    },
+    "benchmark_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "experiment_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_-]+$"
+    },
+    "model_id": {
+      "type": "string"
+    },
+    "dataset_version_id": {
+      "type": ["string", "null"]
+    },
+    "external_dataset_id": {
+      "type": ["string", "null"]
+    },
+    "modality": {
+      "type": "string",
+      "enum": ["INTERNAL_BENCHMARK", "EXTERNAL_TEST_SET", "CROSS_DATASET_BENCHMARK"]
+    },
+    "view_configuration": {
+      "type": "string",
+      "enum": ["SINGLE_VIEW", "FRONTAL_ONLY", "LATERAL_ONLY", "MULTI_VIEW"]
+    },
+    "fusion_strategy": {
+      "type": "string",
+      "enum": ["independent_view", "feature_fusion", "decision_fusion", "none"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["REGISTERED", "VALIDATING", "EXECUTED", "VALIDATED", "FINALIZED", "ARCHIVED"]
+    },
+    "metrics": {
+      "type": "object"
+    },
+    "uncertainty": {
+      "type": "object"
+    },
+    "error_breakdown": {
+      "type": "object"
+    },
+    "provenance": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "reproducibility_status": {
+      "type": "string",
+      "enum": ["UNVERIFIED", "VERIFIED", "MISMATCH", "INCOMPLETE"]
+    },
+    "validation_status": {
+      "type": "string",
+      "enum": ["PENDING", "VALIDATED", "REJECTED"]
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "finalized_at": {
+      "type": ["string", "null"]
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

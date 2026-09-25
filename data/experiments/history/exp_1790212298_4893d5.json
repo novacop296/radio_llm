@@ -1,0 +1,63 @@
+[
+  {
+    "timestamp": "2026-09-24T01:11:38.897504+00:00",
+    "actor": "api_tester",
+    "action": "EXPERIMENT_REGISTERED",
+    "object_type": "EXPERIMENT",
+    "object_id": "exp_1790212298_4893d5",
+    "field": null,
+    "old_value": null,
+    "new_value": null,
+    "metadata": {
+      "fingerprint": "6ce521281845d049773e1b824d7c63c898bfe895e7acdb53351f70bd769718d0",
+      "model_id": "model_densenet121_txrv",
+      "dataset_version_id": "snap_20260924_011138_29d96f33_1"
+    }
+  },
+  {
+    "timestamp": "2026-09-24T01:11:38.955973+00:00",
+    "actor": "runner",
+    "action": "EXPERIMENT_STARTED",
+    "object_type": "EXPERIMENT",
+    "object_id": "exp_1790212298_4893d5",
+    "field": null,
+    "old_value": null,
+    "new_value": null,
+    "metadata": {}
+  },
+  {
+    "timestamp": "2026-09-24T01:11:38.993705+00:00",
+    "actor": "runner",
+    "action": "EXPERIMENT_COMPLETED",
+    "object_type": "EXPERIMENT",
+    "object_id": "exp_1790212298_4893d5",
+    "field": null,
+    "old_value": null,
+    "new_value": null,
+    "metadata": {
+      "evaluation_run_id": "eval_exp_1790212298_4893d5"
+    }
+  },
+  {
+    "timestamp": "2026-09-24T01:11:39.025487+00:00",
+    "actor": "validator",
+    "action": "EXPERIMENT_VALIDATED",
+    "object_type": "EXPERIMENT",
+    "object_id": "exp_1790212298_4893d5",
+    "field": null,
+    "old_value": null,
+    "new_value": null,
+    "metadata": {}
+  },
+  {
+    "timestamp": "2026-09-24T01:11:39.074470+00:00",
+    "actor": "researcher",
+    "action": "EXPERIMENT_ARCHIVED",
+    "object_type": "EXPERIMENT",
+    "object_id": "exp_1790212298_4893d5",
+    "field": null,
+    "old_value": null,
+    "new_value": null,
+    "metadata": {}
+  }
+]

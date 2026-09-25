@@ -1,0 +1,142 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Phase 1.8 External Dataset Schema",
+  "description": "Formal JSON schema defining registered external datasets, multi-view cohorts, manifests, and integrity constraints for research benchmarking.",
+  "type": "object",
+  "required": [
+    "dataset_id",
+    "dataset_name",
+    "dataset_version",
+    "modality",
+    "image_views",
+    "study_count",
+    "image_count",
+    "label_schema",
+    "manifest_sha256",
+    "status",
+    "created_at"
+  ],
+  "properties": {
+    "dataset_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_-]+$"
+    },
+    "dataset_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "dataset_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 50
+    },
+    "source_description": {
+      "type": "string"
+    },
+    "institution_or_source": {
+      "type": "string"
+    },
+    "modality": {
+      "type": "string",
+      "enum": ["CHEST_XRAY", "MULTI_MODAL_XRAY", "COMPUTED_RADIOGRAPHY", "DIGITAL_RADIOGRAPHY"]
+    },
+    "image_views": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["Frontal", "Lateral", "Frontal + Lateral", "Unknown"]
+      }
+    },
+    "study_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "image_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "studies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["study_id", "views"],
+        "properties": {
+          "study_id": { "type": "string" },
+          "views": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["Frontal", "Lateral", "Unknown"] }
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["image_id", "view"],
+              "properties": {
+                "image_id": { "type": "string" },
+                "view": { "type": "string", "enum": ["Frontal", "Lateral", "Unknown"] },
+                "relative_path": { "type": "string" },
+                "sha256": { "type": "string" }
+              }
+            }
+          },
+          "view_pair_id": { "type": ["string", "null"] },
+          "is_complete_pair": { "type": "boolean" },
+          "annotations": { "type": "object" }
+        }
+      }
+    },
+    "label_schema": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "permitted_annotations": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "preprocessing_definition": {
+      "type": "object"
+    },
+    "split_definition": {
+      "type": "object"
+    },
+    "license_metadata": {
+      "type": "object",
+      "properties": {
+        "license_name": { "type": "string" },
+        "commercial_use": { "type": "boolean" },
+        "attribution_required": { "type": "boolean" },
+        "url": { "type": "string" }
+      }
+    },
+    "access_status": {
+      "type": "string",
+      "enum": ["PUBLIC", "RESTRICTED", "SYNTHETIC_FIXTURE", "AIR_GAPPED", "LOCAL_REFERENCE"]
+    },
+    "local_path_or_reference": {
+      "type": "string"
+    },
+    "manifest_sha256": {
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{64}$"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["REGISTERED", "VALIDATING", "VALIDATED", "FINALIZED", "ARCHIVED"]
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "finalized_at": {
+      "type": ["string", "null"]
+    },
+    "provenance": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

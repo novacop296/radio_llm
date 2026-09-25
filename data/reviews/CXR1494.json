@@ -1,0 +1,35 @@
+{
+  "study_id": "CXR1494",
+  "review_id": "rev_CXR1494_researcher_01_1790211037",
+  "reviewer": {
+    "id": "researcher_01",
+    "display_name": "Clinical Research Reviewer (researcher_01)",
+    "role": "Research Reviewer"
+  },
+  "status": "in_review",
+  "started_at": "2026-09-24T00:50:37Z",
+  "updated_at": "2026-09-24T00:50:37Z",
+  "completed_at": null,
+  "finding_reviews": [],
+  "qa_reviews": [],
+  "report_review": {
+    "machine_report_locked": true,
+    "final_findings": [],
+    "final_impression": [
+      "Inference not yet triggered for this study. Use Batch Processing."
+    ],
+    "reviewer_comment": "",
+    "finalized": false
+  },
+  "audit_trail": [
+    {
+      "timestamp": "2026-09-24T00:50:37Z",
+      "reviewer_id": "researcher_01",
+      "finding": "*SESSION*",
+      "field": "session_init",
+      "old_value": null,
+      "new_value": "initialized"
+    }
+  ],
+  "disclaimer": "Research Prototype \u2014 Reviewer annotations and finalized reports are research metadata and do not constitute certified clinical ground truth or automated diagnoses."
+}

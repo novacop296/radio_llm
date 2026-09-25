@@ -1,0 +1,21 @@
+{
+  "snapshot_id": "snap_20260922_002204_29d96f33",
+  "name": "Exp API Snap",
+  "description": "",
+  "created_at": "2026-09-22T00:22:04Z",
+  "created_by": "researcher",
+  "study_count": 1,
+  "view_counts": {
+    "Frontal": 1
+  },
+  "dataset_source": "IU_XRAY_RESEARCH_CORPUS",
+  "study_ids": [
+    "CXR1122"
+  ],
+  "manifest_sha256": "29d96f3355d83620a28e4d3f3bca09cd2fc7246d574afc4dce6af4b5683b6b01",
+  "source_artifact_hashes": {
+    "grounding": "3d26aae9070eb5b89d4ca969d52a72600023425f64158593678d44f41061e94a"
+  },
+  "schema_version": "1.0",
+  "disclaimer": "RESEARCH EVALUATION ONLY \u2014 NOT CLINICAL PERFORMANCE. Dataset snapshots and experiment metrics are for investigative reproducibility only. They do not constitute certified clinical trial cohorts or diagnostic validation standards."
+}

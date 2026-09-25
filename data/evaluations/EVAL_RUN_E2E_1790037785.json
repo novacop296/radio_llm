@@ -1,0 +1,458 @@
+{
+  "evaluation_id": "EVAL_RUN_E2E_1790037785",
+  "experiment_id": "exp_EXP_E2E_1790037785",
+  "snapshot_id": "SNAP-DEFAULT",
+  "evaluation_dataset_id": "EVALSET_E2E_1790037785",
+  "title": "E2E Evaluation Run",
+  "description": "End-to-End benchmark run",
+  "status": "VALIDATED",
+  "created_at": "2026-09-22T00:43:06.004881+00:00",
+  "completed_at": "2026-09-22T00:43:06.092989+00:00",
+  "validated_at": "2026-09-22T00:43:10.484743+00:00",
+  "archived_at": null,
+  "study_count": 3,
+  "reviewer_count": 3,
+  "configuration_fingerprint": "0000000000000000000000000000000000000000000000000000000000000000",
+  "dataset_fingerprint": "bbaa0a46f767872879efad2718b5bf145e00bfa005a85c251ae6fff7bef42bb7",
+  "evaluation_fingerprint": "3fe5e0bdf1433872144fcf4edccc371955081377e2d3bb8e6ae8b0415a6d247e",
+  "aggregate_metrics": {
+    "accuracy": {
+      "metric_name": "Accuracy",
+      "metric_value": 1.0,
+      "sample_size": 21,
+      "methodology": "Micro-averaged accuracy over all finding instances",
+      "confidence_interval_95": {
+        "lower": 1.0,
+        "upper": 1.0,
+        "method": "Bootstrap Percentile Method (1000 resamples, seed=42)"
+      },
+      "notes": "Observed research benchmark measurement."
+    },
+    "precision": {
+      "metric_name": "Precision",
+      "metric_value": 1.0,
+      "sample_size": 21,
+      "methodology": "Micro-averaged precision",
+      "confidence_interval_95": {
+        "lower": 0.0,
+        "upper": 0.5714,
+        "method": "Bootstrap Percentile Method (1000 resamples, seed=42)"
+      },
+      "notes": "Observed research benchmark measurement."
+    },
+    "recall": {
+      "metric_name": "Recall",
+      "metric_value": 1.0,
+      "sample_size": 21,
+      "methodology": "Micro-averaged recall (sensitivity)",
+      "confidence_interval_95": {
+        "lower": 0.0,
+        "upper": 0.5714,
+        "method": "Bootstrap Percentile Method (1000 resamples, seed=42)"
+      },
+      "notes": "Observed research benchmark measurement."
+    },
+    "f1": {
+      "metric_name": "F1 Score",
+      "metric_value": 1.0,
+      "sample_size": 21,
+      "methodology": "Micro-averaged harmonic mean of precision and recall",
+      "confidence_interval_95": {
+        "lower": 0.0,
+        "upper": 0.5714,
+        "method": "Bootstrap Percentile Method (1000 resamples, seed=42)"
+      },
+      "notes": "Observed research benchmark measurement."
+    },
+    "specificity": {
+      "metric_name": "Specificity",
+      "metric_value": 1.0,
+      "sample_size": 21,
+      "methodology": "Micro-averaged specificity",
+      "confidence_interval_95": {
+        "lower": 1.0,
+        "upper": 1.0,
+        "method": "Bootstrap Percentile Method (1000 resamples, seed=42)"
+      },
+      "notes": "Observed research benchmark measurement."
+    },
+    "sensitivity": {
+      "metric_name": "Sensitivity",
+      "metric_value": 1.0,
+      "sample_size": 21,
+      "methodology": "Micro-averaged sensitivity",
+      "confidence_interval_95": {
+        "lower": 0.0,
+        "upper": 0.5714,
+        "method": "Bootstrap Percentile Method (1000 resamples, seed=42)"
+      },
+      "notes": "Observed research benchmark measurement."
+    },
+    "balanced_accuracy": {
+      "metric_name": "Balanced Accuracy",
+      "metric_value": 1.0,
+      "sample_size": 21,
+      "methodology": "Arithmetic mean of sensitivity and specificity",
+      "confidence_interval_95": {
+        "lower": 0.5,
+        "upper": 0.7857,
+        "method": "Bootstrap Percentile Method (1000 resamples, seed=42)"
+      },
+      "notes": "Observed research benchmark measurement."
+    },
+    "observed_agreement": {
+      "metric_name": "Observed Agreement",
+      "metric_value": 1.0,
+      "sample_size": 3,
+      "methodology": "Observed inter-rater agreement rate",
+      "confidence_interval_95": null,
+      "notes": "Observed research benchmark measurement."
+    },
+    "cohen_kappa": {
+      "metric_name": "Cohen's Kappa",
+      "metric_value": 1.0,
+      "sample_size": 3,
+      "methodology": "Chance-adjusted inter-rater agreement for 2-reviewer pairs",
+      "confidence_interval_95": null,
+      "notes": "Observed research benchmark measurement."
+    },
+    "fleiss_kappa": {
+      "metric_name": "Fleiss' Kappa",
+      "metric_value": 0.68,
+      "sample_size": 3,
+      "methodology": "Chance-adjusted inter-rater agreement for 3+ reviewers",
+      "confidence_interval_95": null,
+      "notes": "Observed research benchmark measurement."
+    },
+    "review_coverage_rate": {
+      "metric_name": "Review Coverage Rate",
+      "metric_value": 0.95,
+      "sample_size": 3,
+      "methodology": "Proportion of studies with completed human reviews",
+      "confidence_interval_95": null,
+      "notes": "Observed research benchmark measurement."
+    },
+    "consensus_coverage_rate": {
+      "metric_name": "Consensus Coverage Rate",
+      "metric_value": 0.88,
+      "sample_size": 3,
+      "methodology": "Proportion of studies with finalized multi-reviewer consensus",
+      "confidence_interval_95": null,
+      "notes": "Observed research benchmark measurement."
+    },
+    "adjudication_rate": {
+      "metric_name": "Adjudication Rate",
+      "metric_value": 0.12,
+      "sample_size": 3,
+      "methodology": "Proportion of studies requiring dispute adjudication",
+      "confidence_interval_95": null,
+      "notes": "Observed research benchmark measurement."
+    }
+  },
+  "confusion_matrix": {
+    "tp": 2,
+    "tn": 19,
+    "fp": 0,
+    "fn": 0
+  },
+  "finding_evaluations": [
+    {
+      "finding_type": "cardiomegaly",
+      "sample_count": 3,
+      "confusion_matrix": {
+        "tp": 1,
+        "tn": 2,
+        "fp": 0,
+        "fn": 0
+      },
+      "metrics": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "specificity": 1.0,
+        "sensitivity": 1.0,
+        "balanced_accuracy": 1.0
+      }
+    },
+    {
+      "finding_type": "pulmonary_edema",
+      "sample_count": 3,
+      "confusion_matrix": {
+        "tp": 0,
+        "tn": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "metrics": {
+        "accuracy": 1.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "specificity": 1.0,
+        "sensitivity": 0.0,
+        "balanced_accuracy": 0.5
+      }
+    },
+    {
+      "finding_type": "consolidation",
+      "sample_count": 3,
+      "confusion_matrix": {
+        "tp": 0,
+        "tn": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "metrics": {
+        "accuracy": 1.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "specificity": 1.0,
+        "sensitivity": 0.0,
+        "balanced_accuracy": 0.5
+      }
+    },
+    {
+      "finding_type": "pleural_effusion",
+      "sample_count": 3,
+      "confusion_matrix": {
+        "tp": 1,
+        "tn": 2,
+        "fp": 0,
+        "fn": 0
+      },
+      "metrics": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "specificity": 1.0,
+        "sensitivity": 1.0,
+        "balanced_accuracy": 1.0
+      }
+    },
+    {
+      "finding_type": "atelectasis",
+      "sample_count": 3,
+      "confusion_matrix": {
+        "tp": 0,
+        "tn": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "metrics": {
+        "accuracy": 1.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "specificity": 1.0,
+        "sensitivity": 0.0,
+        "balanced_accuracy": 0.5
+      }
+    },
+    {
+      "finding_type": "pneumothorax",
+      "sample_count": 3,
+      "confusion_matrix": {
+        "tp": 0,
+        "tn": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "metrics": {
+        "accuracy": 1.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "specificity": 1.0,
+        "sensitivity": 0.0,
+        "balanced_accuracy": 0.5
+      }
+    },
+    {
+      "finding_type": "support_devices",
+      "sample_count": 3,
+      "confusion_matrix": {
+        "tp": 0,
+        "tn": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "metrics": {
+        "accuracy": 1.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "specificity": 1.0,
+        "sensitivity": 0.0,
+        "balanced_accuracy": 0.5
+      }
+    }
+  ],
+  "agreement_evaluation": {
+    "observed_agreement": 1.0,
+    "cohen_kappa": 1.0,
+    "fleiss_kappa": 0.68,
+    "pairwise_agreements": []
+  },
+  "error_analysis": {
+    "total_disagreements": 2,
+    "machine_reviewer_disagreements": 0,
+    "inter_reviewer_disagreements": 2,
+    "adjudication_frequency": 0.2857,
+    "per_finding_disagreements": {
+      "cardiomegaly": 0,
+      "pulmonary_edema": 0,
+      "consolidation": 0,
+      "pleural_effusion": 0,
+      "atelectasis": 0,
+      "pneumothorax": 0,
+      "support_devices": 0
+    },
+    "disagreement_details": []
+  },
+  "statistical_summary": {
+    "metric_distributions": {
+      "accuracy": {
+        "mean": 1.0,
+        "median": 1.0,
+        "std": 0.0,
+        "min": 1.0,
+        "max": 1.0,
+        "q25": 1.0,
+        "q75": 1.0,
+        "iqr": 0.0,
+        "count": 7
+      },
+      "precision": {
+        "mean": 0.2857,
+        "median": 0.0,
+        "std": 0.488,
+        "min": 0.0,
+        "max": 1.0,
+        "q25": 0.0,
+        "q75": 0.5,
+        "iqr": 0.5,
+        "count": 7
+      },
+      "recall": {
+        "mean": 0.2857,
+        "median": 0.0,
+        "std": 0.488,
+        "min": 0.0,
+        "max": 1.0,
+        "q25": 0.0,
+        "q75": 0.5,
+        "iqr": 0.5,
+        "count": 7
+      },
+      "f1": {
+        "mean": 0.2857,
+        "median": 0.0,
+        "std": 0.488,
+        "min": 0.0,
+        "max": 1.0,
+        "q25": 0.0,
+        "q75": 0.5,
+        "iqr": 0.5,
+        "count": 7
+      },
+      "specificity": {
+        "mean": 1.0,
+        "median": 1.0,
+        "std": 0.0,
+        "min": 1.0,
+        "max": 1.0,
+        "q25": 1.0,
+        "q75": 1.0,
+        "iqr": 0.0,
+        "count": 7
+      },
+      "sensitivity": {
+        "mean": 0.2857,
+        "median": 0.0,
+        "std": 0.488,
+        "min": 0.0,
+        "max": 1.0,
+        "q25": 0.0,
+        "q75": 0.5,
+        "iqr": 0.5,
+        "count": 7
+      },
+      "balanced_accuracy": {
+        "mean": 0.6429,
+        "median": 0.5,
+        "std": 0.244,
+        "min": 0.5,
+        "max": 1.0,
+        "q25": 0.5,
+        "q75": 0.75,
+        "iqr": 0.25,
+        "count": 7
+      }
+    },
+    "uncertainty_intervals": {
+      "accuracy": {
+        "lower_95": 1.0,
+        "upper_95": 1.0,
+        "method": "Bootstrap Percentile Method (1000 resamples, seed=42)"
+      },
+      "precision": {
+        "lower_95": 0.0,
+        "upper_95": 0.5714,
+        "method": "Bootstrap Percentile Method (1000 resamples, seed=42)"
+      },
+      "recall": {
+        "lower_95": 0.0,
+        "upper_95": 0.5714,
+        "method": "Bootstrap Percentile Method (1000 resamples, seed=42)"
+      },
+      "f1": {
+        "lower_95": 0.0,
+        "upper_95": 0.5714,
+        "method": "Bootstrap Percentile Method (1000 resamples, seed=42)"
+      },
+      "specificity": {
+        "lower_95": 1.0,
+        "upper_95": 1.0,
+        "method": "Bootstrap Percentile Method (1000 resamples, seed=42)"
+      },
+      "sensitivity": {
+        "lower_95": 0.0,
+        "upper_95": 0.5714,
+        "method": "Bootstrap Percentile Method (1000 resamples, seed=42)"
+      },
+      "balanced_accuracy": {
+        "lower_95": 0.5,
+        "upper_95": 0.7857,
+        "method": "Bootstrap Percentile Method (1000 resamples, seed=42)"
+      }
+    }
+  },
+  "provenance": {
+    "evaluation_id": "EVAL_RUN_E2E_1790037785",
+    "experiment_id": "exp_EXP_E2E_1790037785",
+    "evaluation_dataset_id": "EVALSET_E2E_1790037785",
+    "created_at": "2026-09-22T00:43:06.004881+00:00",
+    "status_history": [
+      {
+        "status": "CREATED",
+        "timestamp": "2026-09-22T00:43:06.004881+00:00"
+      },
+      {
+        "status": "RUNNING",
+        "timestamp": "2026-09-22T00:43:06.036089+00:00"
+      },
+      {
+        "status": "COMPLETED",
+        "timestamp": "2026-09-22T00:43:06.092989+00:00"
+      },
+      {
+        "status": "VALIDATED",
+        "timestamp": "2026-09-22T00:43:10.484743+00:00"
+      }
+    ]
+  },
+  "disclaimer": "RESEARCH EVALUATION ONLY \u2014 NOT CLINICAL PERFORMANCE. Machine activation scores and benchmark metrics are mathematical model outputs and research evaluation measurements, not clinical probabilities, diagnostic certainty, or clinical efficacy claims. No medical decisions should be made based on these outputs."
+}

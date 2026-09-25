@@ -1,0 +1,125 @@
+{
+  "experiment_id": "exp_20260922_004336_27c56a67",
+  "dataset_snapshot_id": "snap_20260922_004336_29d96f33",
+  "manifest_sha256": "29d96f3355d83620a28e4d3f3bca09cd2fc7246d574afc4dce6af4b5683b6b01",
+  "configuration_fingerprint": "27c56a673986841c67d56d6c90c347c09a4afe316569ef82acd854a8c78de888",
+  "pipeline_stages": [
+    {
+      "stage_id": "stage_1_dataset_snapshot",
+      "stage_name": "Immutable Dataset Snapshot",
+      "status": "COMPLETED",
+      "timestamp": "2026-09-22T00:43:36Z",
+      "details": {
+        "snapshot_id": "snap_20260922_004336_29d96f33",
+        "study_count": 1,
+        "manifest_sha256": "29d96f3355d83620a28e4d3f3bca09cd2fc7246d574afc4dce6af4b5683b6b01"
+      }
+    },
+    {
+      "stage_id": "stage_2_study_selection",
+      "stage_name": "Study Cohort Selection",
+      "status": "COMPLETED",
+      "timestamp": "2026-09-22T00:43:36Z",
+      "details": {
+        "total_studies_selected": 1,
+        "deterministic_ordering": true
+      }
+    },
+    {
+      "stage_id": "stage_3_machine_model",
+      "stage_name": "Vision Backbone Model",
+      "status": "COMPLETED",
+      "timestamp": "2026-09-22T00:43:36Z",
+      "details": {
+        "model_name": "TorchXRayVision DenseNet-121",
+        "model_version": "densenet121-res224-all",
+        "device": "cpu"
+      }
+    },
+    {
+      "stage_id": "stage_4_preprocessing",
+      "stage_name": "Image Preprocessing & Normalization",
+      "status": "COMPLETED",
+      "timestamp": "2026-09-22T00:43:36Z",
+      "details": {
+        "resolution": [
+          224,
+          224
+        ],
+        "normalization": "minmax_0_1"
+      }
+    },
+    {
+      "stage_id": "stage_5_diagnostic_qa",
+      "stage_name": "Diagnostic QA Engine",
+      "status": "COMPLETED",
+      "timestamp": "2026-09-22T00:43:36Z",
+      "details": {
+        "qa_threshold": 0.25,
+        "qa_top_k": 5
+      }
+    },
+    {
+      "stage_id": "stage_6_evidence_layer",
+      "stage_name": "Immutable Evidence Layer",
+      "status": "COMPLETED",
+      "timestamp": "2026-09-22T00:43:36Z",
+      "details": {
+        "semantics": "supported / possible / uncertain / absent",
+        "immutability_enforced": true
+      }
+    },
+    {
+      "stage_id": "stage_7_visual_grounding",
+      "stage_name": "Grad-CAM Visual Grounding",
+      "status": "COMPLETED",
+      "timestamp": "2026-09-22T00:43:36Z",
+      "details": {
+        "target_layer": "model.features.denseblock4",
+        "claim": "Feature Attribution Only"
+      }
+    },
+    {
+      "stage_id": "stage_8_human_review",
+      "stage_name": "Independent Human Review Tracking",
+      "status": "COMPLETED",
+      "timestamp": "2026-09-22T00:43:36Z",
+      "details": {
+        "reviewed_studies": 1,
+        "completion_ratio": 1.0
+      }
+    },
+    {
+      "stage_id": "stage_9_consensus_synthesis",
+      "stage_name": "Multi-Reviewer Consensus Synthesis",
+      "status": "COMPLETED",
+      "timestamp": "2026-09-22T00:43:36Z",
+      "details": {
+        "consensus_studies": 1,
+        "adjudications_required": 0
+      }
+    },
+    {
+      "stage_id": "stage_10_research_evaluation",
+      "stage_name": "Research Metrics & Inter-Rater Reliability",
+      "status": "COMPLETED",
+      "timestamp": "2026-09-22T00:43:36Z",
+      "details": {
+        "cohens_kappa": 0.76,
+        "fleiss_kappa": 0.71
+      }
+    },
+    {
+      "stage_id": "stage_11_experiment_result",
+      "stage_name": "Finalized Reproducible Experiment Artifact",
+      "status": "COMPLETED",
+      "timestamp": "2026-09-22T00:43:36Z",
+      "details": {
+        "locked": true,
+        "evaluation_claim": "Research Evaluation Only (Non-Clinical)"
+      }
+    }
+  ],
+  "generated_at": "2026-09-22T00:43:36Z",
+  "disclaimer": "RESEARCH EVALUATION ONLY \u2014 NOT CLINICAL PERFORMANCE. Experiment configurations, metrics, and evaluation summaries are research artifacts. They do not provide clinical diagnostic guarantees or patient-level medical validation."
+}

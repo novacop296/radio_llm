@@ -1,0 +1,36 @@
+{
+  "model_id": "model_e2e_txrv_densenet121",
+  "model_name": "TorchXRayVision DenseNet-121 E2E",
+  "architecture": "DenseNet-121",
+  "framework": "PyTorch / TorchXRayVision",
+  "framework_version": "1.2.0+",
+  "weights_identifier": "densenet121-res224-all",
+  "weights_sha256": null,
+  "input_dimensions": [
+    1,
+    224,
+    224
+  ],
+  "preprocessing": {
+    "resize": [
+      224,
+      224
+    ],
+    "normalization": "standard_cxr"
+  },
+  "target_labels": [
+    "Cardiomegaly",
+    "Effusion",
+    "Infiltration",
+    "Atelectasis"
+  ],
+  "target_layer": "model.features.norm5",
+  "created_at": "2026-09-24T00:16:53.763284+00:00",
+  "registered_by": "researcher",
+  "description": "",
+  "status": "REGISTERED",
+  "metadata": {
+    "weights_hash_note": "Weights downloaded dynamically on demand via TorchXRayVision CDN; local weight cache not verified at bootstrap."
+  },
+  "disclaimer": "RESEARCH MODEL REGISTRY RECORD \u2014 NOT CLINICAL PERFORMANCE EVIDENCE. Model configurations, weight hashes, and architecture specifications are research metadata. They do not provide clinical diagnostic guarantees or patient-level medical validation."
+}

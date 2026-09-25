@@ -1,0 +1,521 @@
+{
+  "study_id": "CXR1078",
+  "image_id": "CXR1078_IM-0055-2001",
+  "view": "Lateral",
+  "vision_candidates": [
+    {
+      "finding": "Pneumothorax",
+      "model_score": 0.5023,
+      "is_baseline": true,
+      "selection_reason": "baseline_routine"
+    },
+    {
+      "finding": "Effusion",
+      "model_score": 0.0786,
+      "is_baseline": true,
+      "selection_reason": "baseline_routine"
+    },
+    {
+      "finding": "Consolidation",
+      "model_score": 0.4491,
+      "is_baseline": true,
+      "selection_reason": "baseline_routine"
+    },
+    {
+      "finding": "Cardiomegaly",
+      "model_score": 0.1295,
+      "is_baseline": true,
+      "selection_reason": "baseline_routine"
+    },
+    {
+      "finding": "Lung Opacity",
+      "model_score": 0.5341,
+      "is_baseline": false,
+      "selection_reason": "top_3_activation"
+    },
+    {
+      "finding": "Mass",
+      "model_score": 0.5115,
+      "is_baseline": false,
+      "selection_reason": "top_3_activation"
+    },
+    {
+      "finding": "Enlarged Cardiomediastinum",
+      "model_score": 0.505,
+      "is_baseline": false,
+      "selection_reason": "top_3_activation"
+    },
+    {
+      "finding": "Emphysema",
+      "model_score": 0.5011,
+      "is_baseline": false,
+      "selection_reason": "threshold_exceeded_>=0.35"
+    },
+    {
+      "finding": "Fracture",
+      "model_score": 0.5002,
+      "is_baseline": false,
+      "selection_reason": "threshold_exceeded_>=0.35"
+    },
+    {
+      "finding": "Nodule",
+      "model_score": 0.3591,
+      "is_baseline": false,
+      "selection_reason": "threshold_exceeded_>=0.35"
+    }
+  ],
+  "questions_evaluated": [
+    {
+      "question_id": "Q_PNEUMOTHORAX_PRESENCE",
+      "finding": "Pneumothorax",
+      "level": 1,
+      "question_text": "Is there radiographic evidence of a pneumothorax?",
+      "options": [
+        "yes",
+        "no",
+        "uncertain"
+      ],
+      "model_score": 0.5023,
+      "answer": "uncertain"
+    },
+    {
+      "question_id": "Q_PNEUMOTHORAX_LOCATION",
+      "finding": "Pneumothorax",
+      "level": 2,
+      "question_text": "Where is the pneumothorax located (e.g., right, left, apical)?",
+      "options": [
+        "right",
+        "left",
+        "bilateral",
+        "right_upper_lobe",
+        "right_middle_lobe",
+        "right_lower_lobe",
+        "left_upper_lobe",
+        "left_lower_lobe",
+        "basilar",
+        "apical",
+        "retrocardiac",
+        "mediastinum",
+        "diffuse",
+        "unspecified"
+      ],
+      "model_score": 0.5023,
+      "answer": "unspecified"
+    },
+    {
+      "question_id": "Q_EFFUSION_PRESENCE",
+      "finding": "Effusion",
+      "level": 1,
+      "question_text": "Is there evidence of pleural effusion or costophrenic angle blunting?",
+      "options": [
+        "yes",
+        "no",
+        "uncertain"
+      ],
+      "model_score": 0.0786,
+      "answer": "uncertain"
+    },
+    {
+      "question_id": "Q_EFFUSION_LOCATION",
+      "finding": "Effusion",
+      "level": 2,
+      "question_text": "Where is the pleural effusion located (e.g., right, left, bilateral)?",
+      "options": [
+        "right",
+        "left",
+        "bilateral",
+        "right_upper_lobe",
+        "right_middle_lobe",
+        "right_lower_lobe",
+        "left_upper_lobe",
+        "left_lower_lobe",
+        "basilar",
+        "apical",
+        "retrocardiac",
+        "mediastinum",
+        "diffuse",
+        "unspecified"
+      ],
+      "model_score": 0.0786,
+      "answer": "unspecified"
+    },
+    {
+      "question_id": "Q_CONSOLIDATION_PRESENCE",
+      "finding": "Consolidation",
+      "level": 1,
+      "question_text": "Is there focal or dense airspace consolidation?",
+      "options": [
+        "yes",
+        "no",
+        "uncertain"
+      ],
+      "model_score": 0.4491,
+      "answer": "uncertain"
+    },
+    {
+      "question_id": "Q_CONSOLIDATION_LOCATION",
+      "finding": "Consolidation",
+      "level": 2,
+      "question_text": "Which lung lobe or region contains the consolidation?",
+      "options": [
+        "right",
+        "left",
+        "bilateral",
+        "right_upper_lobe",
+        "right_middle_lobe",
+        "right_lower_lobe",
+        "left_upper_lobe",
+        "left_lower_lobe",
+        "basilar",
+        "apical",
+        "retrocardiac",
+        "mediastinum",
+        "diffuse",
+        "unspecified"
+      ],
+      "model_score": 0.4491,
+      "answer": "unspecified"
+    },
+    {
+      "question_id": "Q_CARDIOMEGALY_PRESENCE",
+      "finding": "Cardiomegaly",
+      "level": 1,
+      "question_text": "Is cardiomegaly or prominent cardiac enlargement present?",
+      "options": [
+        "yes",
+        "no",
+        "uncertain"
+      ],
+      "model_score": 0.1295,
+      "answer": "uncertain"
+    },
+    {
+      "question_id": "Q_CARDIOMEGALY_LOCATION",
+      "finding": "Cardiomegaly",
+      "level": 2,
+      "question_text": "Is the enlargement generalized or specific to cardiac chambers?",
+      "options": [
+        "right",
+        "left",
+        "bilateral",
+        "right_upper_lobe",
+        "right_middle_lobe",
+        "right_lower_lobe",
+        "left_upper_lobe",
+        "left_lower_lobe",
+        "basilar",
+        "apical",
+        "retrocardiac",
+        "mediastinum",
+        "diffuse",
+        "unspecified"
+      ],
+      "model_score": 0.1295,
+      "answer": "unspecified"
+    },
+    {
+      "question_id": "Q_LUNG OPACITY_PRESENCE",
+      "finding": "Lung Opacity",
+      "level": 1,
+      "question_text": "Are there patchy or streaky lung opacities present?",
+      "options": [
+        "yes",
+        "no",
+        "uncertain"
+      ],
+      "model_score": 0.5341,
+      "answer": "uncertain"
+    },
+    {
+      "question_id": "Q_LUNG OPACITY_LOCATION",
+      "finding": "Lung Opacity",
+      "level": 2,
+      "question_text": "Where are the opacities distributed (e.g., right, left, bibasilar)?",
+      "options": [
+        "right",
+        "left",
+        "bilateral",
+        "right_upper_lobe",
+        "right_middle_lobe",
+        "right_lower_lobe",
+        "left_upper_lobe",
+        "left_lower_lobe",
+        "basilar",
+        "apical",
+        "retrocardiac",
+        "mediastinum",
+        "diffuse",
+        "unspecified"
+      ],
+      "model_score": 0.5341,
+      "answer": "unspecified"
+    },
+    {
+      "question_id": "Q_MASS_PRESENCE",
+      "finding": "Mass",
+      "level": 1,
+      "question_text": "Is there a pulmonary or mediastinal mass lesion (>3 cm)?",
+      "options": [
+        "yes",
+        "no",
+        "uncertain"
+      ],
+      "model_score": 0.5115,
+      "answer": "uncertain"
+    },
+    {
+      "question_id": "Q_MASS_LOCATION",
+      "finding": "Mass",
+      "level": 2,
+      "question_text": "Where is the mass located (e.g., hilar, right_upper_lobe, mediastinum)?",
+      "options": [
+        "right",
+        "left",
+        "bilateral",
+        "right_upper_lobe",
+        "right_middle_lobe",
+        "right_lower_lobe",
+        "left_upper_lobe",
+        "left_lower_lobe",
+        "basilar",
+        "apical",
+        "retrocardiac",
+        "mediastinum",
+        "diffuse",
+        "unspecified"
+      ],
+      "model_score": 0.5115,
+      "answer": "unspecified"
+    },
+    {
+      "question_id": "Q_ENLARGED CARDIOMEDIASTINUM_PRESENCE",
+      "finding": "Enlarged Cardiomediastinum",
+      "level": 1,
+      "question_text": "Is there widening of the cardiomediastinal silhouette or aortic tortuosity?",
+      "options": [
+        "yes",
+        "no",
+        "uncertain"
+      ],
+      "model_score": 0.505,
+      "answer": "uncertain"
+    },
+    {
+      "question_id": "Q_ENLARGED CARDIOMEDIASTINUM_LOCATION",
+      "finding": "Enlarged Cardiomediastinum",
+      "level": 2,
+      "question_text": "Is the widening primarily cardiac, mediastinal, or aortic?",
+      "options": [
+        "right",
+        "left",
+        "bilateral",
+        "right_upper_lobe",
+        "right_middle_lobe",
+        "right_lower_lobe",
+        "left_upper_lobe",
+        "left_lower_lobe",
+        "basilar",
+        "apical",
+        "retrocardiac",
+        "mediastinum",
+        "diffuse",
+        "unspecified"
+      ],
+      "model_score": 0.505,
+      "answer": "unspecified"
+    },
+    {
+      "question_id": "Q_EMPHYSEMA_PRESENCE",
+      "finding": "Emphysema",
+      "level": 1,
+      "question_text": "Are there signs of emphysema, hyperinflation, or flattened diaphragms?",
+      "options": [
+        "yes",
+        "no",
+        "uncertain"
+      ],
+      "model_score": 0.5011,
+      "answer": "uncertain"
+    },
+    {
+      "question_id": "Q_EMPHYSEMA_LOCATION",
+      "finding": "Emphysema",
+      "level": 2,
+      "question_text": "Is the hyperinflation bilateral or localized?",
+      "options": [
+        "right",
+        "left",
+        "bilateral",
+        "right_upper_lobe",
+        "right_middle_lobe",
+        "right_lower_lobe",
+        "left_upper_lobe",
+        "left_lower_lobe",
+        "basilar",
+        "apical",
+        "retrocardiac",
+        "mediastinum",
+        "diffuse",
+        "unspecified"
+      ],
+      "model_score": 0.5011,
+      "answer": "unspecified"
+    },
+    {
+      "question_id": "Q_FRACTURE_PRESENCE",
+      "finding": "Fracture",
+      "level": 1,
+      "question_text": "Is there evidence of acute or healed fractures (ribs, clavicle, spine)?",
+      "options": [
+        "yes",
+        "no",
+        "uncertain"
+      ],
+      "model_score": 0.5002,
+      "answer": "uncertain"
+    },
+    {
+      "question_id": "Q_FRACTURE_LOCATION",
+      "finding": "Fracture",
+      "level": 2,
+      "question_text": "Which bone is fractured (e.g., rib_right, clavicle_left, spine)?",
+      "options": [
+        "right",
+        "left",
+        "bilateral",
+        "right_upper_lobe",
+        "right_middle_lobe",
+        "right_lower_lobe",
+        "left_upper_lobe",
+        "left_lower_lobe",
+        "basilar",
+        "apical",
+        "retrocardiac",
+        "mediastinum",
+        "diffuse",
+        "unspecified"
+      ],
+      "model_score": 0.5002,
+      "answer": "unspecified"
+    },
+    {
+      "question_id": "Q_NODULE_PRESENCE",
+      "finding": "Nodule",
+      "level": 1,
+      "question_text": "Is there evidence of pulmonary nodule(s) or calcified granuloma(s)?",
+      "options": [
+        "yes",
+        "no",
+        "uncertain"
+      ],
+      "model_score": 0.3591,
+      "answer": "uncertain"
+    },
+    {
+      "question_id": "Q_NODULE_LOCATION",
+      "finding": "Nodule",
+      "level": 2,
+      "question_text": "Where is the nodule located (e.g., right_upper_lobe, left_midlung)?",
+      "options": [
+        "right",
+        "left",
+        "bilateral",
+        "right_upper_lobe",
+        "right_middle_lobe",
+        "right_lower_lobe",
+        "left_upper_lobe",
+        "left_lower_lobe",
+        "basilar",
+        "apical",
+        "retrocardiac",
+        "mediastinum",
+        "diffuse",
+        "unspecified"
+      ],
+      "model_score": 0.3591,
+      "answer": "unspecified"
+    }
+  ],
+  "qa_findings": [
+    {
+      "finding": "Pneumothorax",
+      "presence": "uncertain",
+      "location": "unspecified",
+      "severity": "unspecified",
+      "model_score": 0.5023,
+      "evidence_source": "vision_model"
+    },
+    {
+      "finding": "Effusion",
+      "presence": "uncertain",
+      "location": "unspecified",
+      "severity": "unspecified",
+      "model_score": 0.0786,
+      "evidence_source": "vision_model"
+    },
+    {
+      "finding": "Consolidation",
+      "presence": "uncertain",
+      "location": "unspecified",
+      "severity": "unspecified",
+      "model_score": 0.4491,
+      "evidence_source": "vision_model"
+    },
+    {
+      "finding": "Cardiomegaly",
+      "presence": "uncertain",
+      "location": "unspecified",
+      "severity": "unspecified",
+      "model_score": 0.1295,
+      "evidence_source": "vision_model"
+    },
+    {
+      "finding": "Lung Opacity",
+      "presence": "uncertain",
+      "location": "unspecified",
+      "severity": "unspecified",
+      "model_score": 0.5341,
+      "evidence_source": "vision_model"
+    },
+    {
+      "finding": "Mass",
+      "presence": "uncertain",
+      "location": "unspecified",
+      "severity": "unspecified",
+      "model_score": 0.5115,
+      "evidence_source": "vision_model"
+    },
+    {
+      "finding": "Enlarged Cardiomediastinum",
+      "presence": "uncertain",
+      "location": "unspecified",
+      "severity": "unspecified",
+      "model_score": 0.505,
+      "evidence_source": "vision_model"
+    },
+    {
+      "finding": "Emphysema",
+      "presence": "uncertain",
+      "location": "unspecified",
+      "severity": "unspecified",
+      "model_score": 0.5011,
+      "evidence_source": "vision_model"
+    },
+    {
+      "finding": "Fracture",
+      "presence": "uncertain",
+      "location": "unspecified",
+      "severity": "unspecified",
+      "model_score": 0.5002,
+      "evidence_source": "vision_model"
+    },
+    {
+      "finding": "Nodule",
+      "presence": "uncertain",
+      "location": "unspecified",
+      "severity": "unspecified",
+      "model_score": 0.3591,
+      "evidence_source": "vision_model"
+    }
+  ]
+}

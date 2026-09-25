@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LLM-Assisted Explainable Radiology Research Dashboard</title>
+  <title>LLM-Assisted Explainable Radiology Research Dashboard — Phase 1.2 Human Review</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -17,11 +17,21 @@
         <span class="logo-icon">🩻</span>
         <div class="logo-text">
           <h1>Explainable Radiology Report Generation</h1>
-          <span class="subtitle">Diagnostic Questioning & Visual Attribution Research Prototype (Phase 1.1)</span>
+          <span class="subtitle">Diagnostic Questioning, Multi-Reviewer Consensus & Adjudication (Phase 1.3)</span>
         </div>
       </div>
     </div>
     <div class="header-right">
+      <!-- Active Reviewer Profile Switcher -->
+      <div class="reviewer-switcher-container">
+        <label for="activeReviewerSelect">Reviewer:</label>
+        <select id="activeReviewerSelect" class="study-select">
+          <option value="researcher_01">Reviewer 1 (Dr. Alice / Default)</option>
+          <option value="rev_02">Reviewer 2 (Dr. Bob)</option>
+          <option value="rev_03">Reviewer 3 (Dr. Carol)</option>
+        </select>
+      </div>
+
       <!-- Pipeline Status Summary Widget -->
       <div class="pipeline-status-widget" id="pipelineStatusWidget">
         <div class="pipeline-status-title">PIPELINE STATUS</div>
@@ -32,6 +42,8 @@
           <span class="p-step active" title="Grad-CAM Visual Grounding">✓ Grounding</span>
           <span class="p-step active" title="LLM Report Generation">✓ LLM</span>
           <span class="p-step active" title="Safety & Invariant Validator">✓ Validation</span>
+          <span class="p-step active" title="Human Review Layer (Phase 1.2)" id="reviewStepBadge">✓ Review</span>
+          <span class="p-step active highlight" title="Multi-Reviewer Consensus (Phase 1.3)" id="consensusStepBadge">👥 Consensus</span>
         </div>
         <div class="pipeline-violations" id="pipelineViolationsText">Safety checks: 0 violations</div>
       </div>
@@ -57,6 +69,196 @@
     </div>
   </header>
 
+  <!-- Top Tab Navigation (Phase 1.5 Research Platform) -->
+  <nav class="main-tab-nav" aria-label="Main Navigation">
+    <button class="main-tab-btn" id="tabDatasetQueue">
+      <span class="tab-icon">📂</span> Dataset & Review Queue
+    </button>
+    <button class="main-tab-btn active" id="tabIndividualReview">
+      <span class="tab-icon">👤</span> Individual Human Review
+    </button>
+    <button class="main-tab-btn" id="tabConsensusDashboard">
+      <span class="tab-icon">👥</span> Multi-Reviewer Consensus & Adjudication
+      <span class="badge badge-consensus-tab" id="consensusStatusHeaderBadge">Collecting (0/3)</span>
+    </button>
+    <button class="main-tab-btn" id="tabEvaluationAnalytics">
+      <span class="tab-icon">📊</span> Evaluation & Workflow Analytics
+    </button>
+    <button class="main-tab-btn" id="tabResearchEvaluation">
+      <span class="tab-icon">🧪</span> Research Evaluation
+    </button>
+    <button class="main-tab-btn" id="tabExperimentRegistry">
+      <span class="tab-icon">🔬</span> Experiment Registry
+    </button>
+    <button class="main-tab-btn" id="tabExternalBenchmarking">
+      <span class="tab-icon">🌐</span> External Benchmarking
+    </button>
+    <button class="main-tab-btn" id="tabResearchExperiments">
+      <span class="tab-icon">📊</span> Research Experiments
+    </button>
+    <button class="main-tab-btn" id="tabCounterfactualExplainability">
+      <span class="tab-icon">🔬</span> Counterfactual Explainability
+    </button>
+  </nav>
+
+  <!-- Container for Tab 0: Dataset & Review Queue (Phase 1.4) -->
+  <div id="datasetQueueViewContainer" style="display: none;">
+    <main class="dataset-layout">
+      <!-- Dataset Summary Cards -->
+      <section class="dataset-stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">TOTAL STUDIES</div>
+          <div class="stat-val" id="statTotalStudies">-</div>
+          <div class="stat-sub">Indexed radiograph studies</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">UNREVIEWED</div>
+          <div class="stat-val stat-unreviewed" id="statUnreviewed">-</div>
+          <div class="stat-sub">Awaiting initial review</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">IN REVIEW</div>
+          <div class="stat-val stat-in-review" id="statInReview">-</div>
+          <div class="stat-sub">Active clinician evaluation</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">AWAITING CONSENSUS</div>
+          <div class="stat-val stat-awaiting" id="statAwaitingConsensus">-</div>
+          <div class="stat-sub">≥ 2 reviews ready for synthesis</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">ADJUDICATION REQUIRED</div>
+          <div class="stat-val stat-adjudication" id="statAdjudicationRequired">-</div>
+          <div class="stat-sub">Finding disputes to resolve</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">FINALIZED</div>
+          <div class="stat-val stat-finalized" id="statFinalized">-</div>
+          <div class="stat-sub">Locked research reports</div>
+        </div>
+      </section>
+
+      <!-- Review Queue Controls & Filter Bar -->
+      <section class="panel dataset-queue-panel">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h2>Multi-Study Research Review Queue</h2>
+            <span class="info-tag">Deterministic Workflow Index</span>
+          </div>
+          <div class="queue-header-actions">
+            <button id="refreshQueueBtn" class="btn btn-sm btn-secondary">🔄 Refresh Queue</button>
+            <button id="exportDatasetJsonBtn" class="btn btn-sm btn-primary">⬇ Export Dataset (JSON)</button>
+            <button id="exportDatasetTextBtn" class="btn btn-sm btn-secondary">⬇ Export Dataset (Text)</button>
+          </div>
+        </div>
+
+        <div class="queue-filter-toolbar">
+          <div class="filter-group">
+            <label for="queueSearchInput">Search Study ID:</label>
+            <input type="text" id="queueSearchInput" class="study-search-input" placeholder="e.g. CXR1122, CXR1007...">
+          </div>
+          <div class="filter-group">
+            <label for="queueStatusFilter">Workflow Status:</label>
+            <select id="queueStatusFilter" class="reviewer-select">
+              <option value="ALL" selected>All Statuses</option>
+              <option value="UNREVIEWED">Unreviewed</option>
+              <option value="IN_REVIEW">In Review</option>
+              <option value="AWAITING_CONSENSUS">Awaiting Consensus</option>
+              <option value="ADJUDICATION_REQUIRED">Adjudication Required</option>
+              <option value="READY_FOR_FINALIZATION">Ready for Finalization</option>
+              <option value="FINALIZED">Finalized</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="queueConsensusFilter">Consensus Status:</label>
+            <select id="queueConsensusFilter" class="reviewer-select">
+              <option value="ALL" selected>All Consensus States</option>
+              <option value="NOT_STARTED">Not Started</option>
+              <option value="PENDING">Pending</option>
+              <option value="CONSENSUS_READY">Consensus Ready</option>
+              <option value="ADJUDICATION_REQUIRED">Adjudication Required</option>
+              <option value="FINALIZED">Finalized</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="queueSortBy">Sort By:</label>
+            <select id="queueSortBy" class="reviewer-select">
+              <option value="study_id" selected>Study ID (Default)</option>
+              <option value="last_updated">Last Updated (Newest)</option>
+              <option value="reviewer_count">Reviewer Count</option>
+              <option value="workflow_status">Workflow Lifecycle</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Review Queue Table -->
+        <div class="queue-table-container">
+          <table class="consensus-matrix-table queue-table" id="queueTable">
+            <thead>
+              <tr>
+                <th>Study ID</th>
+                <th>Views</th>
+                <th>Findings / Evidence</th>
+                <th>Machine Report</th>
+                <th>Review Progress</th>
+                <th>Reviewers</th>
+                <th>Consensus Status</th>
+                <th>Adjudication</th>
+                <th>Workflow Status</th>
+                <th>Last Updated</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="queueTableBody">
+              <!-- Dynamically populated via app.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Review Workflow Progress Bar (Phase 1.2) -->
+  <section class="review-progress-section" id="individualProgressBar" aria-label="Review Workflow Progress">
+    <div class="review-progress-container">
+      <div class="progress-step-item active" id="stepEvidence">
+        <span class="step-num">1</span>
+        <span class="step-label">Evidence Inspected</span>
+        <span class="step-status">✓ Ready</span>
+      </div>
+      <div class="progress-arrow">→</div>
+      <div class="progress-step-item" id="stepFindings">
+        <span class="step-num">2</span>
+        <span class="step-label">Findings Reviewed</span>
+        <span class="step-status" id="findingsProgressText">0 / 7 Reviewed</span>
+      </div>
+      <div class="progress-arrow">→</div>
+      <div class="progress-step-item" id="stepReport">
+        <span class="step-num">3</span>
+        <span class="step-label">Report Draft</span>
+        <span class="step-status" id="reportProgressText">Machine Baseline</span>
+      </div>
+      <div class="progress-arrow">→</div>
+      <div class="progress-step-item" id="stepValidation">
+        <span class="step-num">4</span>
+        <span class="step-label">Review Validation</span>
+        <span class="step-status" id="validationProgressText">Pending</span>
+      </div>
+      <div class="progress-arrow">→</div>
+      <div class="progress-step-item finalize-step" id="stepFinalize">
+        <span class="step-num">5</span>
+        <span class="step-label">Finalization</span>
+        <span class="step-status" id="sessionStatusBadge">IN REVIEW</span>
+      </div>
+      <div class="progress-actions">
+        <button id="validateReviewBtn" class="btn btn-sm btn-secondary" title="Run Pre-Finalization Integrity Checks">Validate Review</button>
+        <button id="finalizeReviewBtn" class="btn btn-sm btn-primary btn-finalize" title="Validate and Finalize Review Session">Finalize Report</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Container for Tab 1: Individual Review -->
+  <div id="individualViewContainer">
   <!-- Main Content Grid -->
   <main class="dashboard-grid">
 
@@ -145,11 +347,16 @@
       </div>
     </section>
 
-    <!-- Column 2: Candidate Findings, QA, Reviewer & Traceability -->
+    <!-- Column 2: Candidate Findings, Human Review Decisions & Traceability -->
     <section class="panel findings-panel" aria-label="Evidence & Findings">
       <div class="panel-header">
-        <h2>Model Findings & Evidence</h2>
-        <span class="badge badge-neutral" id="findingsCountBadge">7 Candidates</span>
+        <div class="panel-title-group">
+          <h2>Candidate Findings & Review</h2>
+          <span class="badge badge-neutral" id="findingsCountBadge">7 Candidates</span>
+        </div>
+        <div class="reviewer-badge-pill" id="reviewerNameBadge">
+          <span>Reviewer: <strong>Dr. Reviewer</strong></span>
+        </div>
       </div>
 
       <!-- Finding Selector Pills -->
@@ -157,8 +364,24 @@
         <!-- Injected dynamically via app.js -->
       </div>
 
-      <!-- Active Finding Detail Card -->
-      <div class="card active-finding-card" id="activeFindingCard">
+      <!-- INFERENCE NOT RUN BANNER -->
+      <div id="inferenceNotRunBanner" class="card inference-not-run-card" style="display: none; background: rgba(245, 158, 11, 0.08); border: 1px solid #f59e0b; padding: 16px; margin-bottom: 16px; border-radius: 8px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 1.8rem;">⚡</span>
+          <div style="flex: 1;">
+            <h4 style="margin: 0; color: #fbbf24; font-size: 1rem;">INFERENCE NOT RUN</h4>
+            <p style="margin: 4px 0 0 0; color: #cbd5e1; font-size: 0.85rem;">This study has not yet been processed through the machine inference pipeline.</p>
+          </div>
+          <button id="runStudyInferenceBtn" class="btn btn-primary" style="white-space: nowrap;">▶ Run Inference</button>
+        </div>
+        <div id="singleInferenceFeedback" class="report-action-feedback" style="margin-top: 8px;"></div>
+      </div>
+
+      <!-- MACHINE EVIDENCE CARD (Immutable Baseline) -->
+      <div class="card machine-evidence-card" id="activeFindingCard">
+        <div class="card-section-label">
+          <span class="badge badge-machine">MACHINE EVIDENCE (IMMUTABLE)</span>
+        </div>
         <div class="card-header">
           <h3 id="activeFindingName">INFILTRATION</h3>
           <span class="status-badge status-possible" id="activeFindingStatus">POSSIBLE</span>
@@ -176,87 +399,99 @@
             <span class="metric-val" id="activeEvidenceSource">vision_model</span>
           </div>
           <div class="metric-item">
-            <span class="metric-label">Location</span>
+            <span class="metric-label">Machine Location</span>
             <span class="metric-val" id="activeLocation">unspecified</span>
           </div>
           <div class="metric-item">
-            <span class="metric-label">Severity</span>
+            <span class="metric-label">Machine Severity</span>
             <span class="metric-val" id="activeSeverity">unspecified</span>
           </div>
         </div>
 
         <!-- Semantic Interpretation Box -->
         <div class="status-interpretation-box">
-          <div class="interpretation-title">EVIDENCE STATUS INTERPRETATION:</div>
+          <div class="interpretation-title">MACHINE EVIDENCE INTERPRETATION:</div>
           <div class="interpretation-text" id="statusInterpretationText">
             Model or indirect evidence suggests this finding may warrant review, but it is not independently established.
           </div>
         </div>
       </div>
 
-      <!-- Clinician / Reviewer Annotation System (Phase 1.1) -->
-      <div class="collapsible-section reviewer-section" id="reviewerSection">
-        <button class="collapsible-header" id="reviewerToggleBtn" aria-expanded="true">
-          <span>RESEARCH REVIEWER ANNOTATION</span>
-          <span class="toggle-icon">▼</span>
-        </button>
-        <div class="collapsible-body" id="reviewerBody">
-          <div class="reviewer-form-row">
-            <label for="reviewerStatusSelect">Reviewer Status:</label>
-            <select id="reviewerStatusSelect" class="reviewer-select">
-              <option value="not_reviewed">Not Reviewed</option>
-              <option value="confirmed_present">Confirmed Present</option>
-              <option value="confirmed_absent">Confirmed Absent</option>
-              <option value="uncertain">Uncertain</option>
+      <!-- REVIEWER DECISION CARD (Phase 1.2 Interactive Decision Layer) -->
+      <div class="card reviewer-decision-card" id="reviewerDecisionCard">
+        <div class="card-section-label">
+          <span class="badge badge-reviewer">HUMAN REVIEWER DECISION</span>
+          <span class="review-state-indicator" id="findingReviewStatePill">NOT REVIEWED</span>
+        </div>
+
+        <div class="decision-buttons-grid">
+          <button class="btn-decision btn-confirm-present" data-status="confirmed_present" id="btnConfirmPresent">
+            <span class="btn-icon">✓</span> Confirm Present
+          </button>
+          <button class="btn-decision btn-confirm-absent" data-status="confirmed_absent" id="btnConfirmAbsent">
+            <span class="btn-icon">✕</span> Confirm Absent
+          </button>
+          <button class="btn-decision btn-uncertain" data-status="uncertain" id="btnUncertain">
+            <span class="btn-icon">?</span> Uncertain
+          </button>
+          <button class="btn-decision btn-needs-review" data-status="needs_review" id="btnNeedsReview">
+            <span class="btn-icon">!</span> Needs Review
+          </button>
+        </div>
+
+        <div class="reviewer-form-grid">
+          <div class="reviewer-form-item">
+            <label for="reviewerLocationInput">Reviewer Location:</label>
+            <input type="text" id="reviewerLocationInput" class="reviewer-input" placeholder="e.g. right_lower_lobe or unspecified">
+          </div>
+          <div class="reviewer-form-item">
+            <label for="reviewerSeveritySelect">Reviewer Severity:</label>
+            <select id="reviewerSeveritySelect" class="reviewer-select">
+              <option value="unspecified">unspecified</option>
+              <option value="mild">mild</option>
+              <option value="moderate">moderate</option>
+              <option value="severe">severe</option>
             </select>
           </div>
+        </div>
 
-          <div class="reviewer-form-grid">
-            <div class="reviewer-form-item">
-              <label for="reviewerLocationInput">Location:</label>
-              <input type="text" id="reviewerLocationInput" class="reviewer-input" placeholder="e.g. right_lower_lobe or unspecified">
+        <div class="reviewer-form-row">
+          <label for="reviewerNotesInput">Reviewer Notes / Commentary:</label>
+          <textarea id="reviewerNotesInput" class="reviewer-textarea" rows="2" placeholder="Record reviewer observations and clinical justification..."></textarea>
+        </div>
+
+        <div class="reviewer-actions-row">
+          <button id="saveFindingReviewBtn" class="btn btn-sm btn-primary">Save Finding Decision</button>
+          <span id="reviewSaveStatus" class="review-save-status"></span>
+        </div>
+
+        <!-- Machine Evidence vs Reviewer Comparison Box -->
+        <div class="comparison-card" id="comparisonCard">
+          <div class="comparison-title">MACHINE EVIDENCE vs REVIEWER DECISION</div>
+          <div class="comparison-grid">
+            <div class="comp-col">
+              <span class="comp-label">Machine Status:</span>
+              <span class="status-badge status-possible" id="compMachineStatus">POSSIBLE</span>
             </div>
-            <div class="reviewer-form-item">
-              <label for="reviewerSeveritySelect">Severity:</label>
-              <select id="reviewerSeveritySelect" class="reviewer-select">
-                <option value="unspecified">unspecified</option>
-                <option value="mild">mild</option>
-                <option value="moderate">moderate</option>
-                <option value="severe">severe</option>
-              </select>
+            <div class="comp-col">
+              <span class="comp-label">Reviewer Status:</span>
+              <span class="status-badge status-absent" id="compReviewerStatus">NOT REVIEWED</span>
             </div>
           </div>
-
-          <div class="reviewer-form-row">
-            <label for="reviewerNotesInput">Reviewer Notes / Commentary:</label>
-            <textarea id="reviewerNotesInput" class="reviewer-textarea" rows="2" placeholder="Record research review notes..."></textarea>
+          <div class="disagreement-banner" id="disagreementBanner" style="display: none;">
+            ⚠️ <strong>Reviewer Disagreement:</strong> Machine status differs from reviewer confirmed decision.
           </div>
+        </div>
+      </div>
 
-          <div class="reviewer-actions-row">
-            <button id="saveReviewBtn" class="btn btn-sm btn-primary">Save Review</button>
-            <button id="clearReviewBtn" class="btn btn-sm btn-secondary">Clear Review</button>
-            <span id="reviewSaveStatus" class="review-save-status"></span>
-          </div>
-
-          <div class="reviewer-disclaimer">
-            <em>Notice: Reviewer annotations are research metadata and do not alter underlying machine evidence or constitute clinical ground truth.</em>
-          </div>
-
-          <!-- Machine Evidence vs Reviewer Comparison Box -->
-          <div class="comparison-card" id="comparisonCard">
-            <div class="comparison-title">MACHINE EVIDENCE vs REVIEWER ANNOTATION</div>
-            <div class="comparison-grid">
-              <div class="comp-col">
-                <span class="comp-label">Machine Status:</span>
-                <span class="status-badge status-possible" id="compMachineStatus">POSSIBLE</span>
-              </div>
-              <div class="comp-col">
-                <span class="comp-label">Reviewer Status:</span>
-                <span class="status-badge status-absent" id="compReviewerStatus">NOT REVIEWED</span>
-              </div>
-            </div>
-            <p class="comp-note">Disagreement between model suggestions and reviewer annotations is expected in exploratory research.</p>
-          </div>
+      <!-- Diagnostic QA Review Section (Phase 1.2) -->
+      <div class="collapsible-section" id="qaSection">
+        <button class="collapsible-header" id="qaToggleBtn" aria-expanded="false">
+          <span>DIAGNOSTIC QUESTIONING & QA REVIEW</span>
+          <span class="toggle-icon">▶</span>
+        </button>
+        <div class="collapsible-body" id="qaQuestionsList" style="display: none;">
+          <!-- Injected dynamically via app.js -->
         </div>
       </div>
 
@@ -288,19 +523,8 @@
             <span class="why-val" id="whyFinalStatus">POSSIBLE (Uncertainty preserved)</span>
           </div>
           <div class="why-note">
-            <em>Notice: Grad-CAM attribution is available for this finding to explain model attention. This explains pipeline reasoning, not a medical diagnosis.</em>
+            <em>Notice: Grad-CAM attribution explains pipeline reasoning and neural activations, not medical truth.</em>
           </div>
-        </div>
-      </div>
-
-      <!-- Diagnostic QA Inspection Accordion -->
-      <div class="collapsible-section" id="qaSection">
-        <button class="collapsible-header" id="qaToggleBtn" aria-expanded="false">
-          <span>DIAGNOSTIC QUESTIONING (QA Engine)</span>
-          <span class="toggle-icon">▶</span>
-        </button>
-        <div class="collapsible-body" id="qaQuestionsList" style="display: none;">
-          <!-- Injected dynamically via app.js -->
         </div>
       </div>
 
@@ -313,12 +537,12 @@
       </div>
     </section>
 
-    <!-- Column 3: Generated Structured Report & Validation Status -->
-    <section class="panel report-panel" aria-label="Generated Report">
+    <!-- Column 3: Report Review, Finalization, Metrics & Audit Trail -->
+    <section class="panel report-panel" aria-label="Report Review & Finalization">
       <div class="panel-header">
         <div class="panel-title-group">
-          <h2>GENERATED REPORT</h2>
-          <span class="info-tag">LLM-generated from Evidence Layer</span>
+          <h2>REPORT REVIEW & FINALIZATION</h2>
+          <span class="info-tag" id="reportViewModeTag">Human-in-the-Loop Editor</span>
         </div>
         <div class="export-actions">
           <button id="exportJsonBtn" class="btn btn-sm btn-primary">Export JSON</button>
@@ -327,33 +551,125 @@
       </div>
 
       <!-- Human Review & Non-Diagnostic Notice -->
-      <div class="report-warning-banner">
-        <div class="report-warning-heading">RESEARCH OUTPUT — REQUIRES HUMAN REVIEW</div>
-        <div class="report-warning-sub">This report was synthesized from Evidence Layer findings by an LLM prototype. It is not a clinical diagnosis.</div>
+      <div class="report-warning-banner" id="reportWarningBanner">
+        <div class="report-warning-heading" id="reportWarningHeading">RESEARCH OUTPUT — REQUIRES HUMAN REVIEW</div>
+        <div class="report-warning-sub" id="reportWarningSub">Reviewer corrections and finalized reports are research metadata only. They are not certified clinical diagnoses.</div>
       </div>
 
-      <!-- Report Metadata -->
+      <!-- Report Metadata & Review Info -->
       <div class="report-meta">
-        <span><strong>Study ID:</strong> <span id="reportStudyId">CXR1122</span></span>
-        <span><strong>Backbone:</strong> DenseNet-121</span>
-        <span><strong>LLM Generator:</strong> <span id="reportGenerator">mock-radiology-llm</span></span>
+        <span><strong>Study:</strong> <span id="reportStudyId">CXR1122</span></span>
+        <span><strong>Status:</strong> <span class="badge badge-in-review" id="reportStatusBadge">in_review</span></span>
+        <span><strong>Review ID:</strong> <code id="reportReviewId">-</code></span>
       </div>
 
-      <!-- Structured Report Container -->
+      <!-- Final Report Editor Container -->
       <div class="report-container">
         <!-- Findings Section -->
         <div class="report-section">
-          <div class="section-heading">FINDINGS</div>
-          <div class="findings-list" id="reportFindingsList">
+          <div class="section-heading-row">
+            <div class="section-heading">STRUCTURED FINDINGS</div>
+            <span class="section-subtext">Editable by Reviewer</span>
+          </div>
+          <div class="findings-editor-list" id="reportFindingsEditorList">
             <!-- Injected dynamically via app.js -->
           </div>
         </div>
 
         <!-- Impression Section -->
         <div class="report-section">
-          <div class="section-heading">IMPRESSION</div>
-          <div class="impression-list" id="reportImpressionList">
-            <!-- Injected dynamically via app.js -->
+          <div class="section-heading-row">
+            <div class="section-heading">IMPRESSION</div>
+            <span class="section-subtext">Editable Multiline</span>
+          </div>
+          <textarea id="reportImpressionEditor" class="report-textarea" rows="3" placeholder="Enter finalized impressions..."></textarea>
+        </div>
+
+        <!-- Reviewer Overall Commentary -->
+        <div class="report-section">
+          <div class="section-heading-row">
+            <div class="section-heading">REVIEWER COMMENTARY</div>
+            <span class="section-subtext">Overall Reviewer Notes</span>
+          </div>
+          <textarea id="reportReviewerComment" class="report-textarea" rows="2" placeholder="Enter overall review notes or justification..."></textarea>
+        </div>
+
+        <!-- Report Review Actions Toolbar -->
+        <div class="report-editor-actions">
+          <button id="resetReportBtn" class="btn btn-secondary" title="Reset draft back to original machine report">Reset to Machine Report</button>
+          <button id="saveDraftBtn" class="btn btn-secondary" title="Save current draft without finalization">Save Draft</button>
+          <button id="validateReportBtn" class="btn btn-secondary" title="Verify finalization criteria">Validate</button>
+          <button id="finalizeReportBtn" class="btn btn-primary btn-finalize" title="Finalize and permanently lock review">Finalize Report</button>
+        </div>
+        <div id="reportActionFeedback" class="report-action-feedback"></div>
+      </div>
+
+      <!-- Comparison Metrics Panel (Phase 1.2 Summary) -->
+      <div class="comparison-metrics-panel">
+        <div class="metrics-panel-header">
+          <span>REVIEW COMPARISON METRICS</span>
+          <span class="badge badge-neutral" id="metricsReviewRate">0% Complete</span>
+        </div>
+        <div class="metrics-summary-grid">
+          <div class="metric-card">
+            <div class="metric-number" id="metricTotal">7</div>
+            <div class="metric-title">Candidates</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number text-emerald" id="metricReviewed">0</div>
+            <div class="metric-title">Reviewed</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number text-amber" id="metricNotReviewed">7</div>
+            <div class="metric-title">Not Reviewed</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number text-blue" id="metricConfirmedPresent">0</div>
+            <div class="metric-title">Present</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number text-muted" id="metricConfirmedAbsent">0</div>
+            <div class="metric-title">Absent</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number text-purple" id="metricUncertain">0</div>
+            <div class="metric-title">Uncertain</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number text-rose" id="metricNeedsReview">0</div>
+            <div class="metric-title">Needs Review</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-number text-amber" id="metricDisagreements">0</div>
+            <div class="metric-title">Disagreements</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Audit Trail Section (Phase 1.2 Expandable) -->
+      <div class="collapsible-section audit-trail-section" id="auditSection">
+        <button class="collapsible-header" id="auditToggleBtn" aria-expanded="false">
+          <span>AUDIT TRAIL (<span id="auditCountBadge">0 records</span>)</span>
+          <span class="toggle-icon">▶</span>
+        </button>
+        <div class="collapsible-body" id="auditTrailBody" style="display: none;">
+          <div class="audit-disclaimer">Append-only chronological record of all reviewer modifications.</div>
+          <div class="audit-table-wrapper">
+            <table class="audit-table">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Reviewer</th>
+                  <th>Finding</th>
+                  <th>Field</th>
+                  <th>Old Value</th>
+                  <th>New Value</th>
+                </tr>
+              </thead>
+              <tbody id="auditTableBody">
+                <!-- Injected dynamically via app.js -->
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -368,44 +684,2409 @@
           <div class="val-badge"><span class="val-dot pass"></span> Schema Compliance: PASS</div>
           <div class="val-badge"><span class="val-dot pass"></span> Evidence Traceability: PASS</div>
           <div class="val-badge"><span class="val-dot pass"></span> Ground-Truth Isolation: PASS</div>
-          <div class="val-badge"><span class="val-dot pass"></span> Weight Immutability: PASS</div>
+          <div class="val-badge"><span class="val-dot pass"></span> Machine Immutability: PASS</div>
           <div class="val-badge val-badge-full"><span class="val-dot neutral"></span> Clinical Validation: NOT PERFORMED (Research Prototype Only)</div>
         </div>
       </div>
     </section>
   </main>
+  </div> <!-- End #individualViewContainer -->
+
+  <!-- Container for Tab 2: Multi-Reviewer Consensus & Adjudication Dashboard (Phase 1.3) -->
+  <div id="consensusDashboardContainer" style="display: none;">
+    <main class="consensus-layout">
+      <!-- Top Consensus Header & Summary Bar -->
+      <section class="consensus-banner-section">
+        <div class="consensus-status-card">
+          <div class="banner-title-group">
+            <span class="banner-icon">👥</span>
+            <div>
+              <h2>Multi-Reviewer Consensus & Agreement Dashboard</h2>
+              <span class="banner-subtext" id="consensusStudyBadge">Study: <strong>CXR1122</strong> | ID: <code id="consensusIdBadge">consensus_CXR1122</code></span>
+            </div>
+          </div>
+          <div class="banner-status-badge-group">
+            <span class="status-badge status-possible" id="consensusStatusBadge">COLLECTING REVIEWS</span>
+            <span class="badge badge-neutral" id="consensusReviewersCountBadge">0 / 3 Reviewers Completed</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grid Row 1: Reviewer Roster & Inter-Rater Agreement Metrics -->
+      <div class="consensus-grid-top">
+        <!-- Reviewer Roster Card -->
+        <section class="panel consensus-roster-panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h3>Independent Reviewer Cohort</h3>
+              <span class="badge badge-neutral" id="rosterCountBadge">3 Registered</span>
+            </div>
+            <button id="registerReviewerBtn" class="btn btn-sm btn-secondary">+ Register Reviewer</button>
+          </div>
+          <div class="roster-list" id="reviewerRosterList">
+            <!-- Dynamically populated via app.js -->
+          </div>
+        </section>
+
+        <!-- Statistical Agreement Metrics Card -->
+        <section class="panel consensus-metrics-panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h3>Inter-Rater Agreement Metrics</h3>
+              <span class="info-tag">Statistical Synthesis</span>
+            </div>
+            <button id="refreshConsensusBtn" class="btn btn-sm btn-secondary" title="Recalculate metrics from latest reviews">↻ Recalculate</button>
+          </div>
+          
+          <div class="agreement-metrics-grid">
+            <div class="agr-metric-card">
+              <div class="agr-metric-title">
+                <span>Average Agreement Ratio</span>
+                <span class="info-tooltip-trigger" title="Average modal agreement across candidate findings (N_modal / N_reviewers).">ⓘ</span>
+              </div>
+              <div class="agr-metric-val" id="metricAvgAgreement">-</div>
+              <div class="agr-metric-sub" id="metricAvgAgreementSub">Awaiting minimum reviewers</div>
+            </div>
+
+            <div class="agr-metric-card">
+              <div class="agr-metric-title">
+                <span>Cohen's Kappa ($\kappa$)</span>
+                <span class="info-tooltip-trigger" title="Inter-rater reliability metric for exactly 2 raters. Accounts for chance agreement.">ⓘ</span>
+              </div>
+              <div class="agr-metric-val" id="metricCohensKappa">-</div>
+              <div class="agr-metric-sub" id="metricCohensKappaSub">Applicable when $N=2$ raters</div>
+            </div>
+
+            <div class="agr-metric-card">
+              <div class="agr-metric-title">
+                <span>Fleiss' Kappa ($\kappa$)</span>
+                <span class="info-tooltip-trigger" title="Generalized inter-rater reliability metric for 3 or more independent raters.">ⓘ</span>
+              </div>
+              <div class="agr-metric-val" id="metricFleissKappa">-</div>
+              <div class="agr-metric-sub" id="metricFleissKappaSub">Applicable when $N \ge 3$ raters</div>
+            </div>
+          </div>
+
+          <div class="agreement-interpretation-banner" id="agreementInterpretationBanner">
+            <div class="interpretation-header">
+              <span class="badge badge-neutral" id="kappaInterpretationBadge">Status: Collecting</span>
+              <span class="interpretation-details" id="kappaDetailsText">Requires at least 2 completed reviewer sessions to compute statistical agreement.</span>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Finding Consensus Matrix -->
+      <section class="panel consensus-matrix-panel">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h3>Finding Consensus & Decision Synthesis</h3>
+            <span class="badge badge-neutral" id="consensusFindingsBadge">7 Findings</span>
+          </div>
+          <div class="matrix-legend">
+            <span class="legend-item"><span class="dot-chip dot-unanimous"></span> Unanimous ($100\%$)</span>
+            <span class="legend-item"><span class="dot-chip dot-majority"></span> Majority ($>50\%$)</span>
+            <span class="legend-item"><span class="dot-chip dot-adjudication"></span> Disagreement / Adjudication Required</span>
+          </div>
+        </div>
+
+        <div class="consensus-table-container">
+          <table class="consensus-table" id="consensusTable">
+            <thead>
+              <tr>
+                <th>Finding</th>
+                <th>Machine Evidence</th>
+                <th>Reviewer Decisions</th>
+                <th>Consensus Status</th>
+                <th>Consensus Decision</th>
+                <th>Agreement Ratio</th>
+                <th>Location / Severity</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="consensusTableBody">
+              <!-- Dynamically populated via app.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Diagnostic Questioning Consensus -->
+      <section class="panel consensus-qa-panel">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h3>Diagnostic Questioning Consensus</h3>
+            <span class="info-tag">Multi-Level QA Agreement</span>
+          </div>
+        </div>
+        <div class="consensus-qa-grid" id="consensusQaGrid">
+          <!-- Dynamically populated via app.js -->
+        </div>
+      </section>
+
+      <!-- Adjudication Workspace & History -->
+      <section class="panel adjudication-panel" id="adjudicationSection">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h3>Adjudication Workspace & Audit History</h3>
+            <span class="badge badge-rose" id="pendingAdjudicationsBadge">0 Pending</span>
+          </div>
+        </div>
+        <div class="adjudication-content-grid">
+          <div class="adjudication-pending-box">
+            <h4>Items Requiring Adjudication</h4>
+            <div id="pendingAdjudicationItemsList" class="pending-items-list">
+              <div class="empty-hint">No unresolved disagreements requiring adjudication.</div>
+            </div>
+          </div>
+
+          <div class="adjudication-history-box">
+            <h4>Adjudication Records</h4>
+            <div class="adjudication-records-wrapper">
+              <table class="audit-table">
+                <thead>
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>Adjudicator</th>
+                    <th>Target</th>
+                    <th>Binding Decision</th>
+                    <th>Mandatory Reason</th>
+                  </tr>
+                </thead>
+                <tbody id="adjudicationRecordsBody">
+                  <!-- Dynamically populated via app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Final Consensus Report Editor & Actions -->
+      <section class="panel consensus-report-panel">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h3>Consensus Report & Finalization</h3>
+            <span class="status-badge status-possible" id="consensusReportFinalBadge">DRAFT</span>
+          </div>
+          <div class="consensus-export-actions">
+            <button id="exportConsensusJsonBtn" class="btn btn-sm btn-secondary" title="Export Full Consensus JSON Artifact">Export JSON</button>
+            <button id="exportConsensusTextBtn" class="btn btn-sm btn-secondary" title="Export Human-Readable Consensus Summary">Export Text</button>
+          </div>
+        </div>
+
+        <div class="consensus-report-form">
+          <div class="report-section">
+            <div class="section-heading-row">
+              <div class="section-heading">FINAL CONSENSUS FINDINGS</div>
+              <span class="section-subtext">Synthesized from unanimous, majority, and adjudicated decisions</span>
+            </div>
+            <div class="consensus-findings-list" id="consensusFindingsList">
+              <!-- Dynamically populated via app.js -->
+            </div>
+          </div>
+
+          <div class="report-section">
+            <div class="section-heading-row">
+              <div class="section-heading">FINAL CONSENSUS IMPRESSION</div>
+              <span class="section-subtext">Consensus clinical impression synthesis</span>
+            </div>
+            <textarea id="consensusImpressionEditor" class="report-textarea" rows="3" placeholder="Consensus impression..."></textarea>
+          </div>
+
+          <div class="report-section-grid">
+            <div class="report-section">
+              <div class="section-heading-row">
+                <div class="section-heading">REVIEWER SUMMARY</div>
+              </div>
+              <input type="text" id="consensusReviewerSummary" class="reviewer-input" placeholder="e.g. 3 of 3 reviewers completed independent evaluation">
+            </div>
+
+            <div class="report-section">
+              <div class="section-heading-row">
+                <div class="section-heading">AGREEMENT SUMMARY</div>
+              </div>
+              <input type="text" id="consensusAgreementSummary" class="reviewer-input" placeholder="e.g. Average agreement ratio: 1.000, Fleiss' Kappa: 1.000 (Almost Perfect)">
+            </div>
+          </div>
+
+          <div class="report-section">
+            <div class="section-heading-row">
+              <div class="section-heading">ADJUDICATION SUMMARY & COMMENTARY</div>
+            </div>
+            <textarea id="consensusCommentaryEditor" class="report-textarea" rows="2" placeholder="Enter overall consensus remarks, adjudication justification, or research notes..."></textarea>
+          </div>
+
+          <div class="report-editor-actions">
+            <button id="resetConsensusDraftBtn" class="btn btn-secondary">Reset Draft from Consensus</button>
+            <button id="saveConsensusDraftBtn" class="btn btn-secondary">Save Consensus Draft</button>
+            <button id="finalizeConsensusBtn" class="btn btn-primary btn-finalize">Finalize Consensus Report</button>
+          </div>
+          <div id="consensusActionFeedback" class="report-action-feedback"></div>
+        </div>
+      </section>
+    </main>
+  </div> <!-- End #consensusDashboardContainer -->
+
+  <!-- Container for Tab 3: Evaluation & Workflow Analytics (Phase 1.4) -->
+  <div id="evaluationAnalyticsContainer" style="display: none;">
+    <main class="analytics-layout">
+      <!-- Section 1: Overview Metric Cards -->
+      <section class="analytics-metrics-grid">
+        <div class="agr-metric-card">
+          <div class="agr-metric-title"><span>Review Completion Rate</span></div>
+          <div class="agr-metric-val" id="analyticsReviewCompletion">-</div>
+          <div class="agr-metric-sub" id="analyticsReviewCompletionSub">Across candidate findings</div>
+        </div>
+        <div class="agr-metric-card">
+          <div class="agr-metric-title"><span>Active Reviewers</span></div>
+          <div class="agr-metric-val" id="analyticsActiveReviewers">-</div>
+          <div class="agr-metric-sub" id="analyticsActiveReviewersSub">Participating clinicians</div>
+        </div>
+        <div class="agr-metric-card">
+          <div class="agr-metric-title"><span>Unanimous Finding Decisions</span></div>
+          <div class="agr-metric-val" id="analyticsUnanimousFindings">-</div>
+          <div class="agr-metric-sub">100% rater concordances</div>
+        </div>
+        <div class="agr-metric-card">
+          <div class="agr-metric-title"><span>Finalized Consensus Reports</span></div>
+          <div class="agr-metric-val" id="analyticsFinalizedReports">-</div>
+          <div class="agr-metric-sub">Locked research consensus</div>
+        </div>
+      </section>
+
+      <!-- Section 2: Statistical Agreement Aggregation -->
+      <div class="analytics-grid-two">
+        <!-- 2-Reviewer Agreement (Cohen's Kappa) -->
+        <section class="panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h3>2-Reviewer Studies (Cohen's Kappa κ)</h3>
+              <span class="info-tag">Exact Pairwise Metric</span>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="kappa-summary-box">
+              <div class="kappa-main-stat">
+                <span class="kappa-number" id="analyticsCohenKappa">-</span>
+                <span class="kappa-interp-badge" id="analyticsCohenInterp">Pending</span>
+              </div>
+              <div class="kappa-meta" id="analyticsCohenMeta">Sample size: N=0 studies</div>
+              <p class="kappa-explanation">
+                Cohen's Kappa measures pairwise inter-rater reliability corrected for chance agreement. Applicable strictly to studies with exactly two independent reviewers.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3+-Reviewer Agreement (Fleiss' Kappa) -->
+        <section class="panel">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <h3>3+-Reviewer Studies (Fleiss' Kappa κ)</h3>
+              <span class="info-tag">Multi-Rater Metric</span>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="kappa-summary-box">
+              <div class="kappa-main-stat">
+                <span class="kappa-number" id="analyticsFleissKappa">-</span>
+                <span class="kappa-interp-badge" id="analyticsFleissInterp">Pending</span>
+              </div>
+              <div class="kappa-meta" id="analyticsFleissMeta">Sample size: N=0 studies</div>
+              <p class="kappa-explanation">
+                Fleiss' Kappa generalizes Cohen's Kappa for fixed cohorts of three or more reviewers across discrete rating categories (supported, uncertain, refuted, not_reviewed).
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Section 3: Reviewer Workflow Activity (Strictly Non-Evaluative) -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h3>Reviewer Workflow Monitoring</h3>
+            <span class="badge badge-neutral">Operational Tracking Only — Zero Clinical Performance Ranking</span>
+          </div>
+        </div>
+        <div class="reviewer-activity-table-container">
+          <table class="consensus-matrix-table" id="reviewerActivityTable">
+            <thead>
+              <tr>
+                <th>Reviewer ID</th>
+                <th>Studies Assigned</th>
+                <th>Studies Completed</th>
+                <th>Findings Evaluated</th>
+                <th>Consensus Participation</th>
+                <th>Adjudications Conducted</th>
+              </tr>
+            </thead>
+            <tbody id="reviewerActivityTableBody">
+              <!-- Dynamically populated via app.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 4: Study Provenance Viewer -->
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <h3>End-to-End Study Provenance & Audit Trail</h3>
+            <span class="info-tag">Immutable Lifecycle Chain</span>
+          </div>
+          <div class="provenance-selector-group">
+            <label for="provenanceStudySelect">Select Study:</label>
+            <select id="provenanceStudySelect" class="study-select">
+              <option value="CXR1122">CXR1122</option>
+            </select>
+            <button id="loadProvenanceBtn" class="btn btn-sm btn-secondary">Load Provenance</button>
+          </div>
+        </div>
+        <div class="provenance-timeline" id="provenanceTimeline">
+          <!-- Dynamically populated via app.js -->
+        </div>
+      </section>
+    </main>
+  </div> <!-- End #evaluationAnalyticsContainer -->
+
+  <!-- Adjudication Modal Dialog (Phase 1.3) -->
+  <div class="modal-backdrop" id="adjudicationModalBackdrop" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="adjudicationModalTitle">Adjudicate Disagreement</h3>
+        <button id="closeAdjudicationModalBtn" class="btn btn-sm btn-secondary">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-desc" id="adjudicationModalDesc">
+          Provide a binding adjudication decision for this finding or question disagreement.
+        </p>
+
+        <div class="modal-form-group">
+          <label>Target:</label>
+          <div class="adjudication-target-info" id="adjudicationTargetInfo">-</div>
+        </div>
+
+        <div class="modal-form-group">
+          <label for="adjudicationDecisionSelect">Binding Decision:</label>
+          <select id="adjudicationDecisionSelect" class="reviewer-select">
+            <option value="confirmed_present">Confirmed Present</option>
+            <option value="confirmed_absent">Confirmed Absent</option>
+            <option value="uncertain">Uncertain</option>
+          </select>
+        </div>
+
+        <div class="modal-form-group">
+          <label for="adjudicatorIdInput">Adjudicator ID:</label>
+          <input type="text" id="adjudicatorIdInput" class="reviewer-input" value="lead_adjudicator">
+        </div>
+
+        <div class="modal-form-group">
+          <label for="adjudicationReasonInput">Mandatory Reason / Justification:</label>
+          <textarea id="adjudicationReasonInput" class="report-textarea" rows="3" placeholder="Detail the clinical or evidence justification for this binding adjudication..."></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button id="submitAdjudicationBtn" class="btn btn-primary">Save Binding Adjudication</button>
+          <button id="cancelAdjudicationBtn" class="btn btn-secondary">Cancel</button>
+        </div>
+        <div id="adjudicationFeedback" class="report-action-feedback"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Register Reviewer Modal Dialog (Phase 1.3) -->
+  <div class="modal-backdrop" id="registerReviewerModalBackdrop" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Register New Reviewer</h3>
+        <button id="closeRegisterModalBtn" class="btn btn-sm btn-secondary">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-form-group">
+          <label for="newReviewerId">Reviewer ID (alphanumeric/underscore):</label>
+          <input type="text" id="newReviewerId" class="reviewer-input" placeholder="e.g. rev_04">
+        </div>
+        <div class="modal-form-group">
+          <label for="newReviewerName">Display Name:</label>
+          <input type="text" id="newReviewerName" class="reviewer-input" placeholder="e.g. Dr. Danielle, MD">
+        </div>
+        <div class="modal-form-group">
+          <label for="newReviewerRole">Role:</label>
+          <select id="newReviewerRole" class="reviewer-select">
+            <option value="Clinical Reviewer" selected>Clinical Reviewer</option>
+            <option value="Attending Radiologist">Attending Radiologist</option>
+            <option value="Radiology Resident">Radiology Resident</option>
+            <option value="Research Fellow">Research Fellow</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button id="submitRegisterReviewerBtn" class="btn btn-primary">Register Reviewer</button>
+          <button id="cancelRegisterModalBtn" class="btn btn-secondary">Cancel</button>
+        </div>
+        <div id="registerFeedback" class="report-action-feedback"></div>
+      </div>
+    </div>
+  </div>
 
   <!-- Batch Processing Modal Dialog (Phase 1.1) -->
   <div class="modal-backdrop" id="batchModalBackdrop" style="display: none;">
-    <div class="modal-card">
+    <div class="modal-card" style="max-width: 800px; width: 90%;">
       <div class="modal-header">
         <h3>Research Batch Study Runner</h3>
         <button id="closeBatchModalBtn" class="btn btn-sm btn-secondary">✕</button>
       </div>
       <div class="modal-body">
         <p class="modal-desc">
-          Trigger batch study validation across the 6-stage explainable radiology pipeline (Vision $\rightarrow$ QA $\rightarrow$ Evidence $\rightarrow$ Grounding $\rightarrow$ LLM $\rightarrow$ Validation).
+          Trigger real batch machine inference across the 6-stage pipeline: Vision Backbone $\rightarrow$ Diagnostic QA $\rightarrow$ Evidence Layer $\rightarrow$ Grad-CAM Visual Grounding $\rightarrow$ LLM Report Generation $\rightarrow$ Invariant Validation.
         </p>
         <div class="modal-form-group">
           <label for="batchStudyInput">Study IDs (comma separated):</label>
-          <input type="text" id="batchStudyInput" class="reviewer-input" value="CXR1122, CXR1007, CXR1009">
+          <input type="text" id="batchStudyInput" class="reviewer-input" value="CXR1122, CXR1007, CXR1009, CXR1401">
         </div>
-        <button id="triggerBatchBtn" class="btn btn-primary">Run Batch Verification</button>
+        <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 16px;">
+          <label style="font-size: 0.85rem; color: #94a3b8; display: flex; align-items: center; gap: 6px;">
+            <input type="checkbox" id="batchForceReprocess"> Force re-inference (recompute existing artifacts)
+          </label>
+          <button id="triggerBatchBtn" class="btn btn-primary" style="margin-left: auto;">Run Batch Verification</button>
+        </div>
 
-        <div class="batch-status-container" id="batchStatusContainer" style="display: none;">
-          <div class="batch-status-header">
-            <span>Job ID: <code id="batchJobId">-</code></span>
+        <div class="batch-status-container" id="batchStatusContainer" style="display: none; background: #0f172a; padding: 16px; border-radius: 8px; border: 1px solid #334155;">
+          <div class="batch-status-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div>
+              <span>Job ID: <code id="batchJobId">-</code></span>
+              <span class="badge badge-neutral" id="batchProgressText" style="margin-left: 8px;">0 / 0 Completed</span>
+            </div>
             <span class="status-badge status-possible" id="batchJobStatusBadge">QUEUED</span>
           </div>
-          <div class="batch-stages-grid" id="batchStagesGrid">
+
+          <div style="background: #1e293b; border-radius: 4px; height: 8px; overflow: hidden; margin-bottom: 12px;">
+            <div id="batchProgressBar" style="width: 0%; height: 100%; background: #3b82f6; transition: width 0.3s ease;"></div>
+          </div>
+
+          <div class="batch-stages-grid" id="batchStagesGrid" style="margin-bottom: 16px;">
             <!-- Stage pills injected dynamically -->
           </div>
-          <div class="batch-log" id="batchLog"></div>
+
+          <h5 style="margin: 0 0 8px 0; color: #cbd5e1; font-size: 0.85rem;">Per-Study Progress & Status</h5>
+          <div style="max-height: 240px; overflow-y: auto;">
+            <table class="data-table" style="width: 100%; font-size: 0.8rem;">
+              <thead>
+                <tr>
+                  <th>Study ID</th>
+                  <th>Current Stage</th>
+                  <th>Progress</th>
+                  <th>Status</th>
+                  <th>Details / Error</th>
+                </tr>
+              </thead>
+              <tbody id="batchStudiesTableBody">
+                <!-- Per-study progress rows injected dynamically -->
+              </tbody>
+            </table>
+          </div>
+          <div class="batch-log" id="batchLog" style="margin-top: 12px; font-size: 0.75rem; color: #94a3b8;"></div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Container for Tab 4: Research Evaluation (Phase 1.5) -->
+  <div id="researchEvaluationViewContainer" style="display: none;">
+    <main class="eval-layout">
+      <!-- Research Disclaimer Banner -->
+      <div class="safety-banner-prominent">
+        <span class="warning-icon">🧪</span>
+        <div>
+          <strong>RESEARCH EVALUATION ONLY — NOT CLINICAL PERFORMANCE</strong>
+          <p>
+            Experiment configurations, execution records, inter-rater reliability, and comparison metrics are academic research artifacts.
+            They are strictly non-diagnostic and must not be interpreted as certified medical efficacy or clinical performance rankings.
+          </p>
+        </div>
+      </div>
+
+      <!-- Evaluation Overview Stats (Phase 1.6) -->
+      <section class="overview-stats-section">
+        <div class="stats-cards-grid">
+          <div class="stat-card">
+            <div class="stat-label">TOTAL EVALUATIONS</div>
+            <div class="stat-val" id="evalOverviewTotal">0</div>
+            <div class="stat-sub">Registered benchmark runs</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">COMPLETED RUNS</div>
+            <div class="stat-val text-emerald" id="evalOverviewCompleted">0</div>
+            <div class="stat-sub">Executed & computed</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">VALIDATED RUNS</div>
+            <div class="stat-val text-blue" id="evalOverviewValidated">0</div>
+            <div class="stat-sub">Invariant verified</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">EVALUATION DATASETS</div>
+            <div class="stat-val text-amber" id="evalOverviewDatasets">0</div>
+            <div class="stat-sub">Isolated reference sets</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">EVALUATED STUDIES</div>
+            <div class="stat-val" id="evalOverviewStudies">0</div>
+            <div class="stat-sub">Cumulative sample size</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Action Toolbar -->
+      <div class="evaluation-toolbar">
+        <div class="filter-group">
+          <button id="openNewEvalModalBtn" class="btn btn-primary">
+            <span>+</span> New Evaluation Run
+          </button>
+          <button id="openNewEvalDatasetModalBtn" class="btn btn-secondary">
+            <span>📊</span> New Evaluation Dataset
+          </button>
+          <button id="openNewExperimentModalBtn" class="btn btn-secondary">
+            <span>🧪</span> New Experiment
+          </button>
+          <button id="openNewSnapshotModalBtn" class="btn btn-secondary">
+            <span>📷</span> Create Snapshot
+          </button>
+          <button id="compareSelectedExperimentsBtn" class="btn btn-secondary" disabled>
+            <span>⚖</span> Compare Selected (<span id="selectedExpCount">0</span>)
+          </button>
+        </div>
+        <div class="export-group">
+          <button id="refreshExperimentsBtn" class="btn btn-sm btn-secondary">🔄 Refresh</button>
+        </div>
+      </div>
+
+      <!-- Evaluation Runs Master Table (Phase 1.6) -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-icon">📊</span> Research Evaluation Runs (<span id="evaluationsTotalCount">0</span>)
+          </div>
+          <span class="badge badge-default">Isolated Reference Benchmarks</span>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table" id="evaluationsTable">
+            <thead>
+              <tr>
+                <th>Evaluation ID</th>
+                <th>Title / Description</th>
+                <th>Experiment</th>
+                <th>Dataset</th>
+                <th>Status</th>
+                <th>Accuracy</th>
+                <th>F1 Score</th>
+                <th>Cohen's κ</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="evaluationsTableBody">
+              <!-- Evaluation rows injected dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Selected Evaluation Run Full Workspace (Phase 1.6) -->
+      <section class="section-card" id="evaluationDetailSection" style="display: none;">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-icon">📈</span> Evaluation Workspace: <code id="detailEvalId">-</code>
+          </div>
+          <div class="action-buttons-group">
+            <button id="validateEvalRunBtn" class="btn btn-sm btn-secondary">Validate Run</button>
+            <button id="archiveEvalRunBtn" class="btn btn-sm btn-secondary">Archive</button>
+            <button id="exportEvalJsonBtn" class="btn btn-sm btn-secondary">Export JSON</button>
+            <button id="exportEvalTextBtn" class="btn btn-sm btn-secondary">Export Text</button>
+          </div>
+        </div>
+
+        <!-- Metadata & Reproducibility Fingerprints -->
+        <div class="exp-detail-grid">
+          <div class="exp-meta-card">
+            <h4>Evaluation Run Overview</h4>
+            <div class="meta-row"><strong>Title:</strong> <span id="detailEvalTitle">-</span></div>
+            <div class="meta-row"><strong>Status:</strong> <span class="status-badge" id="detailEvalStatusBadge">CREATED</span></div>
+            <div class="meta-row"><strong>Experiment ID:</strong> <code id="detailEvalExpId">-</code></div>
+            <div class="meta-row"><strong>Evaluation Dataset:</strong> <code id="detailEvalDatasetId">-</code></div>
+            <div class="meta-row"><strong>Studies Evaluated:</strong> <span id="detailEvalStudyCount">-</span></div>
+            <div class="meta-row"><strong>Completed At:</strong> <span id="detailEvalCompletedAt">-</span></div>
+          </div>
+          <div class="exp-meta-card">
+            <h4>Reproducibility & Cryptographic Fingerprints</h4>
+            <div class="meta-row"><strong>Evaluation Fingerprint:</strong> <code class="sha-hash" id="detailEvalFingerprintHash">-</code></div>
+            <div class="meta-row"><strong>Dataset Fingerprint:</strong> <code class="sha-hash" id="detailEvalDatasetFingerprint">-</code></div>
+            <div class="meta-row"><strong>Configuration Fingerprint:</strong> <code class="sha-hash" id="detailEvalConfigFingerprint">-</code></div>
+            <div class="meta-row"><strong>Verification Standard:</strong> <span>SHA-256 Digest (Zero Secrets)</span></div>
+          </div>
+        </div>
+
+        <!-- Research Classification & Agreement Metric Cards -->
+        <h4 style="margin: 24px 0 12px 0;">Observed Benchmark Metrics (Non-Evaluative)</h4>
+        <div class="stats-cards-grid">
+          <div class="stat-card">
+            <div class="stat-label">ACCURACY</div>
+            <div class="stat-val" id="evalMetricAcc">-</div>
+            <div class="stat-sub" id="evalMetricAccCI">95% CI: -</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">PRECISION</div>
+            <div class="stat-val" id="evalMetricPrec">-</div>
+            <div class="stat-sub" id="evalMetricPrecCI">95% CI: -</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">RECALL / SENSITIVITY</div>
+            <div class="stat-val" id="evalMetricRecall">-</div>
+            <div class="stat-sub" id="evalMetricRecallCI">95% CI: -</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">F1 SCORE</div>
+            <div class="stat-val" id="evalMetricF1">-</div>
+            <div class="stat-sub" id="evalMetricF1CI">95% CI: -</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">SPECIFICITY</div>
+            <div class="stat-val" id="evalMetricSpec">-</div>
+            <div class="stat-sub" id="evalMetricSpecCI">95% CI: -</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">BALANCED ACCURACY</div>
+            <div class="stat-val" id="evalMetricBalAcc">-</div>
+            <div class="stat-sub" id="evalMetricBalAccCI">95% CI: -</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">COHEN'S KAPPA (2 RATERS)</div>
+            <div class="stat-val" id="evalMetricCohenK">-</div>
+            <div class="stat-sub">Chance-corrected agreement</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">FLEISS' KAPPA (3+ RATERS)</div>
+            <div class="stat-val" id="evalMetricFleissK">-</div>
+            <div class="stat-sub">Multi-rater reliability</div>
+          </div>
+        </div>
+
+        <!-- Confusion Matrix & Error Analysis Panel -->
+        <div class="modal-grid-2col" style="margin-top: 24px;">
+          <!-- Confusion Matrix Card -->
+          <div class="exp-meta-card">
+            <h4>Observed Confusion Matrix (Aggregate)</h4>
+            <div class="confusion-matrix-grid">
+              <div class="cm-cell cm-header"></div>
+              <div class="cm-cell cm-header"><strong>Ref Positive</strong></div>
+              <div class="cm-cell cm-header"><strong>Ref Negative</strong></div>
+              <div class="cm-cell cm-header"><strong>Pred Positive</strong></div>
+              <div class="cm-cell cm-val cm-tp" id="cmValTP">TP: 0</div>
+              <div class="cm-cell cm-val cm-fp" id="cmValFP">FP: 0</div>
+              <div class="cm-cell cm-header"><strong>Pred Negative</strong></div>
+              <div class="cm-cell cm-val cm-fn" id="cmValFN">FN: 0</div>
+              <div class="cm-cell cm-val cm-tn" id="cmValTN">TN: 0</div>
+            </div>
+            <div class="why-note" style="margin-top: 10px;">
+              <em>Counts reflect binary findings evaluated across isolated reference dataset.</em>
+            </div>
+          </div>
+
+          <!-- Error & Disagreement Summary -->
+          <div class="exp-meta-card">
+            <h4>Error & Disagreement Breakdown</h4>
+            <div class="meta-row"><strong>Total Disagreements:</strong> <span id="errValTotal">0</span></div>
+            <div class="meta-row"><strong>Machine–Reviewer Disagreements:</strong> <span id="errValMachineReviewer">0</span></div>
+            <div class="meta-row"><strong>Inter-Reviewer Disagreements:</strong> <span id="errValInterReviewer">0</span></div>
+            <div class="meta-row"><strong>Adjudication Frequency:</strong> <span id="errValAdjudicationFreq">0.0000</span></div>
+            <div class="meta-row"><strong>Dispute Resolution Rate:</strong> <span>100% Resolved in Consensus</span></div>
+          </div>
+        </div>
+
+        <!-- Finding-Level Analysis Table -->
+        <h4 style="margin: 24px 0 12px 0;">Finding-Level Benchmark Analysis</h4>
+        <div class="table-responsive">
+          <table class="data-table" id="evalFindingsTable">
+            <thead>
+              <tr>
+                <th>Finding Type</th>
+                <th>Sample Count</th>
+                <th>Observed TP</th>
+                <th>Observed TN</th>
+                <th>Observed FP</th>
+                <th>Observed FN</th>
+                <th>Precision</th>
+                <th>Recall</th>
+                <th>F1 Score</th>
+              </tr>
+            </thead>
+            <tbody id="evalFindingsTableBody">
+              <!-- Injected dynamically -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Statistical Distributions Table -->
+        <h4 style="margin: 24px 0 12px 0;">Statistical Metric Distributions (Descriptive)</h4>
+        <div class="table-responsive">
+          <table class="data-table" id="evalStatsTable">
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>Mean</th>
+                <th>Median</th>
+                <th>Std Dev</th>
+                <th>Min</th>
+                <th>Max</th>
+                <th>Q25</th>
+                <th>Q75</th>
+                <th>IQR</th>
+                <th>95% Bootstrap CI</th>
+              </tr>
+            </thead>
+            <tbody id="evalStatsTableBody">
+              <!-- Injected dynamically -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Evaluation Provenance Timeline -->
+        <h4 style="margin: 24px 0 12px 0;">Evaluation Provenance & Audit Trail</h4>
+        <div class="provenance-timeline" id="evalProvenanceTimeline">
+          <!-- Injected dynamically -->
+        </div>
+      </section>
+
+      <!-- Dataset Snapshots Strip -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-icon">📦</span> Dataset Snapshots (<span id="snapshotTotalCount">0</span>)
+          </div>
+          <span class="badge badge-default">Cryptographically Verified</span>
+        </div>
+        <div class="snapshots-grid" id="snapshotsGridContainer">
+          <!-- Snapshots injected dynamically -->
+        </div>
+      </section>
+
+      <!-- Experiments Table -->
+      <section class="section-card">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-icon">🧪</span> Research Experiments (<span id="experimentsTotalCount">0</span>)
+          </div>
+          <span class="badge badge-default">Reproducible Records</span>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table" id="experimentsTable">
+            <thead>
+              <tr>
+                <th style="width: 40px;"><input type="checkbox" id="selectAllExperimentsCheckbox"></th>
+                <th>Experiment ID</th>
+                <th>Name</th>
+                <th>Dataset Snapshot</th>
+                <th>Model / Layer</th>
+                <th>QA Params</th>
+                <th>Status</th>
+                <th>Dataset Size</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="experimentsTableBody">
+              <!-- Experiment rows injected dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Selected Experiment Detail View -->
+      <section class="section-card" id="experimentDetailSection" style="display: none;">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-icon">📋</span> Experiment Details: <code id="detailExpId">-</code>
+          </div>
+          <div class="action-buttons-group">
+            <button id="exportExpJsonBtn" class="btn btn-sm btn-secondary">Export JSON</button>
+            <button id="exportExpTextBtn" class="btn btn-sm btn-secondary">Export Text</button>
+          </div>
+        </div>
+
+        <!-- Metadata & Fingerprint Summary -->
+        <div class="exp-detail-grid">
+          <div class="exp-meta-card">
+            <h4>Experiment Overview</h4>
+            <div class="meta-row"><strong>Name:</strong> <span id="detailExpName">-</span></div>
+            <div class="meta-row"><strong>Description:</strong> <span id="detailExpDesc">-</span></div>
+            <div class="meta-row"><strong>Status:</strong> <span class="status-badge" id="detailExpStatusBadge">CREATED</span></div>
+            <div class="meta-row"><strong>Snapshot ID:</strong> <code id="detailExpSnapshotId">-</code></div>
+            <div class="meta-row"><strong>Created By:</strong> <span id="detailExpCreatedBy">-</span></div>
+            <div class="meta-row"><strong>Created At:</strong> <span id="detailExpCreatedAt">-</span></div>
+            <div class="meta-row"><strong>Completed At:</strong> <span id="detailExpCompletedAt">-</span></div>
+          </div>
+          <div class="exp-meta-card">
+            <h4>Configuration Fingerprint</h4>
+            <div class="meta-row"><strong>Model Architecture:</strong> <span id="detailExpModelName">-</span></div>
+            <div class="meta-row"><strong>Model Version:</strong> <span id="detailExpModelVersion">-</span></div>
+            <div class="meta-row"><strong>Target Grad-CAM Layer:</strong> <code id="detailExpTargetLayer">-</code></div>
+            <div class="meta-row"><strong>QA Threshold / Top-K:</strong> <span id="detailExpQAParams">-</span></div>
+            <div class="meta-row"><strong>LLM Provider & Model:</strong> <span id="detailExpLLMParams">-</span></div>
+            <div class="meta-row"><strong>SHA-256 Fingerprint:</strong> <code class="sha-hash" id="detailExpFingerprintHash">-</code></div>
+          </div>
+        </div>
+
+        <!-- Research Metrics Dashboard -->
+        <div class="metrics-dashboard-container" id="expMetricsDashboard">
+          <h4 style="margin: 20px 0 10px 0;">Research Evaluation Metrics</h4>
+          <div class="stats-cards-grid">
+            <div class="stat-card" title="Percentage of snapshot studies that have completed independent clinician reviews.">
+              <div class="stat-label">REVIEW COVERAGE ℹ️</div>
+              <div class="stat-val" id="expMetricReviewCov">-</div>
+              <div class="stat-sub" id="expMetricReviewSub">0/0 studies</div>
+            </div>
+            <div class="stat-card" title="Studies with multi-reviewer consensus synthesis and resolved dispute states.">
+              <div class="stat-label">CONSENSUS COVERAGE ℹ️</div>
+              <div class="stat-val" id="expMetricConsensusCov">-</div>
+              <div class="stat-sub" id="expMetricConsensusSub">0 consensus sessions</div>
+            </div>
+            <div class="stat-card" title="Concordance ratio between machine-derived evidence status and final reviewer/consensus status.">
+              <div class="stat-label">MACHINE–REVIEWER AGREEMENT ℹ️</div>
+              <div class="stat-val" id="expMetricMachineAggr">-</div>
+              <div class="stat-sub">Non-evaluative concordance</div>
+            </div>
+            <div class="stat-card" title="Statistical inter-rater reliability across 2-reviewer (Cohen's κ) and multi-reviewer (Fleiss' κ) studies.">
+              <div class="stat-label">INTER-RATER RELIABILITY ℹ️</div>
+              <div class="stat-val" id="expMetricKappa">-</div>
+              <div class="stat-sub" id="expMetricKappaSub">Cohen's κ / Fleiss' κ</div>
+            </div>
+            <div class="stat-card" title="Percentage of evaluated findings with successfully generated Grad-CAM attribution heatmaps.">
+              <div class="stat-label">EXPLAINABILITY COVERAGE ℹ️</div>
+              <div class="stat-val" id="expMetricExplainCov">-</div>
+              <div class="stat-sub" id="expMetricExplainSub">0 grounded findings</div>
+            </div>
+            <div class="stat-card" title="Descriptive count of reviewer modifications to machine status, location, severity, or report draft.">
+              <div class="stat-label">HUMAN CORRECTIONS ℹ️</div>
+              <div class="stat-val" id="expMetricHumanCorr">-</div>
+              <div class="stat-sub" id="expMetricHumanCorrSub">Workflow modifications</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11-Stage Provenance Timeline -->
+        <h4 style="margin: 24px 0 12px 0;">11-Stage Experiment Provenance Pipeline</h4>
+        <div class="provenance-timeline" id="expProvenanceTimeline">
+          <!-- Stages injected dynamically -->
+        </div>
+      </section>
+
+      <!-- Multi-Experiment Comparison Workspace -->
+      <section class="section-card" id="experimentComparisonSection" style="display: none;">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-icon">⚖</span> Multi-Experiment Side-by-Side Comparison
+          </div>
+          <button id="closeComparisonBtn" class="btn btn-sm btn-secondary">Close Comparison</button>
+        </div>
+        
+        <div class="comparison-notice-bar">
+          <strong>Configuration Difference & Metric Comparison</strong> (Non-evaluative side-by-side analysis without ranking or superior grading).
+        </div>
+
+        <!-- Configuration Differences Table -->
+        <h4 style="margin: 16px 0 8px 0;">1. Configuration Differences</h4>
+        <div class="table-responsive">
+          <table class="data-table" id="comparisonConfigTable">
+            <thead>
+              <tr id="comparisonConfigHeaderRow">
+                <th>Configuration Parameter</th>
+              </tr>
+            </thead>
+            <tbody id="comparisonConfigTableBody">
+              <!-- Config diff rows -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Metrics Comparison Table -->
+        <h4 style="margin: 20px 0 8px 0;">2. Observed Research Metrics Comparison</h4>
+        <div class="table-responsive">
+          <table class="data-table" id="comparisonMetricsTable">
+            <thead>
+              <tr id="comparisonMetricsHeaderRow">
+                <th>Research Metric Category</th>
+              </tr>
+            </thead>
+            <tbody id="comparisonMetricsTableBody">
+              <!-- Metric comparison rows -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Create Evaluation Run Modal Dialog (Phase 1.6) -->
+  <div class="modal-backdrop" id="createEvalModalBackdrop" style="display: none;">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <h3>Create Research Evaluation Run</h3>
+        <button id="closeCreateEvalModalBtn" class="btn btn-sm btn-secondary">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-form-group">
+          <label for="newEvalTitle">Evaluation Title:</label>
+          <input type="text" id="newEvalTitle" class="reviewer-input" placeholder="e.g. Baseline_DenseNet_Standard_Benchmark">
+        </div>
+        <div class="modal-form-group">
+          <label for="newEvalDescription">Hypothesis / Description:</label>
+          <textarea id="newEvalDescription" class="report-textarea" rows="2" placeholder="Describe benchmark criteria, evaluation objectives, methodology..."></textarea>
+        </div>
+        <div class="modal-grid-2col">
+          <div class="modal-form-group">
+            <label for="newEvalExpSelect">Target Experiment:</label>
+            <select id="newEvalExpSelect" class="reviewer-select">
+              <!-- Injected dynamically -->
+            </select>
+          </div>
+          <div class="modal-form-group">
+            <label for="newEvalDatasetSelect">Evaluation Reference Dataset:</label>
+            <select id="newEvalDatasetSelect" class="reviewer-select">
+              <!-- Injected dynamically -->
+            </select>
+          </div>
+        </div>
+        <div class="fingerprint-preview-box">
+          <strong>Deterministic Reproducibility Preview:</strong>
+          <code id="evalFingerprintPreview" class="sha-hash">-</code>
+        </div>
+        <div class="modal-actions">
+          <button id="submitCreateEvalBtn" class="btn btn-primary">Create Evaluation Run</button>
+          <button id="cancelCreateEvalModalBtn" class="btn btn-secondary">Cancel</button>
+        </div>
+        <div id="createEvalFeedback" class="report-action-feedback"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Evaluation Dataset Modal Dialog (Phase 1.6) -->
+  <div class="modal-backdrop" id="createEvalDatasetModalBackdrop" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Create Isolated Evaluation Dataset</h3>
+        <button id="closeCreateEvalDatasetModalBtn" class="btn btn-sm btn-secondary">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-form-group">
+          <label for="newEvalDatasetId">Dataset ID / Name:</label>
+          <input type="text" id="newEvalDatasetId" class="reviewer-input" placeholder="e.g. EVALSET_IU_BENCHMARK_v1">
+        </div>
+        <div class="modal-form-group">
+          <label for="newEvalDatasetDesc">Source Description:</label>
+          <textarea id="newEvalDatasetDesc" class="report-textarea" rows="2" placeholder="Isolated research reference manifest description..."></textarea>
+        </div>
+        <div class="modal-actions">
+          <button id="submitCreateEvalDatasetBtn" class="btn btn-primary">Create Dataset Manifest</button>
+          <button id="cancelCreateEvalDatasetModalBtn" class="btn btn-secondary">Cancel</button>
+        </div>
+        <div id="createEvalDatasetFeedback" class="report-action-feedback"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Experiment Modal Dialog (Phase 1.5) -->
+  <div class="modal-backdrop" id="createExperimentModalBackdrop" style="display: none;">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <h3>Create Reproducible Research Experiment</h3>
+        <button id="closeCreateExpModalBtn" class="btn btn-sm btn-secondary">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-form-group">
+          <label for="newExpName">Experiment Name:</label>
+          <input type="text" id="newExpName" class="reviewer-input" placeholder="e.g. DenseNet121_norm5_Baseline_Eval">
+        </div>
+        <div class="modal-form-group">
+          <label for="newExpDescription">Description / Hypothesis:</label>
+          <textarea id="newExpDescription" class="report-textarea" rows="2" placeholder="Research objective, model configuration rationale, evaluation goals..."></textarea>
+        </div>
+        <div class="modal-form-group">
+          <label for="newExpSnapshotSelect">Target Dataset Snapshot:</label>
+          <select id="newExpSnapshotSelect" class="reviewer-select">
+            <!-- Snapshots options -->
+          </select>
+        </div>
+
+        <div class="modal-grid-2col">
+          <div class="modal-form-group">
+            <label for="newExpModelVersion">Model Architecture / Version:</label>
+            <input type="text" id="newExpModelVersion" class="reviewer-input" value="densenet121-res224-all">
+          </div>
+          <div class="modal-form-group">
+            <label for="newExpTargetLayer">Grad-CAM Target Layer:</label>
+            <select id="newExpTargetLayer" class="reviewer-select">
+              <option value="model.features.norm5" selected>model.features.norm5 (DenseBlock 4 Output)</option>
+              <option value="model.features.denseblock4">model.features.denseblock4</option>
+              <option value="model.features.transition3">model.features.transition3</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-grid-2col">
+          <div class="modal-form-group">
+            <label for="newExpQaThreshold">QA Threshold (0.0 - 1.0):</label>
+            <input type="number" id="newExpQaThreshold" class="reviewer-input" value="0.15" step="0.01" min="0" max="1">
+          </div>
+          <div class="modal-form-group">
+            <label for="newExpQaTopK">QA Top-K Findings:</label>
+            <input type="number" id="newExpQaTopK" class="reviewer-input" value="5" min="1" max="14">
+          </div>
+        </div>
+
+        <div class="modal-form-group">
+          <label for="newExpCreatedBy">Created By (Researcher ID):</label>
+          <input type="text" id="newExpCreatedBy" class="reviewer-input" value="researcher_01">
+        </div>
+
+        <div class="fingerprint-preview-box">
+          <strong>Configuration Fingerprint Preview:</strong>
+          <code id="expFingerprintPreview" class="sha-hash">-</code>
+        </div>
+
+        <div class="modal-actions">
+          <button id="submitCreateExperimentBtn" class="btn btn-primary">Create Experiment Record</button>
+          <button id="cancelCreateExpModalBtn" class="btn btn-secondary">Cancel</button>
+        </div>
+        <div id="createExpFeedback" class="report-action-feedback"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Dataset Snapshot Modal Dialog (Phase 1.5) -->
+  <div class="modal-backdrop" id="createSnapshotModalBackdrop" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Create Immutable Dataset Snapshot</h3>
+        <button id="closeCreateSnapModalBtn" class="btn btn-sm btn-secondary">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-form-group">
+          <label for="newSnapName">Snapshot Name:</label>
+          <input type="text" id="newSnapName" class="reviewer-input" placeholder="e.g. IU_XRay_Full_Corpus_v1">
+        </div>
+        <div class="modal-form-group">
+          <label for="newSnapDescription">Description:</label>
+          <textarea id="newSnapDescription" class="report-textarea" rows="2" placeholder="Describe cohort criteria, study inclusions, dataset source..."></textarea>
+        </div>
+        <div class="modal-form-group">
+          <label for="newSnapStudySelection">Studies to Include:</label>
+          <select id="newSnapStudySelection" class="reviewer-select">
+            <option value="all" selected>All Discovered Studies (Full Dataset)</option>
+            <option value="reviewed_only">Reviewed Studies Only (Active Reviews)</option>
+            <option value="cxr1122_only">CXR1122 Benchmark Study Only</option>
+          </select>
+        </div>
+        <div class="modal-form-group">
+          <label for="newSnapCreatedBy">Created By:</label>
+          <input type="text" id="newSnapCreatedBy" class="reviewer-input" value="dataset_curator">
+        </div>
+
+        <div class="modal-actions">
+          <button id="submitCreateSnapshotBtn" class="btn btn-primary">Create Immutable Snapshot</button>
+          <button id="cancelCreateSnapModalBtn" class="btn btn-secondary">Cancel</button>
+        </div>
+        <div id="createSnapFeedback" class="report-action-feedback"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Container for Tab 5: Experiment Registry & Longitudinal Tracking (Phase 1.7) -->
+  <div id="experimentRegistryViewContainer" style="display: none;">
+    <main class="dataset-layout">
+      <!-- Registry Overview Cards -->
+      <section class="dataset-stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">REGISTERED EXPERIMENTS</div>
+          <div class="stat-val" id="statRegTotalExp">-</div>
+          <div class="stat-sub">Tracked research configurations</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">MODELS IN REGISTRY</div>
+          <div class="stat-val stat-completed" id="statRegTotalModels">-</div>
+          <div class="stat-sub">Architectures & weights</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">DATASET VERSIONS</div>
+          <div class="stat-val stat-validated" id="statRegTotalDsv">-</div>
+          <div class="stat-sub">Versioned cohorts</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">FINALIZED SNAPSHOTS</div>
+          <div class="stat-val stat-finalized" id="statRegTotalFinalized">-</div>
+          <div class="stat-sub">Immutable research states</div>
+        </div>
+      </section>
+
+      <!-- Model Registry Section -->
+      <section class="section-card" style="margin-bottom: 24px;">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-icon">🤖</span> 1. Model Registry
+          </div>
+          <div class="action-buttons-group">
+            <button id="openRegisterModelModalBtn" class="btn btn-sm btn-primary">+ Register Model</button>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Model ID</th>
+                <th>Model Name</th>
+                <th>Architecture</th>
+                <th>Framework</th>
+                <th>Target Layer</th>
+                <th>Status</th>
+                <th>Registered</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="modelRegistryTableBody">
+              <!-- Models injected dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Dataset Versions Section -->
+      <section class="section-card" style="margin-bottom: 24px;">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-icon">🗂</span> 2. Dataset Versions
+          </div>
+          <div class="action-buttons-group">
+            <button id="openCreateDsvModalBtn" class="btn btn-sm btn-primary">+ Create Dataset Version</button>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Version ID</th>
+                <th>Source Dataset</th>
+                <th>Study Count</th>
+                <th>Manifest SHA-256</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="datasetVersionsTableBody">
+              <!-- Dataset versions injected dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Experiment Registry & Runs Section -->
+      <section class="section-card" style="margin-bottom: 24px;">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-icon">🔬</span> 3. Experiment Registry & Runs
+          </div>
+          <div class="action-buttons-group">
+            <button id="openCreateExpRegModalBtn" class="btn btn-sm btn-primary">+ Create Experiment</button>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Experiment ID</th>
+                <th>Experiment Name</th>
+                <th>Model ID</th>
+                <th>Dataset Version</th>
+                <th>Status</th>
+                <th>Fingerprint</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="experimentRegistryTableBody">
+              <!-- Experiments injected dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Selected Experiment Detail Workspace -->
+      <section class="section-card" id="regExpDetailSection" style="display: none; margin-bottom: 24px;">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-icon">📋</span> Experiment Details: <code id="regDetailExpId">-</code>
+          </div>
+          <div class="action-buttons-group">
+            <button id="regExpRunBtn" class="btn btn-sm btn-primary">Run</button>
+            <button id="regExpValidateBtn" class="btn btn-sm btn-secondary">Validate</button>
+            <button id="regExpFinalizeBtn" class="btn btn-sm btn-primary">Finalize</button>
+            <button id="regExpArchiveBtn" class="btn btn-sm btn-secondary">Archive</button>
+            <button id="regExpExportJsonBtn" class="btn btn-sm btn-secondary">Export JSON</button>
+            <button id="regExpExportTextBtn" class="btn btn-sm btn-secondary">Export Text</button>
+          </div>
+        </div>
+
+        <div class="exp-detail-grid">
+          <div class="exp-meta-card">
+            <h4>Experiment Overview</h4>
+            <div class="meta-row"><strong>Name:</strong> <span id="regDetailExpName">-</span></div>
+            <div class="meta-row"><strong>Description:</strong> <span id="regDetailExpDesc">-</span></div>
+            <div class="meta-row"><strong>Status:</strong> <span class="status-badge" id="regDetailExpStatusBadge">-</span></div>
+            <div class="meta-row"><strong>Model ID:</strong> <code id="regDetailExpModelId">-</code></div>
+            <div class="meta-row"><strong>Dataset Version ID:</strong> <code id="regDetailExpDsvId">-</code></div>
+            <div class="meta-row"><strong>Methodology:</strong> <span id="regDetailExpMethodology">-</span></div>
+            <div class="meta-row"><strong>Fingerprint (SHA-256):</strong> <code class="sha-hash" id="regDetailExpFingerprint">-</code></div>
+          </div>
+          <div class="exp-meta-card">
+            <h4>Execution & Snapshot</h4>
+            <div class="meta-row"><strong>Created At:</strong> <span id="regDetailExpCreatedAt">-</span></div>
+            <div class="meta-row"><strong>Completed At:</strong> <span id="regDetailExpCompletedAt">-</span></div>
+            <div class="meta-row"><strong>Evaluation Run ID:</strong> <code id="regDetailExpEvalRunId">-</code></div>
+            <div class="meta-row"><strong>Snapshot SHA-256:</strong> <code class="sha-hash" id="regDetailExpSnapshotHash">-</code></div>
+          </div>
+        </div>
+
+        <!-- Metrics Cards -->
+        <h4 style="margin: 20px 0 10px 0;">Observed Research Metrics</h4>
+        <div class="stats-cards-grid" id="regDetailMetricsGrid">
+          <!-- Injected dynamically -->
+        </div>
+
+        <!-- Longitudinal History Timeline -->
+        <h4 style="margin: 24px 0 12px 0;">Longitudinal Experiment History & Timeline</h4>
+        <div class="provenance-timeline" id="regExpHistoryTimeline">
+          <!-- Timeline events injected dynamically -->
+        </div>
+      </section>
+
+      <!-- Side-by-Side Comparison Workspace -->
+      <section class="section-card" id="regComparisonSection" style="margin-bottom: 24px;">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-icon">⚖</span> 4. Side-by-Side Longitudinal Experiment Comparison
+          </div>
+        </div>
+        <div class="modal-grid-2col" style="margin-bottom: 16px;">
+          <div class="modal-form-group">
+            <label for="compExpASelect">Experiment A (Baseline):</label>
+            <select id="compExpASelect" class="reviewer-select"></select>
+          </div>
+          <div class="modal-form-group">
+            <label for="compExpBSelect">Experiment B (Target):</label>
+            <select id="compExpBSelect" class="reviewer-select"></select>
+          </div>
+        </div>
+        <button id="runRegComparisonBtn" class="btn btn-primary" style="margin-bottom: 16px;">Compare Experiments</button>
+
+        <div id="regComparisonResults" style="display: none;">
+          <div class="comparison-notice-bar" id="regCompCompatibilityNotice">-</div>
+          <h4 style="margin: 16px 0 8px 0;">Configuration Differences</h4>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Field</th>
+                  <th>Experiment A</th>
+                  <th>Experiment B</th>
+                </tr>
+              </thead>
+              <tbody id="regCompConfigBody"></tbody>
+            </table>
+          </div>
+
+          <h4 style="margin: 16px 0 8px 0;">Observed Metric Differences</h4>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Metric</th>
+                  <th>Value A</th>
+                  <th>Value B</th>
+                  <th>Observed Delta</th>
+                  <th>Relative Delta</th>
+                </tr>
+              </thead>
+              <tbody id="regCompMetricsBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Register Model Modal Dialog (Phase 1.7) -->
+  <div class="modal-backdrop" id="registerModelModalBackdrop" style="display: none;">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <h3>Register New Model Version</h3>
+        <button id="closeRegisterModelModalBtn" class="btn btn-sm btn-secondary">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-form-group">
+          <label for="newModelId">Model ID:</label>
+          <input type="text" id="newModelId" class="reviewer-input" placeholder="e.g. model_densenet121_txrv_custom">
+        </div>
+        <div class="modal-form-group">
+          <label for="newModelName">Model Name:</label>
+          <input type="text" id="newModelName" class="reviewer-input" placeholder="e.g. TorchXRayVision DenseNet-121 Custom">
+        </div>
+        <div class="modal-grid-2col">
+          <div class="modal-form-group">
+            <label for="newModelArchitecture">Architecture:</label>
+            <input type="text" id="newModelArchitecture" class="reviewer-input" value="DenseNet-121">
+          </div>
+          <div class="modal-form-group">
+            <label for="newModelFramework">Framework:</label>
+            <input type="text" id="newModelFramework" class="reviewer-input" value="PyTorch / TorchXRayVision">
+          </div>
+        </div>
+        <div class="modal-grid-2col">
+          <div class="modal-form-group">
+            <label for="newModelWeights">Weights Identifier:</label>
+            <input type="text" id="newModelWeights" class="reviewer-input" value="densenet121-res224-all">
+          </div>
+          <div class="modal-form-group">
+            <label for="newModelTargetLayer">Grad-CAM Target Layer:</label>
+            <input type="text" id="newModelTargetLayer" class="reviewer-input" value="model.features.norm5">
+          </div>
+        </div>
+        <div class="modal-form-group">
+          <label for="newModelDesc">Description:</label>
+          <textarea id="newModelDesc" class="report-textarea" rows="2" placeholder="Model details, training weights provenance, architecture rationale..."></textarea>
+        </div>
+        <div class="modal-actions">
+          <button id="submitRegisterModelBtn" class="btn btn-primary">Register Model Version</button>
+          <button id="cancelRegisterModelModalBtn" class="btn btn-secondary">Cancel</button>
+        </div>
+        <div id="registerModelFeedback" class="report-action-feedback"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Dataset Version Modal Dialog (Phase 1.7) -->
+  <div class="modal-backdrop" id="createDsvModalBackdrop" style="display: none;">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <h3>Create New Dataset Version</h3>
+        <button id="closeCreateDsvModalBtn" class="btn btn-sm btn-secondary">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-form-group">
+          <label for="newDsvId">Dataset Version ID:</label>
+          <input type="text" id="newDsvId" class="reviewer-input" placeholder="e.g. dsv_iu_xray_frontal_cohort_v1">
+        </div>
+        <div class="modal-form-group">
+          <label for="newDsvSource">Source Dataset:</label>
+          <input type="text" id="newDsvSource" class="reviewer-input" value="IU_XRAY">
+        </div>
+        <div class="modal-form-group">
+          <label for="newDsvInclusion">Inclusion Criteria:</label>
+          <input type="text" id="newDsvInclusion" class="reviewer-input" value="has_frontal_view=true, min_views=1">
+        </div>
+        <div class="modal-actions">
+          <button id="submitCreateDsvBtn" class="btn btn-primary">Create Dataset Version</button>
+          <button id="cancelCreateDsvModalBtn" class="btn btn-secondary">Cancel</button>
+        </div>
+        <div id="createDsvFeedback" class="report-action-feedback"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Container for Tab 6: External Benchmarking (Phase 1.8) -->
+  <div id="externalBenchmarkingViewContainer" style="display: none;">
+    <main class="dataset-layout">
+      <!-- Benchmark Safety Banner -->
+      <div class="evaluation-alert-banner" style="background: rgba(14, 165, 233, 0.12); border-color: rgba(14, 165, 233, 0.35); color: #0284c7; margin-bottom: 1.25rem;">
+        <span class="alert-icon">🌐</span>
+        <div>
+          <strong>RESEARCH BENCHMARK — NOT CLINICAL PERFORMANCE EVIDENCE</strong>
+          <p style="margin: 0.25rem 0 0 0; font-size: 0.85rem; opacity: 0.9;">
+            External test set evaluations and multi-view benchmarks are exploratory research metrics for academic reproducibility and distribution shift analysis.
+          </p>
+        </div>
+      </div>
+
+      <!-- Overview Stats Grid -->
+      <section class="dataset-stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">EXTERNAL DATASETS</div>
+          <div class="stat-val" id="bmStatExternalDatasets">-</div>
+          <div class="stat-sub">Registered cohorts</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">TOTAL BENCHMARKS</div>
+          <div class="stat-val" id="bmStatTotalBenchmarks">-</div>
+          <div class="stat-sub">Multi-view & external runs</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">MULTI-VIEW RUNS</div>
+          <div class="stat-val stat-in-review" id="bmStatMultiViewRuns">-</div>
+          <div class="stat-sub">Frontal + Lateral evaluations</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">VERIFIED BUNDLES</div>
+          <div class="stat-val stat-finalized" id="bmStatVerifiedBundles">-</div>
+          <div class="stat-sub">Air-gapped reproducibility</div>
+        </div>
+      </section>
+
+      <!-- Section Navigation Sub-Tabs -->
+      <div class="exp-subnav">
+        <button class="exp-subnav-btn active" id="subtabExtDatasets">1. External Datasets</button>
+        <button class="exp-subnav-btn" id="subtabDatasetCompatibility">2. Dataset Compatibility</button>
+        <button class="exp-subnav-btn" id="subtabBenchmarkRuns">3. Benchmark Runs</button>
+        <button class="exp-subnav-btn" id="subtabMultiViewExps">4. Multi-View Experiments</button>
+        <button class="exp-subnav-btn" id="subtabExtEvaluation">5. External Evaluation</button>
+        <button class="exp-subnav-btn" id="subtabCrossDatasetComp">6. Cross-Dataset Comparison</button>
+        <button class="exp-subnav-btn" id="subtabPortableBundles">7. Portable Bundles</button>
+        <button class="exp-subnav-btn" id="subtabAirGappedVerify">8. Reproducibility</button>
+      </div>
+
+      <!-- Sub-view 1: External Datasets -->
+      <div id="subviewExtDatasets">
+        <div class="card">
+          <div class="card-header flex-between">
+            <h3>Registered External Datasets</h3>
+            <button id="openRegisterExtDsModalBtn" class="btn btn-primary btn-sm">+ Register External Dataset</button>
+          </div>
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Dataset ID</th>
+                  <th>Name</th>
+                  <th>Modality</th>
+                  <th>Views</th>
+                  <th>Studies</th>
+                  <th>Status</th>
+                  <th>Manifest SHA-256</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="extDatasetsTableBody">
+                <tr><td colspan="8" class="text-center text-muted">Loading external datasets...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-view 2: Dataset Compatibility -->
+      <div id="subviewDatasetCompatibility" style="display: none;">
+        <div class="card">
+          <div class="card-header">
+            <h3>Cohort & Label Schema Compatibility Matrix</h3>
+          </div>
+          <div class="card-body">
+            <p class="text-muted">Assesses label taxonomy overlap and preprocessing alignment between IU X-Ray and external test sets.</p>
+            <div id="datasetCompatibilityContent">
+              <div class="info-callout">Select an external dataset to assess cross-distribution compatibility.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-view 3: Benchmark Runs -->
+      <div id="subviewBenchmarkRuns" style="display: none;">
+        <div class="card">
+          <div class="card-header flex-between">
+            <h3>Multi-View & External Benchmark Registry</h3>
+            <button id="openCreateBenchmarkModalBtn" class="btn btn-primary btn-sm">+ Create Benchmark Run</button>
+          </div>
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Benchmark ID</th>
+                  <th>Name</th>
+                  <th>Modality</th>
+                  <th>View Configuration</th>
+                  <th>Status</th>
+                  <th>Reproducibility</th>
+                  <th>Created</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="benchmarkRunsTableBody">
+                <tr><td colspan="8" class="text-center text-muted">Loading benchmark runs...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-view 4: Multi-View Experiments -->
+      <div id="subviewMultiViewExps" style="display: none;">
+        <div class="card">
+          <div class="card-header">
+            <h3>Multi-View Representation Tracking</h3>
+          </div>
+          <div class="card-body">
+            <div class="grid-2col">
+              <div class="p-3 bg-subtle rounded">
+                <h4>Frontal View Representation</h4>
+                <p class="text-muted">Standard PA / AP projection. Single-view baseline evaluation.</p>
+                <div class="badge badge-info">Supported (DenseNet-121)</div>
+              </div>
+              <div class="p-3 bg-subtle rounded">
+                <h4>Lateral View Representation</h4>
+                <p class="text-muted">Lateral projection for retrosternal and retrocardiac space.</p>
+                <div class="badge badge-info">Independent View Evaluation</div>
+              </div>
+            </div>
+            <div class="mt-4 p-3 border rounded">
+              <h4>Multi-View Fusion Architecture</h4>
+              <p class="text-muted">Early feature fusion / late decision fusion across paired frontal and lateral views.</p>
+              <span class="badge badge-warning">Research Architecture: Registered Configuration</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-view 5: External Evaluation -->
+      <div id="subviewExtEvaluation" style="display: none;">
+        <div class="card">
+          <div class="card-header">
+            <h3>External Test Set Evaluation Details</h3>
+          </div>
+          <div class="card-body" id="extEvalDetailContainer">
+            <p class="text-muted">Select an executed benchmark to inspect classification metrics, uncertainty intervals, and finding breakdown.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-view 6: Cross-Dataset Comparison -->
+      <div id="subviewCrossDatasetComp" style="display: none;">
+        <div class="card">
+          <div class="card-header">
+            <h3>Cross-Dataset Benchmark Comparison</h3>
+          </div>
+          <div class="card-body">
+            <div class="comparison-selectors flex-gap mb-3">
+              <select id="compareBenchSelectA" class="study-select"></select>
+              <span class="compare-vs">vs</span>
+              <select id="compareBenchSelectB" class="study-select"></select>
+              <button id="runBenchComparisonBtn" class="btn btn-primary btn-sm">Compare Benchmarks</button>
+            </div>
+            <div id="benchComparisonResultContainer"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-view 7: Portable Bundles -->
+      <div id="subviewPortableBundles" style="display: none;">
+        <div class="card">
+          <div class="card-header flex-between">
+            <h3>Self-Contained Portable Experiment Bundles</h3>
+            <button id="openCreateBundleModalBtn" class="btn btn-primary btn-sm">+ Create Portable Bundle</button>
+          </div>
+          <div class="card-body">
+            <p class="text-muted">Generates air-gapped zip bundles containing complete model/dataset/experiment metadata, reports, and reproduction scripts.</p>
+            <div id="portableBundlesList"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-view 8: Reproducibility -->
+      <div id="subviewAirGappedVerify" style="display: none;">
+        <div class="card">
+          <div class="card-header">
+            <h3>Air-Gapped Reproducibility & Fingerprint Audit</h3>
+          </div>
+          <div class="card-body">
+            <div class="input-group mb-3">
+              <input type="text" id="verifyBundleInput" class="reviewer-input" placeholder="Enter Bundle ID (e.g. bundle_exp_e2e_phase17_main)">
+              <button id="runBundleVerifyBtn" class="btn btn-primary">Verify Air-Gapped Reproducibility</button>
+            </div>
+            <div id="bundleVerifyResultContainer"></div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Register External Dataset Modal Dialog (Phase 1.8) -->
+  <div class="modal-backdrop" id="registerExtDsModalBackdrop" style="display: none;">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <h3>Register External Dataset</h3>
+        <button id="closeRegisterExtDsModalBtn" class="btn btn-sm btn-secondary">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-form-group">
+          <label for="newExtDsId">Dataset ID:</label>
+          <input type="text" id="newExtDsId" class="reviewer-input" placeholder="e.g. ext_mimic_cxr_test_v1">
+        </div>
+        <div class="modal-form-group">
+          <label for="newExtDsName">Dataset Name:</label>
+          <input type="text" id="newExtDsName" class="reviewer-input" placeholder="e.g. External Multi-View Test Set">
+        </div>
+        <div class="modal-grid-2col">
+          <div class="modal-form-group">
+            <label for="newExtDsModality">Modality:</label>
+            <select id="newExtDsModality" class="reviewer-input">
+              <option value="CHEST_XRAY" selected>Chest X-Ray</option>
+              <option value="MULTI_MODAL_XRAY">Multi-Modal Radiography</option>
+            </select>
+          </div>
+          <div class="modal-form-group">
+            <label for="newExtDsStatus">Access Status:</label>
+            <select id="newExtDsStatus" class="reviewer-input">
+              <option value="SYNTHETIC_FIXTURE" selected>Synthetic Validation Fixture</option>
+              <option value="LOCAL_REFERENCE">Local Reference</option>
+              <option value="PUBLIC">Public</option>
+              <option value="RESTRICTED">Restricted</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button id="submitRegisterExtDsBtn" class="btn btn-primary">Register Dataset</button>
+          <button id="cancelRegisterExtDsModalBtn" class="btn btn-secondary">Cancel</button>
+        </div>
+        <div id="registerExtDsFeedback" class="report-action-feedback"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Benchmark Run Modal Dialog (Phase 1.8) -->
+  <div class="modal-backdrop" id="createBenchmarkModalBackdrop" style="display: none;">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <h3>Create Benchmark Run</h3>
+        <button id="closeCreateBenchmarkModalBtn" class="btn btn-sm btn-secondary">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-form-group">
+          <label for="newBmId">Benchmark ID:</label>
+          <input type="text" id="newBmId" class="reviewer-input" placeholder="e.g. bm_multiview_eval_001">
+        </div>
+        <div class="modal-form-group">
+          <label for="newBmName">Benchmark Name:</label>
+          <input type="text" id="newBmName" class="reviewer-input" placeholder="e.g. Frontal vs Multi-View Benchmark">
+        </div>
+        <div class="modal-grid-2col">
+          <div class="modal-form-group">
+            <label for="newBmModality">Modality:</label>
+            <select id="newBmModality" class="reviewer-input">
+              <option value="INTERNAL_BENCHMARK" selected>Internal Benchmark (IU X-Ray)</option>
+              <option value="EXTERNAL_TEST_SET">External Test Set</option>
+              <option value="CROSS_DATASET_BENCHMARK">Cross-Dataset Benchmark</option>
+            </select>
+          </div>
+          <div class="modal-form-group">
+            <label for="newBmViewConfig">View Configuration:</label>
+            <select id="newBmViewConfig" class="reviewer-input">
+              <option value="SINGLE_VIEW" selected>Single View (Frontal)</option>
+              <option value="FRONTAL_ONLY">Frontal Only</option>
+              <option value="LATERAL_ONLY">Lateral Only</option>
+              <option value="MULTI_VIEW">Multi-View (Frontal + Lateral)</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button id="submitCreateBenchmarkBtn" class="btn btn-primary">Create Benchmark</button>
+          <button id="cancelCreateBenchmarkModalBtn" class="btn btn-secondary">Cancel</button>
+        </div>
+        <div id="createBenchmarkFeedback" class="report-action-feedback"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Portable Bundle Modal Dialog (Phase 1.8) -->
+  <div class="modal-backdrop" id="createBundleModalBackdrop" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Create Portable Experiment Bundle</h3>
+        <button id="closeCreateBundleModalBtn" class="btn btn-sm btn-secondary">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-form-group">
+          <label for="newBundleExpId">Source Experiment ID:</label>
+          <input type="text" id="newBundleExpId" class="reviewer-input" placeholder="e.g. exp_e2e_phase17_main">
+        </div>
+        <div class="modal-form-group">
+          <label for="newBundleId">Bundle ID (Optional):</label>
+          <input type="text" id="newBundleId" class="reviewer-input" placeholder="e.g. bundle_main_v1">
+        </div>
+        <div class="modal-actions">
+          <button id="submitCreateBundleBtn" class="btn btn-primary">Create Bundle</button>
+          <button id="cancelCreateBundleModalBtn" class="btn btn-secondary">Cancel</button>
+        </div>
+        <div id="createBundleFeedback" class="report-action-feedback"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Container for Tab 7: Research Experiments (Phase 1.9) -->
+  <div id="researchExperimentsContainer" style="display: none;">
+    <main class="dataset-layout">
+      <!-- Permanent Research Notice Banner -->
+      <div class="research-ethics-banner" style="background: rgba(14, 165, 233, 0.1); border-left: 4px solid #0ea5e9; padding: 12px 16px; margin-bottom: 16px; border-radius: 4px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <strong style="color: #38bdf8;">📊 RESEARCH EXPERIMENT INTERFACE — NOT CLINICAL VALIDATION</strong>
+            <div style="color: #94a3b8; font-size: 0.85rem; margin-top: 4px;">
+              Clearly Distinguishing: <span style="color: #a78bfa; font-weight: 600;">[MEASURED RESULT]</span> &nbsp;|&nbsp; <span style="color: #38bdf8; font-weight: 600;">[STATISTICAL SUMMARY]</span> &nbsp;|&nbsp; <span style="color: #34d399; font-weight: 600;">[RESEARCH INTERPRETATION]</span>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button id="p19OpenCreateExpBtn" class="btn btn-sm btn-primary">➕ New Experiment</button>
+            <button id="p19OpenCompareModalBtn" class="btn btn-sm btn-secondary">⚖️ Compare Runs</button>
+            <button id="p19RefreshDashboardBtn" class="btn btn-sm btn-secondary">🔄 Refresh</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 1.9 Sub-View Navigation Tabs -->
+      <div class="queue-filter-bar" style="margin-bottom: 16px;">
+        <button class="queue-filter-btn active" id="p19SubTabRegistry">📋 Experiment Registry</button>
+        <button class="queue-filter-btn" id="p19SubTabBuilder">⚙️ Experiment Builder</button>
+        <button class="queue-filter-btn" id="p19SubTabResults">📈 Experiment Results</button>
+        <button class="queue-filter-btn" id="p19SubTabComparison">⚖️ Comparison</button>
+        <button class="queue-filter-btn" id="p19SubTabReproducibility">🔍 Reproducibility Inspector</button>
+        <button class="queue-filter-btn" id="p19SubTabReport">📄 Research Report</button>
+        <button class="queue-filter-btn" id="p19SubTabProvenance">⏱️ Provenance Timeline</button>
+      </div>
+
+      <!-- Subview 1: Experiment Registry -->
+      <div id="p19ExpRegistrySubView" class="p19-subview">
+        <div class="card">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h3>Registered Experiments</h3>
+            <span id="p19ExpCountBadge" class="badge">0 experiments</span>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="data-table" id="p19ExpTable">
+                <thead>
+                  <tr>
+                    <th>Experiment ID</th>
+                    <th>Name</th>
+                    <th>Dataset</th>
+                    <th>Model</th>
+                    <th>View Config</th>
+                    <th>Status</th>
+                    <th>Reproducibility</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="p19ExpTableBody">
+                  <tr><td colspan="9" style="text-align: center; color: #94a3b8;">Loading experiments...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subview 2: Experiment Builder -->
+      <div id="p19ExpBuilderSubView" class="p19-subview" style="display: none;">
+        <div class="card">
+          <div class="card-header">
+            <h3>Configure & Initialize New Experiment</h3>
+          </div>
+          <div class="card-body">
+            <div class="modal-form-group">
+              <label for="bldExpId">Experiment ID (Optional custom slug):</label>
+              <input type="text" id="bldExpId" class="reviewer-input" placeholder="e.g. exp_phase19_densenet_multiview">
+            </div>
+            <div class="modal-form-group">
+              <label for="bldExpName">Experiment Name *:</label>
+              <input type="text" id="bldExpName" class="reviewer-input" placeholder="e.g. Multi-View vs Single-View Evaluation on IU-Xray">
+            </div>
+            <div class="modal-form-group">
+              <label for="bldExpDesc">Description & Hypothesis:</label>
+              <textarea id="bldExpDesc" class="reviewer-input" rows="2" placeholder="Research objective and evaluation scope..."></textarea>
+            </div>
+            <div class="modal-grid-2col">
+              <div class="modal-form-group">
+                <label for="bldExpDataset">Target Dataset:</label>
+                <select id="bldExpDataset" class="reviewer-input">
+                  <option value="iu_xray_default" selected>IU-Xray (Default Research Cohort)</option>
+                  <option value="mimic_cxr_ext">MIMIC-CXR External Subset</option>
+                  <option value="chexpert_ext">CheXpert External Validation</option>
+                </select>
+              </div>
+              <div class="modal-form-group">
+                <label for="bldExpViewConfig">View Representation:</label>
+                <select id="bldExpViewConfig" class="reviewer-input">
+                  <option value="SINGLE_VIEW" selected>SINGLE_VIEW (Frontal)</option>
+                  <option value="FRONTAL_ONLY">FRONTAL_ONLY</option>
+                  <option value="LATERAL_ONLY">LATERAL_ONLY</option>
+                  <option value="MULTI_VIEW">MULTI_VIEW (Frontal + Lateral Fusion)</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-grid-2col">
+              <div class="modal-form-group">
+                <label for="bldExpModel">Vision Backbone Architecture:</label>
+                <select id="bldExpModel" class="reviewer-input">
+                  <option value="txrv_densenet121" selected>TorchXRayVision DenseNet-121 (Res224)</option>
+                  <option value="txrv_resnet50">TorchXRayVision ResNet-50</option>
+                </select>
+              </div>
+              <div class="modal-form-group">
+                <label for="bldExpBootstraps">Bootstrap Resamples (for 95% CI):</label>
+                <input type="number" id="bldExpBootstraps" class="reviewer-input" value="1000" min="100" max="5000">
+              </div>
+            </div>
+            <div class="modal-grid-2col">
+              <div class="modal-form-group">
+                <label for="bldExpSeed">Random Seed (Deterministic):</label>
+                <input type="number" id="bldExpSeed" class="reviewer-input" value="42">
+              </div>
+              <div class="modal-form-group">
+                <label for="bldExpThreshold">Decision Threshold:</label>
+                <input type="number" id="bldExpThreshold" class="reviewer-input" value="0.5" step="0.05" min="0.0" max="1.0">
+              </div>
+            </div>
+            <div class="modal-actions" style="margin-top: 16px;">
+              <button id="bldSubmitCreateBtn" class="btn btn-primary">Create Experiment Definition</button>
+            </div>
+            <div id="bldExpFeedback" class="report-action-feedback" style="margin-top: 12px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subview 3: Experiment Results -->
+      <div id="p19ExpResultsSubView" class="p19-subview" style="display: none;">
+        <div class="card">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <h3 id="p19ResultsExpTitle">Experiment Evaluation Results</h3>
+              <span id="p19ResultsExpMeta" style="color: #94a3b8; font-size: 0.85rem;">Select an experiment from the registry to view metrics.</span>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button id="p19RunSelectedExpBtn" class="btn btn-sm btn-primary">▶ Run Benchmark</button>
+              <button id="p19FinalizeExpBtn" class="btn btn-sm btn-secondary">✓ Finalize</button>
+              <button id="p19PublishExpBtn" class="btn btn-sm btn-secondary" style="border-color: #38bdf8; color: #38bdf8;">🔒 Publish & Lock</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <!-- Macro Summary Grid -->
+            <div class="analytics-metrics-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 20px;">
+              <div class="stat-card">
+                <div class="stat-label">AUC (Macro-Average)</div>
+                <div class="stat-value" id="p19ResAuc" style="color: #38bdf8;">—</div>
+                <div class="stat-subtitle" id="p19ResAucCi">95% CI: —</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Sensitivity / Recall</div>
+                <div class="stat-value" id="p19ResSens" style="color: #4ade80;">—</div>
+                <div class="stat-subtitle" id="p19ResSensCi">95% CI: —</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Specificity</div>
+                <div class="stat-value" id="p19ResSpec" style="color: #a78bfa;">—</div>
+                <div class="stat-subtitle" id="p19ResSpecCi">95% CI: —</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">F1-Score / Accuracy</div>
+                <div class="stat-value" id="p19ResF1" style="color: #fb923c;">—</div>
+                <div class="stat-subtitle" id="p19ResF1Ci">95% CI: —</div>
+              </div>
+            </div>
+
+            <!-- Detailed Per-Finding Table -->
+            <h4>Per-Finding Diagnostic Metrics</h4>
+            <div class="table-responsive">
+              <table class="data-table" id="p19PerFindingTable">
+                <thead>
+                  <tr>
+                    <th>Finding</th>
+                    <th>AUC</th>
+                    <th>Sensitivity</th>
+                    <th>Specificity</th>
+                    <th>F1 Score</th>
+                    <th>Accuracy</th>
+                  </tr>
+                </thead>
+                <tbody id="p19PerFindingTableBody">
+                  <tr><td colspan="6" style="text-align: center; color: #94a3b8;">No results loaded yet.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subview 4: Experiment Comparison -->
+      <div id="p19ExpComparisonSubView" class="p19-subview" style="display: none;">
+        <div class="card">
+          <div class="card-header">
+            <h3>Side-by-Side Research Experiment Comparison</h3>
+          </div>
+          <div class="card-body">
+            <div style="background: rgba(30, 41, 59, 0.5); padding: 12px; border-radius: 6px; margin-bottom: 16px;">
+              <p id="p19ComparisonSummaryText" style="color: #cbd5e1; font-size: 0.9rem; margin: 0;">
+                Select experiments in the comparison dialog to view quantified metric differences.
+              </p>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table" id="p19ComparisonTable">
+                <thead>
+                  <tr>
+                    <th>Metric</th>
+                    <th>Baseline Value</th>
+                    <th>Comparator Value</th>
+                    <th>Absolute Delta (Δabs)</th>
+                    <th>Relative Delta (Δrel)</th>
+                  </tr>
+                </thead>
+                <tbody id="p19ComparisonTableBody">
+                  <tr><td colspan="5" style="text-align: center; color: #94a3b8;">No comparison active.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subview 5: Reproducibility Inspector -->
+      <div id="p19ReproducibilitySubView" class="p19-subview" style="display: none;">
+        <div class="card">
+          <div class="card-header">
+            <h3>Reproducibility & Drift Inspector</h3>
+          </div>
+          <div class="card-body">
+            <div id="p19RepStatusBanner" style="padding: 12px; border-radius: 4px; margin-bottom: 16px; background: rgba(52, 211, 153, 0.1); border-left: 4px solid #34d399;">
+              <strong style="color: #34d399;" id="p19RepStatusTitle">✓ STATUS: REPRODUCIBLE</strong>
+              <div style="color: #94a3b8; font-size: 0.85rem;" id="p19RepStatusDesc">All dataset, model, configuration, and environment fingerprints match the canonical record.</div>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Component</th>
+                    <th>Canonical Hash (SHA-256)</th>
+                    <th>Live Environment Status</th>
+                  </tr>
+                </thead>
+                <tbody id="p19RepHashTableBody">
+                  <tr><td>Dataset Manifest</td><td id="p19Hds">—</td><td><span class="badge" style="background:#065f46; color:#34d399;">MATCH</span></td></tr>
+                  <tr><td>Model Weights & Architecture</td><td id="p19Hmod">—</td><td><span class="badge" style="background:#065f46; color:#34d399;">MATCH</span></td></tr>
+                  <tr><td>Experiment Configuration</td><td id="p19Hcfg">—</td><td><span class="badge" style="background:#065f46; color:#34d399;">MATCH</span></td></tr>
+                  <tr><td>Runtime Environment</td><td id="p19Henv">—</td><td><span class="badge" style="background:#065f46; color:#34d399;">MATCH</span></td></tr>
+                  <tr><td><strong>Master Canonical Fingerprint</strong></td><td id="p19Hcan"><strong>—</strong></td><td><span class="badge" style="background:#065f46; color:#34d399;">VERIFIED</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subview 6: Research Report -->
+      <div id="p19ResearchReportSubView" class="p19-subview" style="display: none;">
+        <div class="card">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h3>Structured Research Report</h3>
+            <div style="display: flex; gap: 8px;">
+              <button id="p19ExportJsonBtn" class="btn btn-sm btn-secondary">Export JSON</button>
+              <button id="p19ExportCsvBtn" class="btn btn-sm btn-secondary">Export CSV</button>
+              <button id="p19ExportTextBtn" class="btn btn-sm btn-secondary">Export Text</button>
+              <button id="p19ExportMdBtn" class="btn btn-sm btn-secondary">Export Markdown</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div id="p19ReportContainer" style="background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; border-radius: 6px; padding: 20px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #e2e8f0; white-space: pre-wrap; max-height: 600px; overflow-y: auto;">
+              Select an experiment to display its structured 16-section research report.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subview 7: Provenance Timeline -->
+      <div id="p19ProvenanceSubView" class="p19-subview" style="display: none;">
+        <div class="card">
+          <div class="card-header">
+            <h3>End-to-End Experiment Provenance</h3>
+          </div>
+          <div class="card-body">
+            <div style="display: flex; flex-direction: column; gap: 12px;" id="p19ProvTimeline">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <span class="badge" style="background: #0ea5e9; color: white;">1. DATASET</span>
+                <span>Cohort ingestion and manifest integrity verification</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <span class="badge" style="background: #0ea5e9; color: white;">2. PREPROCESSING</span>
+                <span>Projection normalization (224x224 Min-Max normalized)</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <span class="badge" style="background: #0ea5e9; color: white;">3. MODEL</span>
+                <span>Vision backbone feature extraction & target visual layer binding</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <span class="badge" style="background: #0ea5e9; color: white;">4. BENCHMARK</span>
+                <span>Deterministic inference execution and metric calculation</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <span class="badge" style="background: #0ea5e9; color: white;">5. STATISTICS</span>
+                <span>Empirical bootstrap percentile confidence interval estimation</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <span class="badge" style="background: #0ea5e9; color: white;">6. COMPARISON</span>
+                <span>Neutral relative and absolute difference estimation</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <span class="badge" style="background: #0ea5e9; color: white;">7. REPORT</span>
+                <span>16-section immutable research report generation</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Phase 1.9 Compare Experiments Modal Dialog -->
+  <div class="modal-backdrop" id="p19CompareModalBackdrop" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Select Experiments for Comparison</h3>
+        <button id="closeP19CompareModalBtn" class="btn btn-sm btn-secondary">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-form-group">
+          <label for="p19CompareExpA">Baseline Experiment (A):</label>
+          <select id="p19CompareExpA" class="reviewer-input"></select>
+        </div>
+        <div class="modal-form-group">
+          <label for="p19CompareExpB">Comparator Experiment (B):</label>
+          <select id="p19CompareExpB" class="reviewer-input"></select>
+        </div>
+        <div class="modal-actions">
+          <button id="submitP19CompareBtn" class="btn btn-primary">Run Comparison</button>
+          <button id="cancelP19CompareModalBtn" class="btn btn-secondary">Cancel</button>
+        </div>
+        <div id="p19CompareFeedback" class="report-action-feedback"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Container for Tab 7: Phase 2.0 Counterfactual Explainability -->
+  <div id="counterfactualViewContainer" style="display: none;">
+    <main class="dataset-layout" style="max-width: 1440px; margin: 0 auto; padding: 16px;">
+      
+      <!-- Prominent Research Disclaimer -->
+      <div class="safety-banner" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444; padding: 12px 16px; border-radius: 6px; margin-bottom: 16px;">
+        <div style="font-weight: 700; color: #ef4444; font-size: 0.9rem; margin-bottom: 4px;">
+          ⚠️ RESEARCH USE ONLY — NOT FOR CLINICAL DIAGNOSIS OR CAUSAL INFERENCE
+        </div>
+        <div style="font-size: 0.8rem; color: #94a3b8; line-height: 1.4;">
+          Counterfactual perturbations are controlled computational interventions designed to inspect model sensitivity.
+          Changes in model activation, attribution, QA responses, or generated text do not establish clinical causality,
+          lesion boundaries, or diagnostic ground truth.
+          <strong style="color: #cbd5e1; display: block; margin-top: 4px;">
+            Model Activation Score ≠ Clinical Probability | Grad-CAM Attribution ≠ Lesion Localization | Counterfactual Response Change ≠ Clinical Causality
+          </strong>
+        </div>
+      </div>
+
+      <!-- Dashboard Metric Cards -->
+      <section class="dataset-stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px;">
+        <div class="stat-card">
+          <div class="stat-label">TOTAL EXPERIMENTS</div>
+          <div class="stat-val" id="cfStatTotal">-</div>
+          <div class="stat-sub">Counterfactual runs</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">COMPLETED</div>
+          <div class="stat-val" style="color: #38bdf8;" id="cfStatCompleted">-</div>
+          <div class="stat-sub">Inference executed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">VALIDATED</div>
+          <div class="stat-val" style="color: #10b981;" id="cfStatValidated">-</div>
+          <div class="stat-sub">Invariants verified</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">PUBLISHED</div>
+          <div class="stat-val" style="color: #a855f7;" id="cfStatPublished">-</div>
+          <div class="stat-sub">Immutable records</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">REPRODUCIBLE</div>
+          <div class="stat-val" style="color: #06b6d4;" id="cfStatReproducible">-</div>
+          <div class="stat-sub">Deterministic hash match</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">DRIFT DETECTED</div>
+          <div class="stat-val" style="color: #f59e0b;" id="cfStatDrift">-</div>
+          <div class="stat-sub">Artifact mismatch</div>
+        </div>
+      </section>
+
+      <!-- Experiment Workspace Control Bar -->
+      <div class="card" style="margin-bottom: 16px; padding: 16px; background: #1e293b; border: 1px solid #334155; border-radius: 8px;">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <label for="cfStudySelect" style="font-weight: 600; font-size: 0.85rem; color: #94a3b8;">Study:</label>
+            <select id="cfStudySelect" class="study-select" style="min-width: 140px;">
+              <option value="CXR1122" selected>CXR1122</option>
+            </select>
+
+            <label for="cfViewSelect" style="font-weight: 600; font-size: 0.85rem; color: #94a3b8;">View:</label>
+            <select id="cfViewSelect" class="study-select" style="min-width: 110px;">
+              <option value="PA" selected>Frontal (PA)</option>
+              <option value="Lateral">Lateral</option>
+            </select>
+
+            <button id="cfNewExpBtn" class="btn btn-sm btn-primary">➕ New Experiment</button>
+            <button id="cfHistoryBtn" class="btn btn-sm btn-secondary">📜 Experiment History</button>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="badge" id="cfLifecycleBadge" style="background: #64748b; color: white; padding: 4px 10px; font-size: 0.8rem; border-radius: 4px;">DRAFT</span>
+            <span class="badge" id="cfReproBadge" style="background: #334155; color: #94a3b8; padding: 4px 10px; font-size: 0.8rem; border-radius: 4px;">REPRODUCIBILITY: PENDING</span>
+          </div>
+        </div>
+
+        <!-- Perturbation Config Form -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; padding-top: 12px; border-top: 1px solid #334155;">
+          <div>
+            <label for="cfMethodSelect" style="font-size: 0.8rem; color: #94a3b8; display: block; margin-bottom: 4px;">Perturbation Method:</label>
+            <select id="cfMethodSelect" class="study-select" style="width: 100%;">
+              <option value="REGION_MASK" selected>1. REGION_MASK (Solid Neutral Mask)</option>
+              <option value="REGION_OCCLUSION">2. REGION_OCCLUSION (Mean Baseline Context)</option>
+              <option value="REGION_BLUR">3. REGION_BLUR (Gaussian Blur)</option>
+              <option value="REGION_NOISE">4. REGION_NOISE (Deterministic Gaussian Noise)</option>
+              <option value="REGION_CONTRAST">5. REGION_CONTRAST (Local Contrast Adjustment)</option>
+              <option value="REGION_BRIGHTNESS">6. REGION_BRIGHTNESS (Local Brightness Shift)</option>
+              <option value="REMOVE_ATTRIBUTION_REGION">7. REMOVE_ATTRIBUTION_REGION (Grad-CAM Hotspot)</option>
+              <option value="RANDOM_CONTROL_REGION">8. RANDOM_CONTROL_REGION (Non-overlapping Control)</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="cfTargetPathology" style="font-size: 0.8rem; color: #94a3b8; display: block; margin-bottom: 4px;">Target Finding:</label>
+            <select id="cfTargetPathology" class="study-select" style="width: 100%;">
+              <option value="Atelectasis" selected>Atelectasis</option>
+              <option value="Consolidation">Consolidation</option>
+              <option value="Infiltration">Infiltration</option>
+              <option value="Pneumothorax">Pneumothorax</option>
+              <option value="Edema">Edema</option>
+              <option value="Effusion">Effusion</option>
+              <option value="Pneumonia">Pneumonia</option>
+              <option value="Cardiomegaly">Cardiomegaly</option>
+              <option value="Nodule">Nodule</option>
+              <option value="Mass">Mass</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="cfStrengthSlider" style="font-size: 0.8rem; color: #94a3b8; display: flex; justify-content: space-between; margin-bottom: 4px;">
+              <span>Strength / Intensity:</span>
+              <span id="cfStrengthVal" style="color: #38bdf8; font-weight: 700;">1.0</span>
+            </label>
+            <input type="range" id="cfStrengthSlider" min="0.1" max="2.0" step="0.1" value="1.0" style="width: 100%;">
+          </div>
+
+          <div>
+            <label for="cfSeedInput" style="font-size: 0.8rem; color: #94a3b8; display: block; margin-bottom: 4px;">Deterministic Seed:</label>
+            <input type="number" id="cfSeedInput" value="42" min="0" max="999999" class="reviewer-input" style="width: 100%;">
+          </div>
+        </div>
+
+        <!-- Action Toolbar -->
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid #334155;">
+          <button id="cfClearRoiBtn" class="btn btn-sm btn-secondary">🧹 Clear ROI</button>
+          <button id="cfRandomControlBtn" class="btn btn-sm btn-secondary">🎲 Random Control ROI</button>
+          <button id="cfRunBtn" class="btn btn-sm btn-primary" style="font-weight: 600;">▶️ Run Counterfactual</button>
+          <button id="cfValidateBtn" class="btn btn-sm btn-secondary">✓ Validate Invariants</button>
+          <button id="cfPublishBtn" class="btn btn-sm btn-secondary" style="background: #6b21a8; color: white;">🔒 Publish & Lock</button>
+          <button id="cfCompareControlBtn" class="btn btn-sm btn-secondary">⚖️ Target vs Control ROI</button>
+          <button id="cfExportJsonBtn" class="btn btn-sm btn-secondary">📥 Export JSON</button>
+        </div>
+      </div>
+
+      <!-- Synchronized 3-Panel Viewer (Original | Counterfactual | Attribution Difference) -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+        
+        <!-- Left Panel: Original & Baseline Grad-CAM -->
+        <div class="card" style="background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span style="font-weight: 700; color: #94a3b8; font-size: 0.85rem;">LEFT: ORIGINAL RADIOGRAPH</span>
+            <span class="badge" style="background: #3b82f6; color: white; font-size: 0.75rem;">BASELINE</span>
+          </div>
+          <div class="image-viewer-container" style="position: relative; width: 100%; aspect-ratio: 1; background: #000; border-radius: 6px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+            <canvas id="cfOriginalCanvas" width="400" height="400" style="width: 100%; height: 100%; object-fit: contain; cursor: crosshair;"></canvas>
+            <div id="cfCanvasHint" style="position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.7); color: #cbd5e1; font-size: 0.75rem; padding: 4px 8px; border-radius: 4px; pointer-events: none;">
+              Click & drag to draw perturbation ROI
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+            <label style="font-size: 0.75rem; color: #94a3b8;">
+              <input type="checkbox" id="cfToggleBaseHeatmap" checked> Grad-CAM Overlay
+            </label>
+            <input type="range" id="cfBaseOpacity" min="0" max="1" step="0.05" value="0.6" style="width: 80px;" title="Heatmap Opacity">
+          </div>
+        </div>
+
+        <!-- Center Panel: Counterfactual Image & Grad-CAM -->
+        <div class="card" style="background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span style="font-weight: 700; color: #94a3b8; font-size: 0.85rem;">CENTER: COUNTERFACTUAL RADIOGRAPH</span>
+            <span class="badge" style="background: #f59e0b; color: white; font-size: 0.75rem;">PERTURBED</span>
+          </div>
+          <div class="image-viewer-container" style="position: relative; width: 100%; aspect-ratio: 1; background: #000; border-radius: 6px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+            <canvas id="cfPerturbedCanvas" width="400" height="400" style="width: 100%; height: 100%; object-fit: contain;"></canvas>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+            <label style="font-size: 0.75rem; color: #94a3b8;">
+              <input type="checkbox" id="cfToggleCfHeatmap" checked> Grad-CAM Overlay
+            </label>
+            <input type="range" id="cfCfOpacity" min="0" max="1" step="0.05" value="0.6" style="width: 80px;" title="Heatmap Opacity">
+          </div>
+        </div>
+
+        <!-- Right Panel: Attribution Difference & Finding Activation -->
+        <div class="card" style="background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span style="font-weight: 700; color: #94a3b8; font-size: 0.85rem;">RIGHT: ATTRIBUTION DIFFERENCE</span>
+            <span class="badge" style="background: #ef4444; color: white; font-size: 0.75rem;">DIFF HEATMAP</span>
+          </div>
+          <div class="image-viewer-container" style="position: relative; width: 100%; aspect-ratio: 1; background: #000; border-radius: 6px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+            <canvas id="cfDiffCanvas" width="400" height="400" style="width: 100%; height: 100%; object-fit: contain;"></canvas>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+            <span style="font-size: 0.75rem; color: #94a3b8;">Difference Map (CF - Baseline)</span>
+            <span id="cfMeanDiffBadge" class="badge" style="background: #334155; color: #38bdf8; font-size: 0.75rem;">Mean |Δ|: -</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Analysis Results & Impact Grid -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+        
+        <!-- Finding Activation Deltas -->
+        <div class="card" style="background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px;">
+          <h4 style="margin: 0 0 12px 0; color: #f1f5f9; font-size: 0.95rem; display: flex; justify-content: space-between;">
+            <span>Finding Activation Deltas</span>
+            <span style="font-size: 0.75rem; color: #94a3b8; font-weight: normal;">Model Activation Score ≠ Clinical Probability</span>
+          </h4>
+          <div style="max-height: 280px; overflow-y: auto;">
+            <table class="table" style="width: 100%; font-size: 0.8rem;">
+              <thead>
+                <tr>
+                  <th>Pathology</th>
+                  <th>Baseline</th>
+                  <th>Counterfactual</th>
+                  <th>Δ Abs</th>
+                  <th>Δ Rel</th>
+                  <th>Direction</th>
+                </tr>
+              </thead>
+              <tbody id="cfFindingDeltasTbody">
+                <tr><td colspan="6" style="text-align: center; color: #64748b;">No counterfactual run loaded. Click 'Run Counterfactual'.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Attribution Metrics & Overlap -->
+        <div class="card" style="background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px;">
+          <h4 style="margin: 0 0 12px 0; color: #f1f5f9; font-size: 0.95rem; display: flex; justify-content: space-between;">
+            <span>Grad-CAM Attribution Metrics</span>
+            <span style="font-size: 0.75rem; color: #94a3b8; font-weight: normal;">Attribution ≠ Lesion Localization</span>
+          </h4>
+          <div id="cfAttributionMetricsContainer" style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.6;">
+            <div style="padding: 12px; background: #0f172a; border-radius: 6px; border: 1px solid #334155;">
+              <div><strong>Mean Absolute Pixel Difference:</strong> <span id="cfAttrMeanDiff" style="color: #38bdf8;">-</span></div>
+              <div><strong>Attribution Overlap (Cosine Similarity):</strong> <span id="cfAttrOverlap" style="color: #10b981;">-</span></div>
+              <div><strong>ROI Attribution Fraction (Baseline):</strong> <span id="cfAttrRoiBase" style="color: #e2e8f0;">-</span></div>
+              <div><strong>ROI Attribution Fraction (Counterfactual):</strong> <span id="cfAttrRoiCf" style="color: #e2e8f0;">-</span></div>
+              <div><strong>Attribution Energy Shift:</strong> <span id="cfAttrShift" style="color: #f59e0b;">-</span></div>
+            </div>
+            <div style="margin-top: 10px; font-size: 0.75rem; color: #94a3b8;">
+              ℹ️ High overlap indicates robust feature representation invariant to the selected perturbation. Significant attribution shift indicates local activation sensitivity.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Diagnostic QA & Machine Report Impact -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+        
+        <!-- Diagnostic QA Impact -->
+        <div class="card" style="background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px;">
+          <h4 style="margin: 0 0 12px 0; color: #f1f5f9; font-size: 0.95rem;">Diagnostic QA Impact</h4>
+          <div style="max-height: 240px; overflow-y: auto;">
+            <table class="table" style="width: 100%; font-size: 0.8rem;">
+              <thead>
+                <tr>
+                  <th>Question Level</th>
+                  <th>Finding</th>
+                  <th>Baseline QA</th>
+                  <th>Perturbed QA</th>
+                  <th>Effect</th>
+                </tr>
+              </thead>
+              <tbody id="cfQaImpactTbody">
+                <tr><td colspan="5" style="text-align: center; color: #64748b;">No QA impact data.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Machine Report Impact -->
+        <div class="card" style="background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px;">
+          <h4 style="margin: 0 0 12px 0; color: #f1f5f9; font-size: 0.95rem;">Machine Report Statement Impact</h4>
+          <div id="cfReportImpactContainer" style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.5;">
+            <div style="margin-bottom: 8px; padding: 8px; background: #0f172a; border-radius: 4px; border-left: 3px solid #3b82f6;">
+              <span style="font-size: 0.75rem; font-weight: 700; color: #94a3b8;">BASELINE MACHINE REPORT:</span>
+              <div id="cfBaseReportSummary" style="color: #e2e8f0; font-size: 0.8rem; margin-top: 2px;">-</div>
+            </div>
+            <div style="margin-bottom: 8px; padding: 8px; background: #0f172a; border-radius: 4px; border-left: 3px solid #f59e0b;">
+              <span style="font-size: 0.75rem; font-weight: 700; color: #94a3b8;">COUNTERFACTUAL MACHINE OUTPUT:</span>
+              <div id="cfPerturbedReportSummary" style="color: #e2e8f0; font-size: 0.8rem; margin-top: 2px;">-</div>
+            </div>
+            <div style="font-size: 0.75rem; color: #94a3b8;" id="cfStatusChangesSummary">
+              Status transitions: None
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Reproducibility & Audit Trail -->
+      <div class="card" style="background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px;">
+        <h4 style="margin: 0 0 12px 0; color: #f1f5f9; font-size: 0.95rem; display: flex; justify-content: space-between;">
+          <span>Reproducibility Manifest & Audit Trail</span>
+          <span id="cfFingerprintBadge" style="font-size: 0.75rem; color: #38bdf8; font-family: monospace;">FINGERPRINT: -</span>
+        </h4>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div style="font-size: 0.8rem; color: #94a3b8; line-height: 1.6;">
+            <div><strong>Source Image SHA256:</strong> <span id="cfSrcHash" style="color: #cbd5e1; font-family: monospace;">-</span></div>
+            <div><strong>Perturbation Config SHA256:</strong> <span id="cfConfigHash" style="color: #cbd5e1; font-family: monospace;">-</span></div>
+            <div><strong>Model Architecture & Weights:</strong> <span id="cfModelChecksum" style="color: #cbd5e1; font-family: monospace;">TorchXRayVision DenseNet-121</span></div>
+          </div>
+          <div style="max-height: 140px; overflow-y: auto; font-size: 0.75rem;">
+            <ul id="cfAuditTrailList" style="list-style: none; padding: 0; margin: 0; color: #94a3b8;">
+              <li>Audit trail will populate as actions are performed.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
   <script src="app.js"></script>
 </body>
 </html>
+
+

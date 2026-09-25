@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.8.0",
+  "disclaimer": "RESEARCH PROTOTYPE \u2014 NOT CLINICAL PERFORMANCE EVIDENCE. External datasets and benchmark definitions are registered for reproducibility and cross-distribution research evaluation only.",
+  "dataset_id": "ext_ds_e2e_mimic_cxr_v1",
+  "dataset_name": "E2E MIMIC-CXR Validation Test Cohort",
+  "dataset_version": "v1.0-e2e",
+  "source_description": "MIMIC-CXR external validation test partition fixture.",
+  "institution_or_source": "PhysioNet / Beth Israel Deaconess Medical Center",
+  "modality": "CHEST_XRAY",
+  "image_views": [
+    "Frontal",
+    "Lateral"
+  ],
+  "study_count": 2,
+  "image_count": 3,
+  "studies": [
+    {
+      "study_id": "STUDY_MIMIC_001",
+      "images": [
+        {
+          "image_id": "MIMIC_001_F",
+          "view": "Frontal",
+          "relative_path": "images/mimic_001_f.png"
+        },
+        {
+          "image_id": "MIMIC_001_L",
+          "view": "Lateral",
+          "relative_path": "images/mimic_001_l.png"
+        }
+      ],
+      "views": [
+        "Frontal",
+        "Lateral"
+      ],
+      "view_pair_id": "pair_STUDY_MIMIC_001_F1_L1",
+      "is_complete_pair": true
+    },
+    {
+      "study_id": "STUDY_MIMIC_002",
+      "images": [
+        {
+          "image_id": "MIMIC_002_F",
+          "view": "Frontal",
+          "relative_path": "images/mimic_002_f.png"
+        }
+      ],
+      "views": [
+        "Frontal"
+      ],
+      "view_pair_id": null,
+      "is_complete_pair": false
+    }
+  ],
+  "label_schema": [
+    "Normal",
+    "Cardiomegaly",
+    "Pulmonary Edema",
+    "Consolidation",
+    "Pleural Effusion"
+  ],
+  "permitted_annotations": [],
+  "preprocessing_definition": {
+    "resize": [
+      224,
+      224
+    ],
+    "normalization": "standard_cxr"
+  },
+  "split_definition": {
+    "train": 0.0,
+    "val": 0.0,
+    "test": 1.0
+  },
+  "license_metadata": {
+    "license_name": "Research Only",
+    "commercial_use": false,
+    "attribution_required": true
+  },
+  "access_status": "SYNTHETIC_FIXTURE",
+  "local_path_or_reference": "",
+  "status": "FINALIZED",
+  "created_at": "2026-09-24T00:16:53.714831+00:00",
+  "finalized_at": "2026-09-24T00:16:53.752111+00:00",
+  "provenance": [
+    {
+      "timestamp": "2026-09-24T00:16:53.714831+00:00",
+      "action": "REGISTERED",
+      "actor": "research_system",
+      "details": "Registered external dataset 'ext_ds_e2e_mimic_cxr_v1' with 2 studies, 3 images."
+    },
+    {
+      "timestamp": "2026-09-24T00:16:53.729163+00:00",
+      "action": "VALIDATED",
+      "actor": "system_validator",
+      "details": "Dataset schema and manifest fingerprint successfully validated."
+    },
+    {
+      "timestamp": "2026-09-24T00:16:53.752111+00:00",
+      "action": "FINALIZED",
+      "actor": "researcher",
+      "details": "Dataset version manifest frozen permanently."
+    }
+  ],
+  "metadata": {},
+  "manifest_sha256": "5b857331bfb2adbede19b8b5d4be304eec7de7cfef6055bed4119c7d7283e636"
+}

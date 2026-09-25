@@ -1,0 +1,365 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ConsensusSession",
+  "description": "Formal JSON Schema for Multi-Reviewer Consensus, Inter-Rater Agreement, Adjudication, and Consensus Reporting in Explainable Radiology Research Prototype.",
+  "type": "object",
+  "required": [
+    "study_id",
+    "consensus_id",
+    "status",
+    "created_at",
+    "updated_at",
+    "required_reviewers",
+    "minimum_reviewers",
+    "reviewers",
+    "finding_consensus",
+    "qa_consensus",
+    "agreement_metrics",
+    "adjudication",
+    "consensus_report",
+    "audit_trail"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "study_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]+$",
+      "description": "Unique identifier of the chest X-ray study."
+    },
+    "consensus_id": {
+      "type": "string",
+      "description": "Unique identifier of the consensus session."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "collecting",
+        "ready_for_consensus",
+        "consensus_reached",
+        "adjudication_required",
+        "adjudicated",
+        "finalized"
+      ],
+      "description": "Lifecycle status of the multi-reviewer consensus session."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "required_reviewers": {
+      "type": "integer",
+      "minimum": 2,
+      "description": "Target number of independent reviewers required for consensus calculation."
+    },
+    "minimum_reviewers": {
+      "type": "integer",
+      "minimum": 2,
+      "description": "Minimum completed reviews needed before consensus calculation is permissible."
+    },
+    "reviewers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "display_name", "review_status"],
+        "properties": {
+          "id": { "type": "string" },
+          "display_name": { "type": "string" },
+          "role": { "type": "string" },
+          "review_status": {
+            "type": "string",
+            "enum": ["registered", "in_progress", "completed", "finalized"]
+          },
+          "session_file": { "type": "string" },
+          "completed_at": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "finding_consensus": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "finding",
+          "machine_status",
+          "machine_score",
+          "reviewer_decisions",
+          "consensus_decision",
+          "consensus_status",
+          "agreement_ratio"
+        ],
+        "properties": {
+          "finding": { "type": "string" },
+          "machine_status": { "type": "string" },
+          "machine_score": { "type": "number" },
+          "machine_location": { "type": "string" },
+          "machine_severity": { "type": "string" },
+          "reviewer_decisions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["reviewer_id", "decision"],
+              "properties": {
+                "reviewer_id": { "type": "string" },
+                "reviewer_name": { "type": "string" },
+                "decision": {
+                  "type": "string",
+                  "enum": [
+                    "not_reviewed",
+                    "confirmed_present",
+                    "confirmed_absent",
+                    "uncertain",
+                    "needs_review"
+                  ]
+                },
+                "location": { "type": "string" },
+                "severity": { "type": "string" },
+                "comment": { "type": "string" },
+                "reviewed": { "type": "boolean" }
+              }
+            }
+          },
+          "decision_distribution": {
+            "type": "object",
+            "additionalProperties": { "type": "integer" }
+          },
+          "consensus_decision": {
+            "type": ["string", "null"],
+            "enum": [
+              "confirmed_present",
+              "confirmed_absent",
+              "uncertain",
+              null
+            ]
+          },
+          "consensus_status": {
+            "type": "string",
+            "enum": [
+              "unanimous",
+              "majority",
+              "adjudication_required",
+              "pending_reviews"
+            ]
+          },
+          "agreement_ratio": {
+            "type": ["number", "null"],
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "location_consensus": {
+            "type": ["string", "null"]
+          },
+          "location_status": {
+            "type": "string",
+            "enum": ["unanimous", "majority", "adjudication_required", "unspecified", "pending"]
+          },
+          "severity_consensus": {
+            "type": ["string", "null"]
+          },
+          "severity_status": {
+            "type": "string",
+            "enum": ["unanimous", "majority", "adjudication_required", "unspecified", "pending"]
+          }
+        }
+      }
+    },
+    "qa_consensus": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "question_id",
+          "finding",
+          "level",
+          "machine_answer",
+          "reviewer_answers",
+          "consensus_answer",
+          "agreement_status"
+        ],
+        "properties": {
+          "question_id": { "type": "string" },
+          "finding": { "type": "string" },
+          "level": { "type": "integer" },
+          "question_text": { "type": "string" },
+          "machine_answer": { "type": "string" },
+          "reviewer_answers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["reviewer_id", "answer"],
+              "properties": {
+                "reviewer_id": { "type": "string" },
+                "answer": { "type": "string" },
+                "comment": { "type": "string" }
+              }
+            }
+          },
+          "consensus_answer": {
+            "type": ["string", "null"]
+          },
+          "agreement_status": {
+            "type": "string",
+            "enum": ["unanimous", "majority", "adjudication_required", "pending"]
+          }
+        }
+      }
+    },
+    "agreement_metrics": {
+      "type": "object",
+      "required": [
+        "reviewer_count",
+        "finding_count",
+        "average_agreement_ratio",
+        "cohens_kappa",
+        "fleiss_kappa"
+      ],
+      "properties": {
+        "reviewer_count": { "type": "integer" },
+        "finding_count": { "type": "integer" },
+        "average_agreement_ratio": {
+          "type": ["number", "null"]
+        },
+        "cohens_kappa": {
+          "type": ["object", "null"],
+          "properties": {
+            "metric": { "type": "string" },
+            "value": { "type": ["number", "null"] },
+            "observed_agreement": { "type": ["number", "null"] },
+            "expected_agreement": { "type": ["number", "null"] },
+            "reviewer_pair": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "finding_count": { "type": "integer" }
+          }
+        },
+        "fleiss_kappa": {
+          "type": ["object", "null"],
+          "properties": {
+            "metric": { "type": "string" },
+            "value": { "type": ["number", "null"] },
+            "observed_agreement_mean": { "type": ["number", "null"] },
+            "expected_agreement": { "type": ["number", "null"] },
+            "reviewer_count": { "type": "integer" },
+            "finding_count": { "type": "integer" },
+            "categories": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "adjudication": {
+      "type": "object",
+      "required": ["items_requiring_adjudication", "adjudication_records", "all_resolved"],
+      "properties": {
+        "items_requiring_adjudication": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["target_type", "target_id", "issue", "status"],
+            "properties": {
+              "target_type": { "type": "string", "enum": ["finding", "location", "severity", "qa", "report"] },
+              "target_id": { "type": "string" },
+              "issue": { "type": "string" },
+              "status": { "type": "string", "enum": ["pending", "resolved"] },
+              "resolved_decision": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "adjudication_records": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "adjudication_id",
+              "study_id",
+              "target_type",
+              "target_id",
+              "adjudicator_id",
+              "decision",
+              "reason",
+              "timestamp"
+            ],
+            "properties": {
+              "adjudication_id": { "type": "string" },
+              "study_id": { "type": "string" },
+              "target_type": { "type": "string" },
+              "target_id": { "type": "string" },
+              "previous_consensus": { "type": ["string", "null"] },
+              "adjudicator_id": { "type": "string" },
+              "adjudicator_name": { "type": "string" },
+              "decision": { "type": "string" },
+              "reason": { "type": "string", "minLength": 1 },
+              "timestamp": { "type": "string", "format": "date-time" }
+            }
+          }
+        },
+        "all_resolved": { "type": "boolean" }
+      }
+    },
+    "consensus_report": {
+      "type": "object",
+      "required": [
+        "final_findings",
+        "final_impression",
+        "reviewer_summary",
+        "agreement_summary",
+        "adjudication_summary",
+        "finalized"
+      ],
+      "properties": {
+        "final_findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["finding", "statement", "status"],
+            "properties": {
+              "finding": { "type": "string" },
+              "statement": { "type": "string" },
+              "status": { "type": "string" },
+              "location": { "type": "string" },
+              "severity": { "type": "string" },
+              "consensus_basis": { "type": "string" }
+            }
+          }
+        },
+        "final_impression": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "reviewer_summary": { "type": "string" },
+        "agreement_summary": { "type": "string" },
+        "adjudication_summary": { "type": "string" },
+        "reviewer_comment": { "type": "string" },
+        "finalized": { "type": "boolean" }
+      }
+    },
+    "audit_trail": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["timestamp", "user_id", "action", "target", "old_value", "new_value"],
+        "properties": {
+          "timestamp": { "type": "string", "format": "date-time" },
+          "user_id": { "type": "string" },
+          "action": { "type": "string" },
+          "target": { "type": "string" },
+          "old_value": {},
+          "new_value": {}
+        }
+      }
+    },
+    "disclaimer": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,383 @@
+{
+  "study_id": "CXR1024",
+  "consensus_id": "cons_CXR1024_1790234260",
+  "status": "collecting",
+  "created_at": "2026-09-24T07:17:40Z",
+  "updated_at": "2026-09-24T07:17:40Z",
+  "completed_at": null,
+  "required_reviewers": 3,
+  "minimum_reviewers": 2,
+  "reviewers": [
+    {
+      "id": "reviewer_001",
+      "display_name": "Clinical Reviewer 001",
+      "role": "Clinical Reviewer",
+      "review_status": "registered",
+      "session_file": "CXR1024_reviewer_001.json",
+      "completed_at": null
+    },
+    {
+      "id": "reviewer_002",
+      "display_name": "Clinical Reviewer 002",
+      "role": "Clinical Reviewer",
+      "review_status": "registered",
+      "session_file": "CXR1024_reviewer_002.json",
+      "completed_at": null
+    },
+    {
+      "id": "reviewer_003",
+      "display_name": "Clinical Reviewer 003",
+      "role": "Clinical Reviewer",
+      "review_status": "registered",
+      "session_file": "CXR1024_reviewer_003.json",
+      "completed_at": null
+    }
+  ],
+  "finding_consensus": [
+    {
+      "finding": "Consolidation",
+      "machine_status": "possible",
+      "machine_score": 0.467,
+      "machine_location": "unspecified",
+      "machine_severity": "unspecified",
+      "reviewer_decisions": [],
+      "decision_distribution": {},
+      "consensus_decision": null,
+      "consensus_status": "pending_reviews",
+      "agreement_ratio": null,
+      "location_consensus": "unspecified",
+      "location_status": "unspecified",
+      "severity_consensus": "unspecified",
+      "severity_status": "unspecified"
+    },
+    {
+      "finding": "Pneumonia",
+      "machine_status": "possible",
+      "machine_score": 0.4531,
+      "machine_location": "unspecified",
+      "machine_severity": "unspecified",
+      "reviewer_decisions": [],
+      "decision_distribution": {},
+      "consensus_decision": null,
+      "consensus_status": "pending_reviews",
+      "agreement_ratio": null,
+      "location_consensus": "unspecified",
+      "location_status": "unspecified",
+      "severity_consensus": "unspecified",
+      "severity_status": "unspecified"
+    },
+    {
+      "finding": "Infiltration",
+      "machine_status": "possible",
+      "machine_score": 0.4441,
+      "machine_location": "unspecified",
+      "machine_severity": "unspecified",
+      "reviewer_decisions": [],
+      "decision_distribution": {},
+      "consensus_decision": null,
+      "consensus_status": "pending_reviews",
+      "agreement_ratio": null,
+      "location_consensus": "unspecified",
+      "location_status": "unspecified",
+      "severity_consensus": "unspecified",
+      "severity_status": "unspecified"
+    },
+    {
+      "finding": "Nodule",
+      "machine_status": "possible",
+      "machine_score": 0.2233,
+      "machine_location": "unspecified",
+      "machine_severity": "unspecified",
+      "reviewer_decisions": [],
+      "decision_distribution": {},
+      "consensus_decision": null,
+      "consensus_status": "pending_reviews",
+      "agreement_ratio": null,
+      "location_consensus": "unspecified",
+      "location_status": "unspecified",
+      "severity_consensus": "unspecified",
+      "severity_status": "unspecified"
+    },
+    {
+      "finding": "Pneumothorax",
+      "machine_status": "possible",
+      "machine_score": 0.1567,
+      "machine_location": "unspecified",
+      "machine_severity": "unspecified",
+      "reviewer_decisions": [],
+      "decision_distribution": {},
+      "consensus_decision": null,
+      "consensus_status": "pending_reviews",
+      "agreement_ratio": null,
+      "location_consensus": "unspecified",
+      "location_status": "unspecified",
+      "severity_consensus": "unspecified",
+      "severity_status": "unspecified"
+    },
+    {
+      "finding": "Effusion",
+      "machine_status": "possible",
+      "machine_score": 0.0112,
+      "machine_location": "unspecified",
+      "machine_severity": "unspecified",
+      "reviewer_decisions": [],
+      "decision_distribution": {},
+      "consensus_decision": null,
+      "consensus_status": "pending_reviews",
+      "agreement_ratio": null,
+      "location_consensus": "unspecified",
+      "location_status": "unspecified",
+      "severity_consensus": "unspecified",
+      "severity_status": "unspecified"
+    },
+    {
+      "finding": "Cardiomegaly",
+      "machine_status": "possible",
+      "machine_score": 0.001,
+      "machine_location": "unspecified",
+      "machine_severity": "unspecified",
+      "reviewer_decisions": [],
+      "decision_distribution": {},
+      "consensus_decision": null,
+      "consensus_status": "pending_reviews",
+      "agreement_ratio": null,
+      "location_consensus": "unspecified",
+      "location_status": "unspecified",
+      "severity_consensus": "unspecified",
+      "severity_status": "unspecified"
+    }
+  ],
+  "qa_consensus": [
+    {
+      "question_id": "Q_PNEUMOTHORAX_PRESENCE",
+      "finding": "Pneumothorax",
+      "level": 1,
+      "question_text": "Is there radiographic evidence of a pneumothorax?",
+      "machine_answer": "uncertain",
+      "reviewer_answers": [],
+      "consensus_answer": null,
+      "agreement_status": "pending"
+    },
+    {
+      "question_id": "Q_PNEUMOTHORAX_LOCATION",
+      "finding": "Pneumothorax",
+      "level": 2,
+      "question_text": "Where is the pneumothorax located (e.g., right, left, apical)?",
+      "machine_answer": "unspecified",
+      "reviewer_answers": [],
+      "consensus_answer": null,
+      "agreement_status": "pending"
+    },
+    {
+      "question_id": "Q_EFFUSION_PRESENCE",
+      "finding": "Effusion",
+      "level": 1,
+      "question_text": "Is there evidence of pleural effusion or costophrenic angle blunting?",
+      "machine_answer": "uncertain",
+      "reviewer_answers": [],
+      "consensus_answer": null,
+      "agreement_status": "pending"
+    },
+    {
+      "question_id": "Q_EFFUSION_LOCATION",
+      "finding": "Effusion",
+      "level": 2,
+      "question_text": "Where is the pleural effusion located (e.g., right, left, bilateral)?",
+      "machine_answer": "unspecified",
+      "reviewer_answers": [],
+      "consensus_answer": null,
+      "agreement_status": "pending"
+    },
+    {
+      "question_id": "Q_CONSOLIDATION_PRESENCE",
+      "finding": "Consolidation",
+      "level": 1,
+      "question_text": "Is there focal or dense airspace consolidation?",
+      "machine_answer": "uncertain",
+      "reviewer_answers": [],
+      "consensus_answer": null,
+      "agreement_status": "pending"
+    },
+    {
+      "question_id": "Q_CONSOLIDATION_LOCATION",
+      "finding": "Consolidation",
+      "level": 2,
+      "question_text": "Which lung lobe or region contains the consolidation?",
+      "machine_answer": "unspecified",
+      "reviewer_answers": [],
+      "consensus_answer": null,
+      "agreement_status": "pending"
+    },
+    {
+      "question_id": "Q_CARDIOMEGALY_PRESENCE",
+      "finding": "Cardiomegaly",
+      "level": 1,
+      "question_text": "Is cardiomegaly or prominent cardiac enlargement present?",
+      "machine_answer": "uncertain",
+      "reviewer_answers": [],
+      "consensus_answer": null,
+      "agreement_status": "pending"
+    },
+    {
+      "question_id": "Q_CARDIOMEGALY_LOCATION",
+      "finding": "Cardiomegaly",
+      "level": 2,
+      "question_text": "Is the enlargement generalized or specific to cardiac chambers?",
+      "machine_answer": "unspecified",
+      "reviewer_answers": [],
+      "consensus_answer": null,
+      "agreement_status": "pending"
+    },
+    {
+      "question_id": "Q_PNEUMONIA_PRESENCE",
+      "finding": "Pneumonia",
+      "level": 1,
+      "question_text": "Are there features suggestive of infectious pneumonia / bronchopneumonia?",
+      "machine_answer": "uncertain",
+      "reviewer_answers": [],
+      "consensus_answer": null,
+      "agreement_status": "pending"
+    },
+    {
+      "question_id": "Q_PNEUMONIA_LOCATION",
+      "finding": "Pneumonia",
+      "level": 2,
+      "question_text": "Where is the suspected pneumonia located?",
+      "machine_answer": "unspecified",
+      "reviewer_answers": [],
+      "consensus_answer": null,
+      "agreement_status": "pending"
+    },
+    {
+      "question_id": "Q_INFILTRATION_PRESENCE",
+      "finding": "Infiltration",
+      "level": 1,
+      "question_text": "Are there infiltrative or hazy airspace opacities?",
+      "machine_answer": "uncertain",
+      "reviewer_answers": [],
+      "consensus_answer": null,
+      "agreement_status": "pending"
+    },
+    {
+      "question_id": "Q_INFILTRATION_LOCATION",
+      "finding": "Infiltration",
+      "level": 2,
+      "question_text": "Where are the infiltrates distributed (e.g., right, left, bilateral)?",
+      "machine_answer": "unspecified",
+      "reviewer_answers": [],
+      "consensus_answer": null,
+      "agreement_status": "pending"
+    },
+    {
+      "question_id": "Q_NODULE_PRESENCE",
+      "finding": "Nodule",
+      "level": 1,
+      "question_text": "Is there evidence of pulmonary nodule(s) or calcified granuloma(s)?",
+      "machine_answer": "uncertain",
+      "reviewer_answers": [],
+      "consensus_answer": null,
+      "agreement_status": "pending"
+    },
+    {
+      "question_id": "Q_NODULE_LOCATION",
+      "finding": "Nodule",
+      "level": 2,
+      "question_text": "Where is the nodule located (e.g., right_upper_lobe, left_midlung)?",
+      "machine_answer": "unspecified",
+      "reviewer_answers": [],
+      "consensus_answer": null,
+      "agreement_status": "pending"
+    }
+  ],
+  "agreement_metrics": {
+    "reviewer_count": 0,
+    "finding_count": 7,
+    "average_agreement_ratio": null,
+    "cohens_kappa": null,
+    "fleiss_kappa": null
+  },
+  "adjudication": {
+    "items_requiring_adjudication": [],
+    "adjudication_records": [],
+    "all_resolved": true
+  },
+  "consensus_report": {
+    "final_findings": [
+      {
+        "finding": "Consolidation",
+        "statement": "Evaluation of consolidation is possible.",
+        "status": "possible",
+        "location": "unspecified",
+        "severity": "unspecified",
+        "consensus_basis": "pending_reviews"
+      },
+      {
+        "finding": "Pneumonia",
+        "statement": "Evaluation of pneumonia is possible.",
+        "status": "possible",
+        "location": "unspecified",
+        "severity": "unspecified",
+        "consensus_basis": "pending_reviews"
+      },
+      {
+        "finding": "Infiltration",
+        "statement": "Evaluation of infiltration is possible.",
+        "status": "possible",
+        "location": "unspecified",
+        "severity": "unspecified",
+        "consensus_basis": "pending_reviews"
+      },
+      {
+        "finding": "Nodule",
+        "statement": "Evaluation of nodule is possible.",
+        "status": "possible",
+        "location": "unspecified",
+        "severity": "unspecified",
+        "consensus_basis": "pending_reviews"
+      },
+      {
+        "finding": "Pneumothorax",
+        "statement": "Evaluation of pneumothorax is possible.",
+        "status": "possible",
+        "location": "unspecified",
+        "severity": "unspecified",
+        "consensus_basis": "pending_reviews"
+      },
+      {
+        "finding": "Effusion",
+        "statement": "Evaluation of effusion is possible.",
+        "status": "possible",
+        "location": "unspecified",
+        "severity": "unspecified",
+        "consensus_basis": "pending_reviews"
+      },
+      {
+        "finding": "Cardiomegaly",
+        "statement": "Evaluation of cardiomegaly is possible.",
+        "status": "possible",
+        "location": "unspecified",
+        "severity": "unspecified",
+        "consensus_basis": "pending_reviews"
+      }
+    ],
+    "final_impression": [
+      "1. No acute consensus cardiopulmonary abnormality."
+    ],
+    "reviewer_summary": "Synthesized from 0/3 independent completed reviewer evaluations.",
+    "agreement_summary": "Average inter-rater agreement ratio: N/A.",
+    "adjudication_summary": "Adjudicated items: 0 dispute(s) resolved.",
+    "reviewer_comment": "",
+    "finalized": false
+  },
+  "audit_trail": [
+    {
+      "timestamp": "2026-09-24T07:17:40Z",
+      "user_id": "system",
+      "action": "consensus_initialized",
+      "target": "*SESSION*",
+      "old_value": null,
+      "new_value": "initialized"
+    }
+  ],
+  "disclaimer": "RESEARCH CONSENSUS OUTPUT \u2014 NOT A CLINICAL DIAGNOSIS. Consensus results, reviewer annotations, inter-rater agreement metrics, adjudication decisions, and consensus reports are research metadata only."
+}

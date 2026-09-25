@@ -1,0 +1,38 @@
+{
+  "study_id": "CXR1031",
+  "image_id": "CXR1031_IM-0025-4004",
+  "view": "Frontal",
+  "model_name": "TorchXRayVision DenseNet-121",
+  "weights": "densenet121-res224-all",
+  "input_shape": [
+    1,
+    1,
+    224,
+    224
+  ],
+  "feature_shape": [
+    1,
+    1024
+  ],
+  "pathology_scores": {
+    "Atelectasis": 0.34979215264320374,
+    "Consolidation": 0.08303305506706238,
+    "Infiltration": 0.19188019633293152,
+    "Pneumothorax": 0.017270412296056747,
+    "Edema": 0.02031385526061058,
+    "Emphysema": 0.5002338886260986,
+    "Fibrosis": 0.5074047446250916,
+    "Effusion": 0.062174003571271896,
+    "Pneumonia": 0.010286721400916576,
+    "Pleural_Thickening": 0.14416798949241638,
+    "Cardiomegaly": 0.5070512294769287,
+    "Nodule": 0.2631811797618866,
+    "Mass": 0.13609330356121063,
+    "Hernia": 0.011963988654315472,
+    "Lung Lesion": 0.0025785171892493963,
+    "Fracture": 0.10578140616416931,
+    "Lung Opacity": 0.09206623584032059,
+    "Enlarged Cardiomediastinum": 0.05283050984144211
+  },
+  "extracted_at": "2026-09-24T07:24:07Z"
+}

@@ -1,0 +1,20 @@
+{
+  "model_name": "DenseNet-121",
+  "model_version": "densenet121-res224-all",
+  "target_layer": "model.features.norm5",
+  "preprocessing_resolution": [
+    224,
+    224
+  ],
+  "normalization": "minmax_0_1",
+  "device": "cpu",
+  "qa_threshold": 0.25,
+  "qa_top_k": 5,
+  "llm_provider": "mock",
+  "llm_model": "mock-radiology-llm",
+  "fingerprint_sha256": "ef96a86e5455b72f8c08b6a1794fd23c4abc7ddd5fa8375ba9df4b022272fc0f",
+  "environment_metadata": {
+    "python_version": "3.11.9",
+    "os_platform": "win32"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.8.0",
+  "disclaimer": "RESEARCH EXPERIMENT RECORD \u2014 NOT CLINICAL PERFORMANCE EVIDENCE. Experiment configurations, metrics, and evaluation summaries are research artifacts. They do not provide clinical diagnostic guarantees or patient-level medical validation.",
+  "updated_at": "2026-09-24T00:16:58.182829+00:00",
+  "benchmarks": {
+    "bm_e2e_multiview_001": {
+      "benchmark_id": "bm_e2e_multiview_001",
+      "benchmark_name": "E2E Multi-View Benchmark Run",
+      "experiment_id": "exp_e2e_phase18_main",
+      "modality": "EXTERNAL_TEST_SET",
+      "view_configuration": "MULTI_VIEW",
+      "fusion_strategy": "independent_view",
+      "status": "FINALIZED",
+      "reproducibility_status": "VERIFIED",
+      "validation_status": "PENDING",
+      "created_at": "2026-09-24T00:16:53.802352+00:00",
+      "finalized_at": "2026-09-24T00:16:58.169370+00:00"
+    },
+    "bm_e2e_baseline_internal": {
+      "benchmark_id": "bm_e2e_baseline_internal",
+      "benchmark_name": "E2E Internal Baseline Run",
+      "experiment_id": "exp_e2e_phase18_main",
+      "modality": "INTERNAL_BENCHMARK",
+      "view_configuration": "SINGLE_VIEW",
+      "fusion_strategy": "independent_view",
+      "status": "EXECUTED",
+      "reproducibility_status": "VERIFIED",
+      "validation_status": "PENDING",
+      "created_at": "2026-09-24T00:16:53.829892+00:00",
+      "finalized_at": null
+    }
+  }
+}

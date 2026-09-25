@@ -1,0 +1,85 @@
+{
+  "study_id": "CXR1078",
+  "image_id": "CXR1078_IM-0055-2001",
+  "view": "Lateral",
+  "findings": [
+    {
+      "finding": "Lung Opacity",
+      "statement": "Possible lung opacity cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Mass",
+      "statement": "Possible mass cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Enlarged Cardiomediastinum",
+      "statement": "Possible enlarged cardiomediastinum cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Pneumothorax",
+      "statement": "Possible pneumothorax cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Emphysema",
+      "statement": "Possible emphysema cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Fracture",
+      "statement": "Possible fracture cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Consolidation",
+      "statement": "Possible consolidation cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Nodule",
+      "statement": "Possible nodule cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Cardiomegaly",
+      "statement": "Possible cardiomegaly cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    },
+    {
+      "finding": "Effusion",
+      "statement": "Possible effusion cannot be excluded; correlation is advised.",
+      "status": "possible",
+      "location": "unspecified",
+      "severity": "unspecified"
+    }
+  ],
+  "impression": [
+    "1. Possible lung opacity, Possible mass, Possible enlarged cardiomediastinum, Possible pneumothorax, Possible emphysema, Possible fracture, Possible consolidation, Possible nodule, Possible cardiomegaly, Possible effusion; recommend clinical correlation."
+  ],
+  "metadata": {
+    "provider": "mock",
+    "model": "mock-radiology-llm",
+    "generated_at": "2026-09-24T01:16:04Z"
+  }
+}

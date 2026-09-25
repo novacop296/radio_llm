@@ -1,0 +1,251 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CounterfactualSchema",
+  "description": "JSON Schemas for Phase 2.0 Interactive Counterfactual Explanations and Clinical Reasoning Synthesis.",
+  "type": "object",
+  "definitions": {
+    "LifecycleStatus": {
+      "type": "string",
+      "enum": ["DRAFT", "CONFIGURED", "RUNNING", "COMPLETED", "VALIDATED", "PUBLISHED", "ARCHIVED"]
+    },
+    "PerturbationMethod": {
+      "type": "string",
+      "enum": [
+        "REGION_MASK",
+        "REGION_OCCLUSION",
+        "REGION_BLUR",
+        "REGION_NOISE",
+        "REGION_CONTRAST",
+        "REGION_BRIGHTNESS",
+        "REMOVE_ATTRIBUTION_REGION",
+        "RANDOM_CONTROL_REGION"
+      ]
+    },
+    "ReproducibilityStatus": {
+      "type": "string",
+      "enum": ["REPRODUCIBLE", "DRIFT_DETECTED", "INCOMPLETE", "INVALID"]
+    },
+    "Direction": {
+      "type": "string",
+      "enum": ["INCREASED", "DECREASED", "UNCHANGED"]
+    },
+    "ROI": {
+      "type": "object",
+      "required": ["x", "y", "width", "height"],
+      "properties": {
+        "x": { "type": "number", "minimum": 0 },
+        "y": { "type": "number", "minimum": 0 },
+        "width": { "type": "number", "minimum": 1 },
+        "height": { "type": "number", "minimum": 1 },
+        "norm_x": { "type": "number", "minimum": 0, "maximum": 1 },
+        "norm_y": { "type": "number", "minimum": 0, "maximum": 1 },
+        "norm_width": { "type": "number", "minimum": 0, "maximum": 1 },
+        "norm_height": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "PerturbationConfiguration": {
+      "type": "object",
+      "required": ["method", "roi", "strength", "seed"],
+      "properties": {
+        "method": { "$ref": "#/definitions/PerturbationMethod" },
+        "roi": { "$ref": "#/definitions/ROI" },
+        "strength": { "type": "number", "minimum": 0.0, "maximum": 2.0 },
+        "seed": { "type": "integer", "minimum": 0 },
+        "is_control_region": { "type": "boolean" },
+        "control_roi": { "$ref": "#/definitions/ROI" },
+        "target_pathology": { "type": ["string", "null"] },
+        "artifact_hash": { "type": ["string", "null"] },
+        "parameters": { "type": "object" }
+      }
+    },
+    "FindingScore": {
+      "type": "object",
+      "required": ["pathology", "score"],
+      "properties": {
+        "pathology": { "type": "string" },
+        "score": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "is_top_finding": { "type": "boolean" }
+      }
+    },
+    "InferenceResult": {
+      "type": "object",
+      "required": ["image_id", "findings", "timestamp", "model_checksum"],
+      "properties": {
+        "image_id": { "type": "string" },
+        "image_path": { "type": "string" },
+        "findings": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/FindingScore" }
+        },
+        "top_findings": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "timestamp": { "type": "string" },
+        "model_checksum": { "type": "string" },
+        "gradcam_artifacts": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "FindingDelta": {
+      "type": "object",
+      "required": ["pathology", "baseline_score", "counterfactual_score", "delta_abs", "delta_rel", "direction"],
+      "properties": {
+        "pathology": { "type": "string" },
+        "baseline_score": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "counterfactual_score": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "delta_abs": { "type": "number" },
+        "delta_rel": { "type": "number" },
+        "direction": { "$ref": "#/definitions/Direction" },
+        "is_significant": { "type": "boolean" }
+      }
+    },
+    "AttributionDelta": {
+      "type": "object",
+      "required": ["pathology", "mean_abs_difference", "overlap_fraction", "roi_attribution_fraction_baseline", "roi_attribution_fraction_counterfactual"],
+      "properties": {
+        "pathology": { "type": "string" },
+        "mean_abs_difference": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "overlap_fraction": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "roi_attribution_fraction_baseline": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "roi_attribution_fraction_counterfactual": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "attribution_shift": { "type": "number" },
+        "diff_map_path": { "type": ["string", "null"] }
+      }
+    },
+    "QAImpactItem": {
+      "type": "object",
+      "required": ["question_id", "finding", "level", "baseline_answer", "counterfactual_answer", "changed", "evidence_effect"],
+      "properties": {
+        "question_id": { "type": "string" },
+        "finding": { "type": "string" },
+        "level": { "type": "string" },
+        "baseline_answer": { "type": "string" },
+        "counterfactual_answer": { "type": "string" },
+        "changed": { "type": "boolean" },
+        "evidence_effect": { "type": "string" }
+      }
+    },
+    "ReportImpact": {
+      "type": "object",
+      "required": ["findings_changed", "status_changes", "statements_added", "statements_removed", "baseline_summary", "counterfactual_summary"],
+      "properties": {
+        "findings_changed": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "status_changes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["finding", "baseline_status", "counterfactual_status"],
+            "properties": {
+              "finding": { "type": "string" },
+              "baseline_status": { "type": "string" },
+              "counterfactual_status": { "type": "string" }
+            }
+          }
+        },
+        "statements_added": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "statements_removed": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "baseline_summary": { "type": "string" },
+        "counterfactual_summary": { "type": "string" },
+        "impression_changed": { "type": "boolean" }
+      }
+    },
+    "ReproducibilityManifest": {
+      "type": "object",
+      "required": ["status", "fingerprint", "source_image_hash", "model_checksum", "config_hash", "environment"],
+      "properties": {
+        "status": { "$ref": "#/definitions/ReproducibilityStatus" },
+        "fingerprint": { "type": "string" },
+        "source_image_hash": { "type": "string" },
+        "counterfactual_image_hash": { "type": "string" },
+        "model_checksum": { "type": "string" },
+        "config_hash": { "type": "string" },
+        "environment": {
+          "type": "object",
+          "properties": {
+            "python_version": { "type": "string" },
+            "torch_version": { "type": "string" },
+            "torchxrayvision_version": { "type": "string" },
+            "platform": { "type": "string" }
+          }
+        },
+        "verified_at": { "type": "string" }
+      }
+    },
+    "CounterfactualAuditRecord": {
+      "type": "object",
+      "required": ["timestamp", "action", "actor", "previous_status", "new_status", "record_hash"],
+      "properties": {
+        "timestamp": { "type": "string" },
+        "action": { "type": "string" },
+        "actor": { "type": "string" },
+        "previous_status": { "type": ["string", "null"] },
+        "new_status": { "type": "string" },
+        "details": { "type": "string" },
+        "record_hash": { "type": "string" }
+      }
+    },
+    "CounterfactualExperiment": {
+      "type": "object",
+      "required": [
+        "counterfactual_id",
+        "study_id",
+        "source_view",
+        "created_at",
+        "created_by",
+        "status",
+        "perturbation",
+        "baseline",
+        "counterfactual",
+        "finding_deltas",
+        "attribution_deltas",
+        "qa_impact",
+        "report_impact",
+        "reproducibility",
+        "audit_trail"
+      ],
+      "properties": {
+        "counterfactual_id": { "type": "string" },
+        "study_id": { "type": "string" },
+        "source_view": { "type": "string" },
+        "source_image_filename": { "type": "string" },
+        "created_at": { "type": "string" },
+        "created_by": { "type": "string" },
+        "status": { "$ref": "#/definitions/LifecycleStatus" },
+        "disclaimer": { "type": "string" },
+        "perturbation": { "$ref": "#/definitions/PerturbationConfiguration" },
+        "baseline": { "$ref": "#/definitions/InferenceResult" },
+        "counterfactual": { "$ref": "#/definitions/InferenceResult" },
+        "finding_deltas": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/FindingDelta" }
+        },
+        "attribution_deltas": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/AttributionDelta" }
+        },
+        "qa_impact": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/QAImpactItem" }
+        },
+        "report_impact": { "$ref": "#/definitions/ReportImpact" },
+        "reproducibility": { "$ref": "#/definitions/ReproducibilityManifest" },
+        "audit_trail": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/CounterfactualAuditRecord" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,230 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ReviewSessionSchema",
+  "description": "JSON Schema for Human-in-the-Loop Clinical Review, Report Correction, and Finalization (Phase 1.2).",
+  "type": "object",
+  "required": [
+    "study_id",
+    "review_id",
+    "reviewer",
+    "status",
+    "started_at",
+    "updated_at",
+    "completed_at",
+    "finding_reviews",
+    "qa_reviews",
+    "report_review",
+    "audit_trail"
+  ],
+  "properties": {
+    "study_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]+$",
+      "description": "Study identifier corresponding to the analyzed radiograph."
+    },
+    "review_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]+$",
+      "description": "Unique identifier for the review session."
+    },
+    "reviewer": {
+      "type": "object",
+      "required": ["id", "display_name"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "display_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "role": {
+          "type": "string",
+          "default": "Research Reviewer"
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["not_reviewed", "in_review", "reviewed", "finalized"],
+      "description": "Overall review lifecycle status."
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "finding_reviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "finding",
+          "machine_status",
+          "reviewer_status",
+          "machine_location",
+          "reviewer_location",
+          "machine_severity",
+          "reviewer_severity",
+          "reviewer_comment",
+          "reviewed"
+        ],
+        "properties": {
+          "finding": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "machine_status": {
+            "type": "string",
+            "enum": ["supported", "possible", "uncertain", "absent"]
+          },
+          "reviewer_status": {
+            "type": "string",
+            "enum": ["not_reviewed", "confirmed_present", "confirmed_absent", "uncertain", "needs_review"]
+          },
+          "machine_location": {
+            "type": "string"
+          },
+          "reviewer_location": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "machine_severity": {
+            "type": "string"
+          },
+          "reviewer_severity": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "reviewer_comment": {
+            "type": "string",
+            "maxLength": 2048
+          },
+          "reviewed": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "qa_reviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "question_id",
+          "finding",
+          "level",
+          "machine_answer",
+          "reviewer_answer",
+          "reviewer_comment"
+        ],
+        "properties": {
+          "question_id": {
+            "type": "string"
+          },
+          "finding": {
+            "type": "string"
+          },
+          "level": {
+            "type": ["integer", "string"]
+          },
+          "question_text": {
+            "type": "string"
+          },
+          "machine_answer": {
+            "type": "string"
+          },
+          "reviewer_answer": {
+            "type": "string",
+            "enum": ["yes", "no", "uncertain", "unspecified", "not_reviewed"]
+          },
+          "reviewer_comment": {
+            "type": "string",
+            "maxLength": 1024
+          }
+        }
+      }
+    },
+    "report_review": {
+      "type": "object",
+      "required": [
+        "machine_report_locked",
+        "final_findings",
+        "final_impression",
+        "reviewer_comment",
+        "finalized"
+      ],
+      "properties": {
+        "machine_report_locked": {
+          "type": "boolean",
+          "default": true
+        },
+        "final_findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["finding", "statement", "status"],
+            "properties": {
+              "finding": {"type": "string"},
+              "statement": {"type": "string", "maxLength": 1024},
+              "status": {"type": "string"},
+              "location": {"type": "string"},
+              "severity": {"type": "string"}
+            }
+          }
+        },
+        "final_impression": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 2048
+          }
+        },
+        "reviewer_comment": {
+          "type": "string",
+          "maxLength": 4096
+        },
+        "finalized": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "audit_trail": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "timestamp",
+          "reviewer_id",
+          "finding",
+          "field",
+          "old_value",
+          "new_value"
+        ],
+        "properties": {
+          "timestamp": {"type": "string", "format": "date-time"},
+          "reviewer_id": {"type": "string"},
+          "finding": {"type": "string"},
+          "field": {"type": "string"},
+          "old_value": {"type": ["string", "boolean", "null"]},
+          "new_value": {"type": ["string", "boolean", "null"]}
+        }
+      }
+    },
+    "disclaimer": {
+      "type": "string"
+    }
+  }
+}

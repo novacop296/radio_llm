@@ -1,0 +1,296 @@
+{
+  "study_id": "CXR1032",
+  "image_id": "CXR1032_IM-0026-1001-0002",
+  "view": "Frontal",
+  "disclaimer": "Visual attribution map for research explainability; not a clinical localization or diagnosis.",
+  "original_image_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_original.png",
+  "groundings": [
+    {
+      "finding": "Atelectasis",
+      "model_score": 0.5019,
+      "status": "possible",
+      "method": "grad_cam",
+      "explanation_type": "grad_cam",
+      "target_layer": "model.features.norm5",
+      "activation_shape": [
+        7,
+        7
+      ],
+      "heatmap_shape": [
+        419,
+        512
+      ],
+      "normalization": "minmax_0_1",
+      "heatmap_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_atelectasis_heatmap.png",
+      "overlay_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_atelectasis_overlay.png",
+      "notes": "Grad-CAM visual activation map for Atelectasis. Represents neural network feature activations, not clinically verified lesion localization."
+    },
+    {
+      "finding": "Infiltration",
+      "model_score": 0.2822,
+      "status": "possible",
+      "method": "grad_cam",
+      "explanation_type": "grad_cam",
+      "target_layer": "model.features.norm5",
+      "activation_shape": [
+        7,
+        7
+      ],
+      "heatmap_shape": [
+        419,
+        512
+      ],
+      "normalization": "minmax_0_1",
+      "heatmap_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_infiltration_heatmap.png",
+      "overlay_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_infiltration_overlay.png",
+      "notes": "Grad-CAM visual activation map for Infiltration. Represents neural network feature activations, not clinically verified lesion localization."
+    },
+    {
+      "finding": "Fibrosis",
+      "model_score": 0.2544,
+      "status": "possible",
+      "method": "grad_cam",
+      "explanation_type": "grad_cam",
+      "target_layer": "model.features.norm5",
+      "activation_shape": [
+        7,
+        7
+      ],
+      "heatmap_shape": [
+        419,
+        512
+      ],
+      "normalization": "minmax_0_1",
+      "heatmap_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_fibrosis_heatmap.png",
+      "overlay_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_fibrosis_overlay.png",
+      "notes": "Grad-CAM visual activation map for Fibrosis. Represents neural network feature activations, not clinically verified lesion localization."
+    },
+    {
+      "finding": "Consolidation",
+      "model_score": 0.1473,
+      "status": "possible",
+      "method": "grad_cam",
+      "explanation_type": "grad_cam",
+      "target_layer": "model.features.norm5",
+      "activation_shape": [
+        7,
+        7
+      ],
+      "heatmap_shape": [
+        419,
+        512
+      ],
+      "normalization": "minmax_0_1",
+      "heatmap_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_consolidation_heatmap.png",
+      "overlay_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_consolidation_overlay.png",
+      "notes": "Grad-CAM visual activation map for Consolidation. Represents neural network feature activations, not clinically verified lesion localization."
+    },
+    {
+      "finding": "Pneumothorax",
+      "model_score": 0.0479,
+      "status": "possible",
+      "method": "grad_cam",
+      "explanation_type": "grad_cam",
+      "target_layer": "model.features.norm5",
+      "activation_shape": [
+        7,
+        7
+      ],
+      "heatmap_shape": [
+        419,
+        512
+      ],
+      "normalization": "minmax_0_1",
+      "heatmap_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_pneumothorax_heatmap.png",
+      "overlay_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_pneumothorax_overlay.png",
+      "notes": "Grad-CAM visual activation map for Pneumothorax. Represents neural network feature activations, not clinically verified lesion localization."
+    },
+    {
+      "finding": "Cardiomegaly",
+      "model_score": 0.0455,
+      "status": "possible",
+      "method": "grad_cam",
+      "explanation_type": "grad_cam",
+      "target_layer": "model.features.norm5",
+      "activation_shape": [
+        7,
+        7
+      ],
+      "heatmap_shape": [
+        419,
+        512
+      ],
+      "normalization": "minmax_0_1",
+      "heatmap_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_cardiomegaly_heatmap.png",
+      "overlay_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_cardiomegaly_overlay.png",
+      "notes": "Grad-CAM visual activation map for Cardiomegaly. Represents neural network feature activations, not clinically verified lesion localization."
+    },
+    {
+      "finding": "Effusion",
+      "model_score": 0.0258,
+      "status": "possible",
+      "method": "grad_cam",
+      "explanation_type": "grad_cam",
+      "target_layer": "model.features.norm5",
+      "activation_shape": [
+        7,
+        7
+      ],
+      "heatmap_shape": [
+        419,
+        512
+      ],
+      "normalization": "minmax_0_1",
+      "heatmap_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_effusion_heatmap.png",
+      "overlay_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_effusion_overlay.png",
+      "notes": "Grad-CAM visual activation map for Effusion. Represents neural network feature activations, not clinically verified lesion localization."
+    }
+  ],
+  "grounding_records": [
+    {
+      "finding": "Atelectasis",
+      "model_score": 0.5019,
+      "status": "possible",
+      "method": "grad_cam",
+      "explanation_type": "grad_cam",
+      "target_layer": "model.features.norm5",
+      "activation_shape": [
+        7,
+        7
+      ],
+      "heatmap_shape": [
+        419,
+        512
+      ],
+      "normalization": "minmax_0_1",
+      "heatmap_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_atelectasis_heatmap.png",
+      "overlay_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_atelectasis_overlay.png",
+      "notes": "Grad-CAM visual activation map for Atelectasis. Represents neural network feature activations, not clinically verified lesion localization."
+    },
+    {
+      "finding": "Infiltration",
+      "model_score": 0.2822,
+      "status": "possible",
+      "method": "grad_cam",
+      "explanation_type": "grad_cam",
+      "target_layer": "model.features.norm5",
+      "activation_shape": [
+        7,
+        7
+      ],
+      "heatmap_shape": [
+        419,
+        512
+      ],
+      "normalization": "minmax_0_1",
+      "heatmap_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_infiltration_heatmap.png",
+      "overlay_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_infiltration_overlay.png",
+      "notes": "Grad-CAM visual activation map for Infiltration. Represents neural network feature activations, not clinically verified lesion localization."
+    },
+    {
+      "finding": "Fibrosis",
+      "model_score": 0.2544,
+      "status": "possible",
+      "method": "grad_cam",
+      "explanation_type": "grad_cam",
+      "target_layer": "model.features.norm5",
+      "activation_shape": [
+        7,
+        7
+      ],
+      "heatmap_shape": [
+        419,
+        512
+      ],
+      "normalization": "minmax_0_1",
+      "heatmap_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_fibrosis_heatmap.png",
+      "overlay_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_fibrosis_overlay.png",
+      "notes": "Grad-CAM visual activation map for Fibrosis. Represents neural network feature activations, not clinically verified lesion localization."
+    },
+    {
+      "finding": "Consolidation",
+      "model_score": 0.1473,
+      "status": "possible",
+      "method": "grad_cam",
+      "explanation_type": "grad_cam",
+      "target_layer": "model.features.norm5",
+      "activation_shape": [
+        7,
+        7
+      ],
+      "heatmap_shape": [
+        419,
+        512
+      ],
+      "normalization": "minmax_0_1",
+      "heatmap_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_consolidation_heatmap.png",
+      "overlay_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_consolidation_overlay.png",
+      "notes": "Grad-CAM visual activation map for Consolidation. Represents neural network feature activations, not clinically verified lesion localization."
+    },
+    {
+      "finding": "Pneumothorax",
+      "model_score": 0.0479,
+      "status": "possible",
+      "method": "grad_cam",
+      "explanation_type": "grad_cam",
+      "target_layer": "model.features.norm5",
+      "activation_shape": [
+        7,
+        7
+      ],
+      "heatmap_shape": [
+        419,
+        512
+      ],
+      "normalization": "minmax_0_1",
+      "heatmap_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_pneumothorax_heatmap.png",
+      "overlay_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_pneumothorax_overlay.png",
+      "notes": "Grad-CAM visual activation map for Pneumothorax. Represents neural network feature activations, not clinically verified lesion localization."
+    },
+    {
+      "finding": "Cardiomegaly",
+      "model_score": 0.0455,
+      "status": "possible",
+      "method": "grad_cam",
+      "explanation_type": "grad_cam",
+      "target_layer": "model.features.norm5",
+      "activation_shape": [
+        7,
+        7
+      ],
+      "heatmap_shape": [
+        419,
+        512
+      ],
+      "normalization": "minmax_0_1",
+      "heatmap_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_cardiomegaly_heatmap.png",
+      "overlay_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_cardiomegaly_overlay.png",
+      "notes": "Grad-CAM visual activation map for Cardiomegaly. Represents neural network feature activations, not clinically verified lesion localization."
+    },
+    {
+      "finding": "Effusion",
+      "model_score": 0.0258,
+      "status": "possible",
+      "method": "grad_cam",
+      "explanation_type": "grad_cam",
+      "target_layer": "model.features.norm5",
+      "activation_shape": [
+        7,
+        7
+      ],
+      "heatmap_shape": [
+        419,
+        512
+      ],
+      "normalization": "minmax_0_1",
+      "heatmap_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_effusion_heatmap.png",
+      "overlay_path": "data/iu_xray/grounding/CXR1032_CXR1032_IM-0026-1001-0002_effusion_overlay.png",
+      "notes": "Grad-CAM visual activation map for Effusion. Represents neural network feature activations, not clinically verified lesion localization."
+    }
+  ],
+  "metadata": {
+    "model": "TorchXRayVision DenseNet-121 (densenet121-res224-all)",
+    "generated_at": "2026-09-25T14:29:19Z",
+    "disclaimer": "Visual attribution map for research explainability; not a clinical localization or diagnosis."
+  }
+}

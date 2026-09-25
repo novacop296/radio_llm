@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.8.0",
+  "disclaimer": "RESEARCH EXPERIMENT RECORD \u2014 NOT CLINICAL PERFORMANCE EVIDENCE. Experiment configurations, metrics, and evaluation summaries are research artifacts. They do not provide clinical diagnostic guarantees or patient-level medical validation.",
+  "benchmark_id": "bm_e2e_multiview_001",
+  "benchmark_name": "E2E Multi-View Benchmark Run",
+  "experiment_id": "exp_e2e_phase18_main",
+  "model_id": "model_e2e_txrv_densenet121",
+  "dataset_version_id": null,
+  "external_dataset_id": "ext_ds_e2e_mimic_cxr_v1",
+  "modality": "EXTERNAL_TEST_SET",
+  "view_configuration": "MULTI_VIEW",
+  "fusion_strategy": "independent_view",
+  "status": "FINALIZED",
+  "metrics": {
+    "accuracy": 0.9434,
+    "precision": 0.8571,
+    "recall": 0.9231,
+    "f1_score": 0.8889,
+    "specificity": 0.95,
+    "balanced_accuracy": 0.9365,
+    "sample_count": 53
+  },
+  "uncertainty": {
+    "mean": 0.926,
+    "std": 0.0222,
+    "confidence_intervals": {
+      "lower_95": 0.912,
+      "upper_95": 0.939,
+      "method": "Bootstrap Percentile Method (500 resamples, seed=42)"
+    }
+  },
+  "error_breakdown": {
+    "confusion_matrix": {
+      "tp": 12,
+      "tn": 38,
+      "fp": 2,
+      "fn": 1
+    },
+    "disagreement_rate": 0.0566,
+    "finding_breakdown": {
+      "Cardiomegaly": {
+        "tp": 5,
+        "tn": 15,
+        "fp": 1,
+        "fn": 0,
+        "f1": 0.909
+      },
+      "Pulmonary Edema": {
+        "tp": 4,
+        "tn": 16,
+        "fp": 0,
+        "fn": 1,
+        "f1": 0.889
+      },
+      "Pleural Effusion": {
+        "tp": 3,
+        "tn": 17,
+        "fp": 1,
+        "fn": 0,
+        "f1": 0.857
+      }
+    }
+  },
+  "reproducibility_status": "VERIFIED",
+  "validation_status": "PENDING",
+  "created_at": "2026-09-24T00:16:53.802352+00:00",
+  "finalized_at": "2026-09-24T00:16:58.169370+00:00",
+  "provenance": [
+    {
+      "timestamp": "2026-09-24T00:16:53.802352+00:00",
+      "action": "REGISTERED",
+      "actor": "researcher",
+      "details": "Registered benchmark 'bm_e2e_multiview_001' with modality=EXTERNAL_TEST_SET, view_configuration=MULTI_VIEW."
+    },
+    {
+      "timestamp": "2026-09-24T00:16:53.818255+00:00",
+      "action": "EXECUTED",
+      "actor": "benchmark_engine",
+      "details": "Benchmark executed with 53 observations. Observed accuracy=0.9434, f1=0.8889."
+    },
+    {
+      "timestamp": "2026-09-24T00:16:58.169370+00:00",
+      "action": "FINALIZED",
+      "actor": "researcher",
+      "details": "Benchmark locked as immutable research record."
+    }
+  ],
+  "metadata": {}
+}

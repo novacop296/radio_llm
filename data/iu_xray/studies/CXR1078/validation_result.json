@@ -1,0 +1,32 @@
+{
+  "status": "PASSED",
+  "study_id": "CXR1078",
+  "image_id": "CXR1078_IM-0055-2001",
+  "view": "Lateral",
+  "validation": {
+    "schema_validation": "PASS",
+    "evidence_validation": "PASS",
+    "report_validation": "PASS",
+    "ground_truth_isolation": "PASS",
+    "grounding_validation": "PASS",
+    "clinical_validation": "NOT PERFORMED (Research Prototype Only)",
+    "safety_violations_count": 0,
+    "pipeline_stages": {
+      "vision": true,
+      "qa": true,
+      "evidence": true,
+      "grounding": true,
+      "llm": true,
+      "validation": true
+    },
+    "processed_at": "2026-09-24T01:16:04Z",
+    "model_integrity": {
+      "checksum_initial": "2f4a63ca9ce148f63ad77fdaa639f56dad4a4c59aa9b31cb281f43d21aac4275",
+      "checksum_final": "2f4a63ca9ce148f63ad77fdaa639f56dad4a4c59aa9b31cb281f43d21aac4275",
+      "weights_preserved": true
+    }
+  },
+  "findings_count": 10,
+  "groundings_count": 10,
+  "qa_questions_count": 20
+}

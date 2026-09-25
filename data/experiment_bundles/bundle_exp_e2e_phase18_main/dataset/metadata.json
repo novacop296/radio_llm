@@ -1,0 +1,7 @@
+{
+  "dataset_version_id": "dsv_iu_xray_e2e_v1",
+  "external_dataset_id": "ext_ds_e2e_mimic_cxr_v1",
+  "source_dataset": "E2E MIMIC-CXR Validation Test Cohort",
+  "study_count": 2,
+  "manifest_sha256": "5b857331bfb2adbede19b8b5d4be304eec7de7cfef6055bed4119c7d7283e636"
+}

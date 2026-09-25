@@ -1,0 +1,13 @@
+{
+  "study_id": "CXR1401",
+  "image_ids": [
+    "CXR1401_IM-0256-1002"
+  ],
+  "primary_image_id": "CXR1401_IM-0256-1002",
+  "available_views": [
+    "Frontal"
+  ],
+  "findings_count": 13,
+  "status": "COMPLETED",
+  "completed_at": "2026-09-24T02:22:51Z"
+}

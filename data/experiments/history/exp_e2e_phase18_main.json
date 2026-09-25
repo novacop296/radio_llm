@@ -1,0 +1,62 @@
+[
+  {
+    "timestamp": "2026-09-22T05:27:06.518999+00:00",
+    "actor": "researcher",
+    "action": "EXPERIMENT_REGISTERED",
+    "object_type": "EXPERIMENT",
+    "object_id": "exp_e2e_phase18_main",
+    "field": null,
+    "old_value": null,
+    "new_value": null,
+    "metadata": {
+      "fingerprint": "a9df6f3d19732f97630ebc879872845bc16748b305b867a77bf60ea170bd55a9",
+      "model_id": "model_e2e_txrv_densenet121",
+      "dataset_version_id": "dsv_iu_xray_e2e_v1"
+    }
+  },
+  {
+    "timestamp": "2026-09-22T05:27:23.752319+00:00",
+    "actor": "researcher",
+    "action": "EXPERIMENT_REGISTERED",
+    "object_type": "EXPERIMENT",
+    "object_id": "exp_e2e_phase18_main",
+    "field": null,
+    "old_value": null,
+    "new_value": null,
+    "metadata": {
+      "fingerprint": "a9df6f3d19732f97630ebc879872845bc16748b305b867a77bf60ea170bd55a9",
+      "model_id": "model_e2e_txrv_densenet121",
+      "dataset_version_id": "dsv_iu_xray_e2e_v1"
+    }
+  },
+  {
+    "timestamp": "2026-09-22T05:53:37.067736+00:00",
+    "actor": "researcher",
+    "action": "EXPERIMENT_REGISTERED",
+    "object_type": "EXPERIMENT",
+    "object_id": "exp_e2e_phase18_main",
+    "field": null,
+    "old_value": null,
+    "new_value": null,
+    "metadata": {
+      "fingerprint": "a9df6f3d19732f97630ebc879872845bc16748b305b867a77bf60ea170bd55a9",
+      "model_id": "model_e2e_txrv_densenet121",
+      "dataset_version_id": "dsv_iu_xray_e2e_v1"
+    }
+  },
+  {
+    "timestamp": "2026-09-24T00:16:53.789188+00:00",
+    "actor": "researcher",
+    "action": "EXPERIMENT_REGISTERED",
+    "object_type": "EXPERIMENT",
+    "object_id": "exp_e2e_phase18_main",
+    "field": null,
+    "old_value": null,
+    "new_value": null,
+    "metadata": {
+      "fingerprint": "a9df6f3d19732f97630ebc879872845bc16748b305b867a77bf60ea170bd55a9",
+      "model_id": "model_e2e_txrv_densenet121",
+      "dataset_version_id": "dsv_iu_xray_e2e_v1"
+    }
+  }
+]

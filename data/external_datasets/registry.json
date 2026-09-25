@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.8.0",
+  "disclaimer": "RESEARCH PROTOTYPE \u2014 NOT CLINICAL PERFORMANCE EVIDENCE. External datasets and benchmark definitions are registered for reproducibility and cross-distribution research evaluation only.",
+  "updated_at": "2026-09-24T00:16:53.761774+00:00",
+  "datasets": {
+    "ext_ds_e2e_mimic_cxr_v1": {
+      "dataset_id": "ext_ds_e2e_mimic_cxr_v1",
+      "dataset_name": "E2E MIMIC-CXR Validation Test Cohort",
+      "dataset_version": "v1.0-e2e",
+      "modality": "CHEST_XRAY",
+      "image_views": [
+        "Frontal",
+        "Lateral"
+      ],
+      "study_count": 2,
+      "image_count": 3,
+      "access_status": "SYNTHETIC_FIXTURE",
+      "status": "FINALIZED",
+      "manifest_sha256": "5b857331bfb2adbede19b8b5d4be304eec7de7cfef6055bed4119c7d7283e636",
+      "created_at": "2026-09-24T00:16:53.714831+00:00",
+      "finalized_at": "2026-09-24T00:16:53.752111+00:00"
+    }
+  }
+}

@@ -1,0 +1,343 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ExplainableRadiologyResearchEvaluationSchema",
+  "description": "Formal schema for Phase 1.6 Research Evaluation, Benchmarking, and Statistical Analysis.",
+  "type": "object",
+  "definitions": {
+    "Disclaimer": {
+      "type": "string",
+      "enum": [
+        "RESEARCH EVALUATION ONLY — NOT CLINICAL PERFORMANCE. Machine activation scores and benchmark metrics are mathematical model outputs and research evaluation measurements, not clinical probabilities, diagnostic certainty, or clinical efficacy claims. No medical decisions should be made based on these outputs."
+      ]
+    },
+    "EvaluationDataset": {
+      "type": "object",
+      "required": [
+        "dataset_id",
+        "dataset_version",
+        "study_count",
+        "manifest_hash",
+        "created_at",
+        "source_description",
+        "label_availability",
+        "disclaimer"
+      ],
+      "properties": {
+        "dataset_id": { "type": "string", "pattern": "^[a-zA-Z0-9_-]+$" },
+        "dataset_version": { "type": "string" },
+        "study_count": { "type": "integer", "minimum": 0 },
+        "study_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "manifest_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "created_at": { "type": "string" },
+        "source_description": { "type": "string" },
+        "label_availability": {
+          "type": "object",
+          "properties": {
+            "has_reference_annotations": { "type": "boolean" },
+            "annotated_finding_types": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "annotation_source": { "type": "string" }
+          }
+        },
+        "provenance": { "type": "object" },
+        "disclaimer": { "$ref": "#/definitions/Disclaimer" }
+      },
+      "additionalProperties": false
+    },
+    "MetricResult": {
+      "type": "object",
+      "required": [
+        "metric_name",
+        "metric_value",
+        "sample_size",
+        "methodology"
+      ],
+      "properties": {
+        "metric_name": { "type": "string" },
+        "metric_value": { "type": ["number", "null"], "minimum": -1.0, "maximum": 1.0 },
+        "sample_size": { "type": "integer", "minimum": 0 },
+        "methodology": { "type": "string" },
+        "confidence_interval_95": {
+          "type": ["object", "null"],
+          "properties": {
+            "lower": { "type": "number" },
+            "upper": { "type": "number" },
+            "method": { "type": "string" }
+          }
+        },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "ConfusionMatrix": {
+      "type": "object",
+      "required": ["tp", "tn", "fp", "fn"],
+      "properties": {
+        "tp": { "type": "integer", "minimum": 0 },
+        "tn": { "type": "integer", "minimum": 0 },
+        "fp": { "type": "integer", "minimum": 0 },
+        "fn": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "FindingEvaluation": {
+      "type": "object",
+      "required": [
+        "finding_type",
+        "sample_count",
+        "confusion_matrix",
+        "metrics"
+      ],
+      "properties": {
+        "finding_type": { "type": "string" },
+        "sample_count": { "type": "integer", "minimum": 0 },
+        "confusion_matrix": { "$ref": "#/definitions/ConfusionMatrix" },
+        "metrics": {
+          "type": "object",
+          "properties": {
+            "accuracy": { "type": ["number", "null"] },
+            "precision": { "type": ["number", "null"] },
+            "recall": { "type": ["number", "null"] },
+            "f1": { "type": ["number", "null"] },
+            "specificity": { "type": ["number", "null"] },
+            "sensitivity": { "type": ["number", "null"] },
+            "balanced_accuracy": { "type": ["number", "null"] }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "AgreementEvaluation": {
+      "type": "object",
+      "required": [
+        "observed_agreement",
+        "cohen_kappa",
+        "fleiss_kappa"
+      ],
+      "properties": {
+        "observed_agreement": { "type": ["number", "null"] },
+        "cohen_kappa": { "type": ["number", "null"], "minimum": -1.0, "maximum": 1.0 },
+        "fleiss_kappa": { "type": ["number", "null"], "minimum": -1.0, "maximum": 1.0 },
+        "pairwise_agreements": { "type": "array" }
+      },
+      "additionalProperties": false
+    },
+    "ErrorAnalysis": {
+      "type": "object",
+      "required": [
+        "total_disagreements",
+        "machine_reviewer_disagreements",
+        "inter_reviewer_disagreements",
+        "per_finding_disagreements"
+      ],
+      "properties": {
+        "total_disagreements": { "type": "integer", "minimum": 0 },
+        "machine_reviewer_disagreements": { "type": "integer", "minimum": 0 },
+        "inter_reviewer_disagreements": { "type": "integer", "minimum": 0 },
+        "adjudication_frequency": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "per_finding_disagreements": {
+          "type": "object",
+          "additionalProperties": { "type": "integer" }
+        },
+        "disagreement_details": { "type": "array" }
+      },
+      "additionalProperties": false
+    },
+    "ConfidenceAnalysis": {
+      "type": "object",
+      "required": [
+        "metric_distributions",
+        "uncertainty_intervals"
+      ],
+      "properties": {
+        "metric_distributions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "mean": { "type": "number" },
+              "median": { "type": "number" },
+              "std": { "type": "number" },
+              "min": { "type": "number" },
+              "max": { "type": "number" },
+              "q25": { "type": "number" },
+              "q75": { "type": "number" },
+              "iqr": { "type": "number" },
+              "count": { "type": "integer" }
+            }
+          }
+        },
+        "uncertainty_intervals": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "lower_95": { "type": "number" },
+              "upper_95": { "type": "number" },
+              "method": { "type": "string" }
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "EvaluationComparison": {
+      "type": "object",
+      "required": [
+        "comparison_id",
+        "evaluation_id_a",
+        "evaluation_id_b",
+        "experiment_id_a",
+        "experiment_id_b",
+        "metric_comparisons",
+        "disclaimer"
+      ],
+      "properties": {
+        "comparison_id": { "type": "string" },
+        "evaluation_id_a": { "type": "string" },
+        "evaluation_id_b": { "type": "string" },
+        "experiment_id_a": { "type": "string" },
+        "experiment_id_b": { "type": "string" },
+        "metric_comparisons": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "metric_name",
+              "value_a",
+              "value_b",
+              "delta",
+              "sample_size_a",
+              "sample_size_b",
+              "methodology"
+            ],
+            "properties": {
+              "metric_name": { "type": "string" },
+              "value_a": { "type": ["number", "null"] },
+              "value_b": { "type": ["number", "null"] },
+              "delta": { "type": ["number", "null"] },
+              "relative_delta": { "type": ["number", "null"] },
+              "sample_size_a": { "type": "integer" },
+              "sample_size_b": { "type": "integer" },
+              "methodology": { "type": "string" }
+            }
+          }
+        },
+        "created_at": { "type": "string" },
+        "disclaimer": { "$ref": "#/definitions/Disclaimer" }
+      },
+      "additionalProperties": false
+    },
+    "EvaluationReport": {
+      "type": "object",
+      "required": [
+        "report_id",
+        "evaluation_id",
+        "experiment_id",
+        "dataset_id",
+        "created_at",
+        "evaluation_metadata",
+        "observed_metrics",
+        "error_analysis",
+        "statistical_summary",
+        "reproducibility",
+        "limitations",
+        "disclaimer"
+      ],
+      "properties": {
+        "report_id": { "type": "string" },
+        "evaluation_id": { "type": "string" },
+        "experiment_id": { "type": "string" },
+        "dataset_id": { "type": "string" },
+        "created_at": { "type": "string" },
+        "evaluation_metadata": { "type": "object" },
+        "dataset_description": { "type": "object" },
+        "experiment_configuration": { "type": "object" },
+        "methodology": { "type": "object" },
+        "observed_metrics": { "type": "object" },
+        "finding_evaluations": { "type": "array" },
+        "agreement_evaluation": { "$ref": "#/definitions/AgreementEvaluation" },
+        "error_analysis": { "$ref": "#/definitions/ErrorAnalysis" },
+        "statistical_summary": { "$ref": "#/definitions/ConfidenceAnalysis" },
+        "experiment_comparison": { "type": ["object", "null"] },
+        "reproducibility": { "type": "object" },
+        "limitations": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "disclaimer": { "$ref": "#/definitions/Disclaimer" }
+      },
+      "additionalProperties": false
+    },
+    "EvaluationRun": {
+      "type": "object",
+      "required": [
+        "evaluation_id",
+        "experiment_id",
+        "snapshot_id",
+        "evaluation_dataset_id",
+        "status",
+        "created_at",
+        "configuration_fingerprint",
+        "dataset_fingerprint",
+        "evaluation_fingerprint",
+        "disclaimer"
+      ],
+      "properties": {
+        "evaluation_id": { "type": "string", "pattern": "^[a-zA-Z0-9_-]+$" },
+        "experiment_id": { "type": "string" },
+        "snapshot_id": { "type": "string" },
+        "evaluation_dataset_id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "status": {
+          "type": "string",
+          "enum": ["CREATED", "PREPARING", "RUNNING", "COMPLETED", "VALIDATED", "ARCHIVED"]
+        },
+        "created_at": { "type": "string" },
+        "completed_at": { "type": ["string", "null"] },
+        "validated_at": { "type": ["string", "null"] },
+        "archived_at": { "type": ["string", "null"] },
+        "study_count": { "type": "integer", "minimum": 0 },
+        "reviewer_count": { "type": "integer", "minimum": 0 },
+        "configuration_fingerprint": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "dataset_fingerprint": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "evaluation_fingerprint": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "aggregate_metrics": {
+          "type": "object",
+          "properties": {
+            "accuracy": { "$ref": "#/definitions/MetricResult" },
+            "precision": { "$ref": "#/definitions/MetricResult" },
+            "recall": { "$ref": "#/definitions/MetricResult" },
+            "f1": { "$ref": "#/definitions/MetricResult" },
+            "specificity": { "$ref": "#/definitions/MetricResult" },
+            "sensitivity": { "$ref": "#/definitions/MetricResult" },
+            "balanced_accuracy": { "$ref": "#/definitions/MetricResult" },
+            "observed_agreement": { "$ref": "#/definitions/MetricResult" },
+            "cohen_kappa": { "$ref": "#/definitions/MetricResult" },
+            "fleiss_kappa": { "$ref": "#/definitions/MetricResult" },
+            "review_coverage_rate": { "$ref": "#/definitions/MetricResult" },
+            "consensus_coverage_rate": { "$ref": "#/definitions/MetricResult" },
+            "adjudication_rate": { "$ref": "#/definitions/MetricResult" }
+          }
+        },
+        "confusion_matrix": { "$ref": "#/definitions/ConfusionMatrix" },
+        "finding_evaluations": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/FindingEvaluation" }
+        },
+        "agreement_evaluation": { "$ref": "#/definitions/AgreementEvaluation" },
+        "error_analysis": { "$ref": "#/definitions/ErrorAnalysis" },
+        "statistical_summary": { "$ref": "#/definitions/ConfidenceAnalysis" },
+        "provenance": { "type": "object" },
+        "disclaimer": { "$ref": "#/definitions/Disclaimer" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "timestamp": "2026-09-22T00:59:25.137138+00:00",
+    "actor": "researcher",
+    "action": "EXPERIMENT_REGISTERED",
+    "object_type": "EXPERIMENT",
+    "object_id": "exp_1790038765",
+    "field": null,
+    "old_value": null,
+    "new_value": null,
+    "metadata": {
+      "fingerprint": "eb31455221d65839401cd5b7be773f59080744b70cdfe4207b3d147570b6563a",
+      "model_id": "model_densenet121_txrv",
+      "dataset_version_id": "snap_20260922_005925_29d96f33"
+    }
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "model_name": "TorchXRayVision DenseNet-121",
+  "model_version": "densenet121-res224-all",
+  "target_layer": "model.features.denseblock4",
+  "preprocessing_resolution": [
+    224,
+    224
+  ],
+  "normalization": "minmax_0_1",
+  "device": "cpu",
+  "qa_threshold": 0.25,
+  "qa_top_k": 5,
+  "llm_provider": "mock",
+  "llm_model": "mock-radiology-llm",
+  "fingerprint_sha256": "27c56a673986841c67d56d6c90c347c09a4afe316569ef82acd854a8c78de888",
+  "environment_metadata": {
+    "python_version": "3.11.9",
+    "os_platform": "win32"
+  }
+}

@@ -1,0 +1,314 @@
+{
+  "study_id": "CXR1024",
+  "review_id": "rev_CXR1024_researcher_01_1790234070",
+  "reviewer": {
+    "id": "researcher_01",
+    "display_name": "Clinical Research Reviewer (researcher_01)",
+    "role": "Research Reviewer"
+  },
+  "status": "in_review",
+  "started_at": "2026-09-24T07:14:30Z",
+  "updated_at": "2026-09-24T07:17:28Z",
+  "completed_at": null,
+  "finding_reviews": [
+    {
+      "finding": "Consolidation",
+      "machine_status": "possible",
+      "reviewer_status": "not_reviewed",
+      "machine_location": "unspecified",
+      "reviewer_location": "unspecified",
+      "machine_severity": "unspecified",
+      "reviewer_severity": "mild",
+      "reviewer_comment": "",
+      "reviewed": false
+    },
+    {
+      "finding": "Pneumonia",
+      "machine_status": "possible",
+      "reviewer_status": "not_reviewed",
+      "machine_location": "unspecified",
+      "reviewer_location": "unspecified",
+      "machine_severity": "unspecified",
+      "reviewer_severity": "unspecified",
+      "reviewer_comment": "",
+      "reviewed": false
+    },
+    {
+      "finding": "Infiltration",
+      "machine_status": "possible",
+      "reviewer_status": "not_reviewed",
+      "machine_location": "unspecified",
+      "reviewer_location": "unspecified",
+      "machine_severity": "unspecified",
+      "reviewer_severity": "unspecified",
+      "reviewer_comment": "",
+      "reviewed": false
+    },
+    {
+      "finding": "Nodule",
+      "machine_status": "possible",
+      "reviewer_status": "not_reviewed",
+      "machine_location": "unspecified",
+      "reviewer_location": "unspecified",
+      "machine_severity": "unspecified",
+      "reviewer_severity": "unspecified",
+      "reviewer_comment": "",
+      "reviewed": false
+    },
+    {
+      "finding": "Pneumothorax",
+      "machine_status": "possible",
+      "reviewer_status": "not_reviewed",
+      "machine_location": "unspecified",
+      "reviewer_location": "unspecified",
+      "machine_severity": "unspecified",
+      "reviewer_severity": "unspecified",
+      "reviewer_comment": "",
+      "reviewed": false
+    },
+    {
+      "finding": "Effusion",
+      "machine_status": "possible",
+      "reviewer_status": "not_reviewed",
+      "machine_location": "unspecified",
+      "reviewer_location": "unspecified",
+      "machine_severity": "unspecified",
+      "reviewer_severity": "unspecified",
+      "reviewer_comment": "",
+      "reviewed": false
+    },
+    {
+      "finding": "Cardiomegaly",
+      "machine_status": "possible",
+      "reviewer_status": "not_reviewed",
+      "machine_location": "unspecified",
+      "reviewer_location": "unspecified",
+      "machine_severity": "unspecified",
+      "reviewer_severity": "unspecified",
+      "reviewer_comment": "",
+      "reviewed": false
+    }
+  ],
+  "qa_reviews": [
+    {
+      "question_id": "Q_PNEUMOTHORAX_PRESENCE",
+      "finding": "Pneumothorax",
+      "level": 1,
+      "question_text": "Is there radiographic evidence of a pneumothorax?",
+      "machine_answer": "uncertain",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_PNEUMOTHORAX_LOCATION",
+      "finding": "Pneumothorax",
+      "level": 2,
+      "question_text": "Where is the pneumothorax located (e.g., right, left, apical)?",
+      "machine_answer": "unspecified",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_EFFUSION_PRESENCE",
+      "finding": "Effusion",
+      "level": 1,
+      "question_text": "Is there evidence of pleural effusion or costophrenic angle blunting?",
+      "machine_answer": "uncertain",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_EFFUSION_LOCATION",
+      "finding": "Effusion",
+      "level": 2,
+      "question_text": "Where is the pleural effusion located (e.g., right, left, bilateral)?",
+      "machine_answer": "unspecified",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_CONSOLIDATION_PRESENCE",
+      "finding": "Consolidation",
+      "level": 1,
+      "question_text": "Is there focal or dense airspace consolidation?",
+      "machine_answer": "uncertain",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_CONSOLIDATION_LOCATION",
+      "finding": "Consolidation",
+      "level": 2,
+      "question_text": "Which lung lobe or region contains the consolidation?",
+      "machine_answer": "unspecified",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_CARDIOMEGALY_PRESENCE",
+      "finding": "Cardiomegaly",
+      "level": 1,
+      "question_text": "Is cardiomegaly or prominent cardiac enlargement present?",
+      "machine_answer": "uncertain",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_CARDIOMEGALY_LOCATION",
+      "finding": "Cardiomegaly",
+      "level": 2,
+      "question_text": "Is the enlargement generalized or specific to cardiac chambers?",
+      "machine_answer": "unspecified",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_PNEUMONIA_PRESENCE",
+      "finding": "Pneumonia",
+      "level": 1,
+      "question_text": "Are there features suggestive of infectious pneumonia / bronchopneumonia?",
+      "machine_answer": "uncertain",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_PNEUMONIA_LOCATION",
+      "finding": "Pneumonia",
+      "level": 2,
+      "question_text": "Where is the suspected pneumonia located?",
+      "machine_answer": "unspecified",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_INFILTRATION_PRESENCE",
+      "finding": "Infiltration",
+      "level": 1,
+      "question_text": "Are there infiltrative or hazy airspace opacities?",
+      "machine_answer": "uncertain",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_INFILTRATION_LOCATION",
+      "finding": "Infiltration",
+      "level": 2,
+      "question_text": "Where are the infiltrates distributed (e.g., right, left, bilateral)?",
+      "machine_answer": "unspecified",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_NODULE_PRESENCE",
+      "finding": "Nodule",
+      "level": 1,
+      "question_text": "Is there evidence of pulmonary nodule(s) or calcified granuloma(s)?",
+      "machine_answer": "uncertain",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    },
+    {
+      "question_id": "Q_NODULE_LOCATION",
+      "finding": "Nodule",
+      "level": 2,
+      "question_text": "Where is the nodule located (e.g., right_upper_lobe, left_midlung)?",
+      "machine_answer": "unspecified",
+      "reviewer_answer": "not_reviewed",
+      "reviewer_comment": ""
+    }
+  ],
+  "report_review": {
+    "machine_report_locked": true,
+    "final_findings": [
+      {
+        "finding": "Consolidation",
+        "statement": "Possible consolidation cannot be excluded; correlation is advised.",
+        "status": "possible",
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Pneumonia",
+        "statement": "Possible pneumonia cannot be excluded; correlation is advised.",
+        "status": "possible",
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Infiltration",
+        "statement": "Possible infiltration cannot be excluded; correlation is advised.",
+        "status": "possible",
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Nodule",
+        "statement": "Possible nodule cannot be excluded; correlation is advised.",
+        "status": "possible",
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Pneumothorax",
+        "statement": "Possible pneumothorax cannot be excluded; correlation is advised.",
+        "status": "possible",
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Effusion",
+        "statement": "Possible effusion cannot be excluded; correlation is advised.",
+        "status": "possible",
+        "location": "unspecified",
+        "severity": "unspecified"
+      },
+      {
+        "finding": "Cardiomegaly",
+        "statement": "Possible cardiomegaly cannot be excluded; correlation is advised.",
+        "status": "possible",
+        "location": "unspecified",
+        "severity": "unspecified"
+      }
+    ],
+    "final_impression": [
+      "1. Possible consolidation, Possible pneumonia, Possible infiltration, Possible nodule, Possible pneumothorax, Possible effusion, Possible cardiomegaly; recommend clinical correlation."
+    ],
+    "reviewer_comment": "",
+    "finalized": false
+  },
+  "audit_trail": [
+    {
+      "timestamp": "2026-09-24T07:14:30Z",
+      "reviewer_id": "researcher_01",
+      "finding": "*SESSION*",
+      "field": "session_init",
+      "old_value": null,
+      "new_value": "initialized"
+    },
+    {
+      "timestamp": "2026-09-24T07:17:06Z",
+      "reviewer_id": "researcher_01",
+      "finding": "Consolidation",
+      "field": "reviewer_severity",
+      "old_value": "unspecified",
+      "new_value": "mild"
+    },
+    {
+      "timestamp": "2026-09-24T07:17:28Z",
+      "reviewer_id": "researcher_01",
+      "finding": "*REPORT*",
+      "field": "final_findings",
+      "old_value": "previous_findings_draft",
+      "new_value": "7 findings updated"
+    },
+    {
+      "timestamp": "2026-09-24T07:17:28Z",
+      "reviewer_id": "researcher_01",
+      "finding": "*REPORT*",
+      "field": "final_impression",
+      "old_value": "previous_impression_draft",
+      "new_value": "1 impression items updated"
+    }
+  ],
+  "disclaimer": "Research Prototype \u2014 Reviewer annotations and finalized reports are research metadata and do not constitute certified clinical ground truth or automated diagnoses."
+}

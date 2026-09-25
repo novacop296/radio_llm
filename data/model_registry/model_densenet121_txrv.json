@@ -1,0 +1,58 @@
+{
+  "model_id": "model_densenet121_txrv",
+  "model_name": "TorchXRayVision DenseNet-121 (res224-all)",
+  "architecture": "DenseNet-121",
+  "framework": "PyTorch / TorchXRayVision",
+  "framework_version": "torchxrayvision 1.2.0+",
+  "weights_identifier": "densenet121-res224-all",
+  "weights_sha256": null,
+  "input_dimensions": [
+    1,
+    224,
+    224
+  ],
+  "preprocessing": {
+    "resize": [
+      224,
+      224
+    ],
+    "color_mode": "grayscale_to_1ch",
+    "normalization": "txrv_rescale_minmax_to_neg1024_pos1024"
+  },
+  "target_labels": [
+    "Atelectasis",
+    "Consolidation",
+    "Infiltration",
+    "Pneumothorax",
+    "Edema",
+    "Emphysema",
+    "Fibrosis",
+    "Effusion",
+    "Pneumonia",
+    "Pleural_Thickening",
+    "Cardiomegaly",
+    "Nodule",
+    "Mass",
+    "Hernia",
+    "Lung Lesion",
+    "Fracture",
+    "Lung Opacity",
+    "Enlarged Cardiomediastinum"
+  ],
+  "target_layer": "model.features.norm5",
+  "description": "Pre-trained DenseNet-121 model specialized for 18 multi-label chest radiograph pathologies.",
+  "registered_by": "system_bootstrap",
+  "status": "FINALIZED",
+  "metadata": {
+    "source_library": "torchxrayvision",
+    "feature_dim": 1024,
+    "gradcam_supported": true,
+    "attribution_resolution": [
+      7,
+      7
+    ],
+    "weights_hash_note": "Weights downloaded dynamically on demand via TorchXRayVision CDN; local weight cache not verified at bootstrap."
+  },
+  "created_at": "2026-09-22T00:57:32.687520+00:00",
+  "disclaimer": "RESEARCH MODEL REGISTRY RECORD \u2014 NOT CLINICAL PERFORMANCE EVIDENCE. Model configurations, weight hashes, and architecture specifications are research metadata. They do not provide clinical diagnostic guarantees or patient-level medical validation."
+}

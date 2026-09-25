@@ -1,0 +1,62 @@
+{
+  "dataset_id": "EVALSET_E2E_1790037785",
+  "dataset_version": "1.0.0",
+  "study_count": 3,
+  "study_ids": [
+    "CXR1122",
+    "CXR2345",
+    "CXR3456"
+  ],
+  "manifest_hash": "bbaa0a46f767872879efad2718b5bf145e00bfa005a85c251ae6fff7bef42bb7",
+  "created_at": "2026-09-22T00:43:05.957814+00:00",
+  "source_description": "E2E Research Evaluation Dataset",
+  "label_availability": {
+    "has_reference_annotations": true,
+    "annotated_finding_types": [
+      "atelectasis",
+      "cardiomegaly",
+      "consolidation",
+      "pleural_effusion",
+      "pneumothorax",
+      "pulmonary_edema",
+      "support_devices"
+    ],
+    "annotation_source": "Isolated Research Benchmark Ground-Truth Manifest"
+  },
+  "reference_annotations": {
+    "CXR1122": {
+      "cardiomegaly": 1,
+      "pulmonary_edema": 0,
+      "consolidation": 0,
+      "pleural_effusion": 0,
+      "atelectasis": 0,
+      "pneumothorax": 0,
+      "support_devices": 0
+    },
+    "CXR2345": {
+      "cardiomegaly": 0,
+      "pulmonary_edema": 0,
+      "consolidation": 0,
+      "pleural_effusion": 1,
+      "atelectasis": 0,
+      "pneumothorax": 0,
+      "support_devices": 0
+    },
+    "CXR3456": {
+      "cardiomegaly": 0,
+      "pulmonary_edema": 0,
+      "consolidation": 0,
+      "pleural_effusion": 0,
+      "atelectasis": 0,
+      "pneumothorax": 0,
+      "support_devices": 0
+    }
+  },
+  "provenance": {
+    "pipeline_version": "Phase 1.6 Evaluation Dataset Manager",
+    "creation_timestamp": "2026-09-22T00:43:05.957814+00:00",
+    "manifest_sha256": "bbaa0a46f767872879efad2718b5bf145e00bfa005a85c251ae6fff7bef42bb7",
+    "isolation_layer": "data/evaluation_dataset/"
+  },
+  "disclaimer": "RESEARCH EVALUATION ONLY \u2014 NOT CLINICAL PERFORMANCE. Machine activation scores and benchmark metrics are mathematical model outputs and research evaluation measurements, not clinical probabilities, diagnostic certainty, or clinical efficacy claims. No medical decisions should be made based on these outputs."
+}
